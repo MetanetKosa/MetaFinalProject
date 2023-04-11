@@ -1,0 +1,55 @@
+/* your styles go here */
+
+
+#bestReviewItemContainer{
+    height: 100px !important;
+}
+
+.detail-bar-item{
+    margin: 0 50px; text-align: center;
+}
+
+.detail-bar-item{
+    color:white;
+}
+
+/*.detail-bar-item a{*/
+/*    color:#4E66F8;*/
+/*    font-weight:bold;*/
+/*}*/
+.clicked{
+    color:#4E66F8;
+    font-weight:bold;
+}
+
+#personIcon{
+    top: 5px !important;
+}
+
+#mybell{
+    top: 5px !important;
+}
+
+#headerEmpty{
+    width: 20px;
+}
+
+#headerSearch{
+    position:relative;
+    top: 5px !important;
+}
+
+.header-menu{
+    padding-left: 18px;
+}
+
+#search_search{
+    border-radius:20px;
+    width:250px;
+    height: 30px;
+}
+
+#search{
+    border-radius:20px;
+    width:300px;
+}
