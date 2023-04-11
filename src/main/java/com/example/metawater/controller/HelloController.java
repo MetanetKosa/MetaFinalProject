@@ -15,4 +15,9 @@ public class HelloController {
     public String detail(){
         return "detail";
     }
+
+    @GetMapping("/useProduct")
+    public String useProduct(){
+        return "member/myproduct";
+    }
 }

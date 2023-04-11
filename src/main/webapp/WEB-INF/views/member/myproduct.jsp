@@ -12,49 +12,46 @@
                     <div class="card-body pl-lg-5 p-md-0">
                         <div class="list-group list-group-flush rounded-0 text-sm my-5">
                             <h6>제품관리</h6>
-                            <a class="mypage-menu list-group list-group-item-action" href="knowlssedge-base-topic.html">
+                            <a class="list-group list-group-item-action" href="knowlssedge-base-topic.html">
                                 내 정수기 관리하기
                             </a>
-                            <a class="mypage-menu list-group list-group-item-action" href="knowlssedge-base-topic.html">
+                            <a class="list-group list-group-item-action" href="knowlssedge-base-topic.html">
                                 AS 신청 내역
                             </a>
-                            <a class="mypage-menu list-group list-group-item-action" href="knowlssedge-base-topic.html">
+                            <a class="list-group list-group-item-action" href="knowlssedge-base-topic.html">
                                 나의 포인트
-                            </a>
-                            <a class="mypage-menu list-group list-group-item-action" href="/useProduct">
-                                사용중인 제품(임시)
                             </a>
                         </div>
                         <div class="list-group list-group-flush rounded-0 text-sm my-5">
 
                                 <h6>결제관리</h6>
-                            <a class="mypage-menu list-group list-group-item-action text-muted" href="knowlssedge-base-topic.html">
+                            <a class="list-group list-group-item-action text-muted" href="knowlssedge-base-topic.html">
                                납부 내역</a>
-                            <a class="mypage-menu list-group-list list-group-item-action text-muted" href="knowledge-base-topic.html">
+                            <a class="list-group-list list-group-item-action text-muted" href="knowledge-base-topic.html">
                                납부 방법 변경</a>
                         </div>
                         <div class="list-group list-group-flush rounded-0 text-sm my-5">
 
                                 <h6>쇼핑관리</h6>
-                            <a class="mypage-menu list-group list-group-item-action text-muted" href="knowlssedge-base-topic.html">
+                            <a class="list-group list-group-item-action text-muted" href="knowlssedge-base-topic.html">
                                주문 내역</a>
-                            <a class="mypage-menu list-group-list list-group-item-action text-muted" href="knowledge-base-topic.html">
+                            <a class="list-group-list list-group-item-action text-muted" href="knowledge-base-topic.html">
                                 주문취소/반납/해지 내역</a>
                         </div>
                         <div class="list-group list-group-flush rounded-0 text-sm my-5">
 
                                 <h6>활동관리</h6>
-                            <a class="mypage-menu list-group list-group-item-action text-muted" href="knowlssedge-base-topic.html">
+                            <a class="list-group list-group-item-action text-muted" href="knowlssedge-base-topic.html">
                                나의 리뷰</a>
-                            <a class="mypage-menu list-group-list list-group-item-action text-muted" href="knowledge-base-topic.html">
+                            <a class="list-group-list list-group-item-action text-muted" href="knowledge-base-topic.html">
                                1:1 문의 내역</a>
-                            <a class="mypage-menu list-group-list list-group-item-action text-muted" href="knowledge-base-topic.html">
+                            <a class="list-group-list list-group-item-action text-muted" href="knowledge-base-topic.html">
                                제품 문의 내역</a>
                         </div>
                         <div class="list-group list-group-flush rounded-0 text-sm my-5">
 
                                 <h6>정보관리</h6>
-                            <a class="mypage-menu list-group list-group-item-action text-muted" href="knowlssedge-base-topic.html">
+                            <a class="list-group list-group-item-action text-muted" href="knowlssedge-base-topic.html">
                                회원 정보 관리</a>
                         </div>
                         <br>
@@ -62,8 +59,28 @@
                 </div>
             </div>
             <div class="col-lg-9 ps-lg-5">
-                <h1 class="hero-heading mb-0">정세은님,</h1>
-                <h1 class="hero-heading mb-0">안녕하세요!</h1>
+                <h1 class="hero-heading mb-0">사용중인 제품</h1>
+                <div class="text-block" id="useProduct">
+                    <h4 class="mb-4">Amenities</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled text-muted">
+                                <li class="mb-2"> <i class="fa fa-wifi text-secondary w-1rem me-3 text-center"></i><span class="text-sm">Wifi</span></li>
+                                <li class="mb-2"> <i class="fa fa-tv text-secondary w-1rem me-3 text-center"></i><span class="text-sm">Cable TV</span></li>
+                                <li class="mb-2"> <i class="fa fa-snowflake text-secondary w-1rem me-3 text-center"></i><span class="text-sm">Air conditioning</span></li>
+                                <li class="mb-2"> <i class="fa fa-thermometer-three-quarters text-secondary w-1rem me-3 text-center"></i><span class="text-sm">Heating</span></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled text-muted">
+                                <li class="mb-2"> <i class="fa fa-bath text-secondary w-1rem me-3 text-center"></i><span class="text-sm">Toiletteries</span></li>
+                                <li class="mb-2"> <i class="fa fa-utensils text-secondary w-1rem me-3 text-center"></i><span class="text-sm">Equipped Kitchen</span></li>
+                                <li class="mb-2"> <i class="fa fa-laptop text-secondary w-1rem me-3 text-center"></i><span class="text-sm">Desk for work</span></li>
+                                <li class="mb-2"> <i class="fa fa-tshirt text-secondary w-1rem me-3 text-center"></i><span class="text-sm">Washing machine</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <div class="text-block">
                     <p class="mt-2 text-muted">내게 맞는 제품관리 서비스와 활동 내역을 확인하세요.</p>
                 </div>
