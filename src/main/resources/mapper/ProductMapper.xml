@@ -38,15 +38,15 @@
     </resultMap>
 
     <select id="getProductList" resultMap="productMap">
-        select distinct p.*, c.color_name, f.function_name
-        from product p
-                 left join product_color c on p.product_no = c.product_no
-                 left join product_function f on p.product_no = f.product_no
-        order by p.product_no
+        SELECT DISTINCT p.*, c.color_name, f.function_name, f.function_model
+        FROM product p
+                 LEFT JOIN product_color c ON p.product_no = c.product_no
+                 LEFT JOIN product_function f ON p.product_no = f.product_no
+        ORDER BY p.product_no, f.function_name
     </select>
 
     <select id="getProduct" resultMap="productMap" parameterType="Long">
-        SELECT DISTINCT p.*, c.color_name, f.function_name
+        SELECT DISTINCT p.*, c.*, f.*
         FROM product p
                  LEFT JOIN product_color c ON p.product_no = c.product_no
                  LEFT JOIN product_function f ON p.product_no = f.product_no
