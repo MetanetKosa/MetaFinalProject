@@ -36,7 +36,7 @@
                     <div class="mb-4">
                         <label class="form-label" for="bookingDate">Your stay *</label>
                         <div class="datepicker-container datepicker-container-right">
-                            <input class="form-control" type="text" name="bookingDate" id="bookingDate" placeholder="Choose your dates" required="required">
+                            <input class="form-control" type="text" name="bookingDate" id="bookingDate" placeholder="Choose your dates" value ="water" required="required">
                         </div>
                     </div>
                     <div class="mb-4">
@@ -49,8 +49,10 @@
                             <option value="5">5 Guests</option>
                         </select>
                     </div>
-                    <div class="d-grid mb-4">
-                        <button class="btn btn-primary" type="submit">Book your stay</button>
+                    <div class="row">
+                        <a class="btn btn-primary d-grid mb-2"  href="../order/rental1">렌탈</a>
+                        <button class="btn btn-primary d-grid mb-2" href="../order/user-booking-1.html">구매</button>
+<%--                        <button class="btn btn-primary d-grid mb-2" type="submit">구매</button>--%>
                     </div>
                 </form>
                 <p class="text-muted text-sm text-center">Some additional text can be also placed here.</p>
