@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.metawater.product.ProductMapper">
+
+    <select id="getProductList"  resultType="ProductVO">
+        select * from product where product_no > 0
+        order by product_no desc
+    </select>
+
+    <select id="getProduct"  resultType="ProductVO">
+        select * from product where prodcut_no = #{product_no}
+    </select>
+
+    <insert id="productInsert">
+        INSERT INTO POST(product_no, product_name, product_size,product_weight, product_detail,
+                         product_guide, product_type,  product_method,
+                         product_rdate, product_company, regDate, updateDate, detail_url,img_url)
+        VALUES(
+                  product_seq.nextval,#{product_name},#{product_size},#{product_weight},#{product_detail},#{product_guide},#{product_type},#{product_method},
+                  sysdate,#{product_company},sysdate,sysdate,#{detail_url},#{img_url})
+    </insert>
+
+    <delete id="productDelete" parameterType="Long">
+        delete from product where
+            product_no = #{product_no}
+    </delete>
+
+    <update id="productUpdate">
+        update product
+        set  product_name = #{product_name},
+             product_size = #{product_size} ,
+             product_weight = #{product_weight} ,
+             product_detail = #{product_detail} ,
+             product_guide = #{product_guide},
+             product_type = #{product_type},
+             product_method = #{product_method},
+             product_rdate = #{product_rdate},
+             product_company = #{product_company},
+             updateDate = sysdate,
+             detail_url = #{detail_url},
+             img_url = #{ img_url}
+        where product_no = #{product_no}
+    </update>
+</mapper>
