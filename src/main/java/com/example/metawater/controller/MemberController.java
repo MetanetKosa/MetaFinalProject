@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @Log4j2
-@RequestMapping("/member")
+@RequestMapping("/auth")
 public class MemberController {
     @Autowired
     MemberService memberService;
@@ -34,9 +34,9 @@ public class MemberController {
     //회원가입
     @PostMapping("/signup")
     public ResponseEntity<MemberVO> createUser(@RequestBody MemberVO member) {
-        System.out.println("회원가입:" +member.getUsername());
-        System.out.println("회원가입:" +member.getMem_email());
+        System.out.println("회원가입 데이터 확인" + member.getMem_email());
         member.setAuth("ROLE_MEMBER");
+        System.out.println(member);
         memberService.createMember(member);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(member);

@@ -36,6 +36,7 @@ public class MemberServiceImpl implements MemberService {
 //    }
 
     //인증
+    //로그인 후 db에서 데이터 확인 후 맞으면 session 발급
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {MemberVO memberVO = memberMapper.getUser(username);
         System.out.println(memberVO);
