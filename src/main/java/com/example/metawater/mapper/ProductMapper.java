@@ -1,7 +1,6 @@
-package com.example.metawater.product;
+package com.example.metawater.mapper;
 
-
-
+import com.example.metawater.domain.ProductVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -11,6 +10,7 @@ public interface ProductMapper {
     public List<ProductVO> getProductList();
 
     public ProductVO getProduct(Long product_no);
+
     public void productInsert(ProductVO product);
 
     public int productUpdate(ProductVO product);

@@ -1,4 +1,6 @@
-package com.example.metawater.product;
+package com.example.metawater.service;
+
+import com.example.metawater.domain.ProductVO;
 
 import java.util.List;
 

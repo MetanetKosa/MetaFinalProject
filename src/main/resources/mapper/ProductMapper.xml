@@ -3,16 +3,56 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.metawater.product.ProductMapper">
+<mapper namespace="com.example.metawater.mapper.ProductMapper">
 
-    <select id="getProductList"  resultType="ProductVO">
-        select * from product where product_no > 0
-        order by product_no desc
+    <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
+        <id property="product_id" column="product_id"/>
+        <result property="product_name" column="product_name"/>
+        <result property="product_size" column="product_size"/>
+        <result property="product_weight" column="product_weight"/>
+        <result property="product_detail" column="product_detail"/>
+        <result property="product_guide" column="product_guide"/>
+        <result property="product_type" column="product_type"/>
+        <result property="product_method" column="product_method"/>
+        <result property="product_rdate" column="product_rdate"/>
+        <result property="product_company" column="product_company"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+        <result property="img_url" column="img_url"/>
+        <result property="detail_url" column="detail_url"/>
+        <collection property="colors" resultMap="colorMap"></collection>
+        <collection property="functions" resultMap="functionMap"></collection>
+    </resultMap>
+
+    <resultMap id="colorMap" type="com.example.metawater.domain.ColorVO">
+        <id property="color_no" column="color_no"/>
+        <result property="color_name" column="color_name"/>
+    </resultMap>
+
+    <resultMap id="functionMap" type="com.example.metawater.domain.FunctionVO">
+        <id property="function_no" column="function_no"/>
+        <result property="function_name" column="function_name"/>
+        <result property="function_model" column="function_model"/>
+        <result property="function_rentalPrice" column="function_rentalPrice"/>
+        <result property="function_price" column="function_price"/>
+    </resultMap>
+
+    <select id="getProductList" resultMap="productMap">
+        select distinct p.*, c.color_name, f.function_name
+        from product p
+                 left join product_color c on p.product_no = c.product_no
+                 left join product_function f on p.product_no = f.product_no
+        order by p.product_no
     </select>
 
-    <select id="getProduct"  resultType="ProductVO">
-        select * from product where prodcut_no = #{product_no}
-    </select>
+<!--    <select id="getProduct" resultMap="productMap">-->
+<!--        SELECT DISTINCT p.*, c.color_name, f.function_name-->
+<!--        FROM product p-->
+<!--                 LEFT JOIN product_color c ON p.product_no = c.product_no-->
+<!--                 LEFT JOIN product_function f ON p.product_no = f.product_no-->
+<!--        WHERE p.product_no = #{product_no}-->
+<!--        ORDER BY p.product_no;-->
+<!--    </select>-->
 
     <insert id="productInsert">
         INSERT INTO POST(product_no, product_name, product_size,product_weight, product_detail,

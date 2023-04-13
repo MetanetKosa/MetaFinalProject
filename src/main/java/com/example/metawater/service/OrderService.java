@@ -1,7 +1,8 @@
-package com.example.metawater.order;
+package com.example.metawater.service;
 
+import com.example.metawater.domain.RentalVO;
+import com.example.metawater.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 @Service
