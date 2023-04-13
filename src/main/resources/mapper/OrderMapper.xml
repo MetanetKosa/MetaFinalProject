@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.metawater.order.OrderMapper">
+<!--    <resultMap id="orderMap" type="com.example.metawater.vo.OrderVO">-->
+<!--        <result property="orderNo" column="order_no"/>-->
+<!--        <result property="productNo" column="product_no"/>-->
+<!--        <result property="memNo" column="mem_no"/>-->
+<!--        <result property="renNo" column="ren_no"/>-->
+<!--        <result property="orderState" column="order_state"/>-->
+<!--        <result property="orderHopedate" column="order_hopedate"/>-->
+<!--        <result property="orderAdd" column="order_add"/>-->
+<!--        <result property="orderName" column="order_name"/>-->
+<!--        <result property="orderPhone" column="order_phone"/>-->
+<!--        <result property="orderDate" column="order_date"/>-->
+<!--        <result property="orderType" column="order_type"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="rentalMap" type="com.example.metawater.vo.RentalVO">-->
+<!--        <result property="renNo" column="ren_no"/>-->
+<!--        <result property="renInstallCost" column="ren_installcost"/>-->
+<!--        <result property="renEndDate" column="ren_enddate"/>-->
+<!--        <result property="renTerm" column="ren_term"/>-->
+<!--        <result property="renPayDate" column="ren_paydate"/>-->
+<!--        <result property="productNo" column="product_no"/>-->
+<!--    </resultMap>-->
+
+    <insert id="rentalInsert">
+        INSERT INTO rental VALUES (RENTAL_SEQ.nextval,#{ren_installcost},'2022/02/23',#{ren_term},#{ren_paydate},41)
+    </insert>
+
+    <insert id="orderInsert">
+
+    </insert>
+
+</mapper>

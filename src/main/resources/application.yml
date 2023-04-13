@@ -1,12 +1,13 @@
 server:
   port: 8082
 
-#jsp
+logging:
+  level:
+    org.springframework: DEBUG
+
 spring:
-  mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
+  messages:
+    basename: message
 
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
@@ -19,3 +20,4 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.metawater
 #  type-aliases-package: com.example.metajobs
+
