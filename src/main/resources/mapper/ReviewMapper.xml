@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.metawater.mapper.ReviewMapper">
+
+
+    <select id="getReviewList">
+        SELECT * FROM REVIEW
+    </select>
+
+    <select id="getReview" parameterType="Long">
+        SELECT * FROM REVIEW
+        WHERE re_no = #{re_no}
+    </select>
+
+    <insert id="reviewInsert">
+        INSERT INTO REVIEW (re_no, re_star, re_image, re_content, re_date)
+        VALUES (review_seq.nextval, #{re_star}, #{re_image}, #{re_content}, sysdate)
+    </insert>
+
+    <update id="reviewUpdate">
+        UPDATE REVIEW
+        SET re_star = #{re_star},
+            re_image = #{re_content},
+            re_date = sysdate
+        WHERE re_no = #{re_no}
+    </update>
+
+    <delete id="reviewDelete" parameterType="Long">
+        DELETE FROM REVIEW
+        WHERE re_no = #{re_no}
+    </delete>
+
+</mapper>

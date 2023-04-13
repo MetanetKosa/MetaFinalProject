@@ -9,7 +9,7 @@ import java.util.List;
 public interface ProductMapper {
     public List<ProductVO> getProductList();
 
-    public ProductVO getProduct(Long product_no);
+    public List<ProductVO> getProduct(Long product_no);
 
     public void productInsert(ProductVO product);
 

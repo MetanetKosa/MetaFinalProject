@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService
     }
 
     @Override
-    public ProductVO getProduct(Long product_no) {
+    public List<ProductVO> getProduct(Long product_no) {
         return mapper.getProduct(product_no);
     }
 }

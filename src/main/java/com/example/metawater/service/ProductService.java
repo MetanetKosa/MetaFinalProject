@@ -10,5 +10,5 @@ public interface ProductService {
     public boolean updateProduct(ProductVO product);
     public boolean deleteProduct(Long product_no);
     public List<ProductVO> getProductList();
-    public ProductVO getProduct(Long product_no);
+    public List<ProductVO> getProduct(Long product_no);
 }

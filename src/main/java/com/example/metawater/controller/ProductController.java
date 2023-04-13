@@ -37,7 +37,7 @@ public class ProductController {
 
     //상품 상세조회
     @GetMapping("/product/products/{product_no}")
-    public ProductVO get(@PathVariable Long product_no){
+    public List<ProductVO> get(@PathVariable Long product_no){
         return service.getProduct(product_no);
     }
 

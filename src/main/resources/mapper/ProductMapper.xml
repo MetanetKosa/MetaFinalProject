@@ -45,14 +45,14 @@
         order by p.product_no
     </select>
 
-<!--    <select id="getProduct" resultMap="productMap">-->
-<!--        SELECT DISTINCT p.*, c.color_name, f.function_name-->
-<!--        FROM product p-->
-<!--                 LEFT JOIN product_color c ON p.product_no = c.product_no-->
-<!--                 LEFT JOIN product_function f ON p.product_no = f.product_no-->
-<!--        WHERE p.product_no = #{product_no}-->
-<!--        ORDER BY p.product_no;-->
-<!--    </select>-->
+    <select id="getProduct" resultMap="productMap" parameterType="Long">
+        SELECT DISTINCT p.*, c.color_name, f.function_name
+        FROM product p
+                 LEFT JOIN product_color c ON p.product_no = c.product_no
+                 LEFT JOIN product_function f ON p.product_no = f.product_no
+        WHERE p.product_no = #{product_no}
+        ORDER BY p.product_no
+    </select>
 
     <insert id="productInsert">
         INSERT INTO POST(product_no, product_name, product_size,product_weight, product_detail,
