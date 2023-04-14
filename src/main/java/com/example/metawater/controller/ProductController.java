@@ -13,6 +13,7 @@ import java.util.List;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
@@ -30,27 +31,32 @@ public class ProductController {
     }
 
     // 상품 목록 조회
-    @GetMapping("/product/products")
+    @GetMapping("/products")
     public List<ProductVO> list(){
         return service.getProductList();
     }
 
+    // best5
+    @GetMapping("/best")
+    public List<ProductVO> bestList() { return service.getBestProductList();}
+
     //상품 상세조회
-    @GetMapping("/product/products/{product_no}")
-    public ProductVO get(@PathVariable Long product_no){
-        return service.getProduct(product_no);
+    @GetMapping("/products/{productNo}")
+    public ProductVO get(@PathVariable Long productNo){
+        System.out.println("ssssssssssss");
+        return service.getProduct(productNo);
     }
 
     //상품 삭제
-    @DeleteMapping("/product/products/{product_no}")
-    public void delete(@PathVariable Long product_no){
-        service.deleteProduct(product_no);
+    @DeleteMapping("/product/products/{productNo}")
+    public void delete(@PathVariable Long productNo){
+        service.deleteProduct(productNo);
     }
 
     //상품 수정
-    @PatchMapping("/product/products/{product_no}")
-    public void update(@PathVariable Long product_no, @RequestBody ProductVO product){
-        product.setProduct_no(product_no);
+    @PatchMapping("/product/products/{productNo}")
+    public void update(@PathVariable Long productNo, @RequestBody ProductVO product){
+        product.setProductNo(productNo);
         service.updateProduct(product);
     }
 }
