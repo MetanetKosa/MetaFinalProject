@@ -1,5 +1,7 @@
-package com.example.metawater.product;
+package com.example.metawater.service;
 
+import com.example.metawater.domain.ProductVO;
+import com.example.metawater.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

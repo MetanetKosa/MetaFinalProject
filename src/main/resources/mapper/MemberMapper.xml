@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.metawater.mapper.MemberMapper">
+
+    <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
+        <id column="mem_no" property="mem_no"/>
+        <result column="mem_id" property="mem_id" />
+        <result column="mem_pw" property="mem_pw" />
+        <result column="mem_name" property="mem_name" />
+        <result column="mem_phone" property="mem_phone" />
+        <result column="mem_email" property="mem_email" />
+        <result column="auth" property="auth" />
+    </resultMap>
+
+    <!-- 회원 등록 -->
+    <insert id="insertMember" parameterType="MemberVO">
+        <selectKey keyProperty="mem_no" order="BEFORE"
+                   resultType="long">
+            select member_seq.nextval from dual
+        </selectKey>
+
+        insert into member (mem_no, mem_id, mem_pw, mem_name, mem_phone,mem_email,auth)
+        values (member_seq.nextval, #{mem_id}, #{mem_pw}, #{mem_name}, #{mem_phone},#{mem_email},#{auth})
+    </insert>
+
+    <!-- 모든 회원정보 확인 -->
+    <select id="findAllUsers" resultMap="memberMap">
+        SELECT * FROM member
+    </select>
+
+    <!-- 회원정보 확인 -->
+    <select id="findUser" resultMap="memberMap">
+        SELECT * FROM member
+        WHERE id = #{id}
+    </select>
+
+    <!-- 권한 등록 -->
+    <insert id="insertRole">
+        insert into auth values(#{mem_id}, 'ROLE_MEMBER');
+    </insert>
+
+    <!-- 회원정보 수정 -->
+    <update id="updateMember" parameterType="MemberVO">
+        update member set phone = #{mem_phone}
+        where mem_id = #{mem_id}
+    </update>
+
+    <!-- 회원정보 삭제 -->
+    <update id="deleteUser">
+        update member set enabled = 0
+        where mem_id = #{mem_id}
+    </update>
+
+    <!-- 회원정보 검색 -->
+    <select id="getId" resultType="String">
+        select mem_id from member where mem_id = #{mem_id} and mem_name = #{mem_name}
+    </select>
+
+    <!-- 회원정보 수정 -->
+    <select id="updatePw" resultType="String">
+        update member
+            set mem_pw = #{mem_pw}
+        where mem_id = {mem_id} and mem_name = #{mem_name}
+    </select>
+
+    <!-- 회원정보 확인 -->
+    <select id="getUser" parameterType="MemberVO">
+        select * from member where mem_id = #{mem_id}
+    </select>
+
+    <!-- 회원정보 확인 -->
+    <select id="getUserById" parameterType="MemberVO">
+        select * from member where mem_id = #{mem_id}
+    </select>
+
+</mapper>

@@ -1,10 +1,11 @@
-package com.example.metawater.product;
+package com.example.metawater.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +26,15 @@ public class ProductVO {
     private Date updateDate;
     private String img_url;
     private String detail_url;
+    private int product_sales;
+
+    private String product_function;
+
+    private String product_model;
+
+    private int product_rentalPrice;
+
+    private int product_price;
+
+    private String product_color;
 }
