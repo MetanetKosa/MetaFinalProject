@@ -5,24 +5,24 @@
 <mapper namespace="com.example.metawater.mapper.MemberMapper">
 
     <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
-        <id column="mem_no" property="mem_no"/>
-        <result column="mem_id" property="mem_id" />
-        <result column="mem_pw" property="mem_pw" />
-        <result column="mem_name" property="mem_name" />
-        <result column="mem_phone" property="mem_phone" />
-        <result column="mem_email" property="mem_email" />
+        <id column="memNo" property="mem_no"/>
+        <result column="memId" property="mem_id" />
+        <result column="memPw" property="mem_pw" />
+        <result column="memName" property="mem_name" />
+        <result column="memPhone" property="mem_phone" />
+        <result column="memEmail" property="mem_email" />
         <result column="auth" property="auth" />
     </resultMap>
 
     <!-- 회원 등록 -->
     <insert id="insertMember" parameterType="MemberVO">
-        <selectKey keyProperty="mem_no" order="BEFORE"
+        <selectKey keyProperty="memNo" order="BEFORE"
                    resultType="long">
             select member_seq.nextval from dual
         </selectKey>
 
         insert into member (mem_no, mem_id, mem_pw, mem_name, mem_phone,mem_email,auth)
-        values (member_seq.nextval, #{mem_id}, #{mem_pw}, #{mem_name}, #{mem_phone},#{mem_email},#{auth})
+        values (member_seq.nextval, #{memId}, #{memPw}, #{memName}, #{memPhone},#{memEmail},#{auth})
     </insert>
 
     <!-- 모든 회원정보 확인 -->

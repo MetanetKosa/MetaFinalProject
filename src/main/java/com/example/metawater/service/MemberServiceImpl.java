@@ -24,8 +24,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void createMember(MemberVO memberVO) {
-        String password = memberVO.getMem_pw();
-        memberVO.setMem_pw(encoder.encode(password));
+        String password = memberVO.getMemPw();
+        memberVO.setMemPw(encoder.encode(password));
         System.out.println(memberVO);
         memberMapper.insertMember(memberVO);
     }
@@ -44,8 +44,8 @@ public class MemberServiceImpl implements MemberService {
             throw new UsernameNotFoundException("id: " + username + " is not found");
         }
 
-        String id = memberVO.getMem_id();
-        String pw = memberVO.getMem_pw();
+        String id = memberVO.getMemId();
+        String pw = memberVO.getMemPw();
         String auth = memberVO.getAuth();
         System.out.println("id: "+id+", pw: "+pw+", auth: "+auth);
 

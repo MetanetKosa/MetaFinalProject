@@ -34,7 +34,7 @@ public class MemberController {
     //회원가입
     @PostMapping("/signup")
     public ResponseEntity<MemberVO> createUser(@RequestBody MemberVO member) {
-        System.out.println("회원가입 데이터 확인" + member.getMem_email());
+        System.out.println("회원가입 데이터 확인" + member.getPassword());
         member.setAuth("ROLE_MEMBER");
         System.out.println(member);
         memberService.createMember(member);
