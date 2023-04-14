@@ -15,12 +15,12 @@
     </select>
 
     <insert id="productInsert">
-        INSERT INTO POST(product_no, product_name, product_size,product_weight, product_detail,
+        INSERT INTO product(product_no, product_name, product_size,product_weight, product_detail,
                          product_guide, product_type,  product_method,
                          product_rdate, product_company, regDate, updateDate, detail_url,img_url)
         VALUES(
                   product_seq.nextval,#{product_name},#{product_size},#{product_weight},#{product_detail},#{product_guide},#{product_type},#{product_method},
-                  sysdate,#{product_company},sysdate,sysdate,#{detail_url},#{img_url})
+                 sysdate,#{product_company},sysdate,sysdate,'detail_url',#{img_url})
     </insert>
 
     <delete id="productDelete" parameterType="Long">
