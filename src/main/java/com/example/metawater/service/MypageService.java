@@ -16,8 +16,8 @@ public class MypageService {
             return mypageMapper.getMyProductList(memNo);
         }
 
-    public List<ProductVO> getMyOrderList() {
-        return mypageMapper.getMyOrderList();
+    public List<ProductVO> getMyOrderList(Long memNo) {
+        return mypageMapper.getMyOrderList(memNo);
         }
 
     }
