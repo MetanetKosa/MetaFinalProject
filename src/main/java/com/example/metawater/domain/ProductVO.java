@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductVO {
-
     private Long productNo;
     private String productName;
     private String productSize;
