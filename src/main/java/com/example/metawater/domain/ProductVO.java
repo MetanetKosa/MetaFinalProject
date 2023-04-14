@@ -13,23 +13,29 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductVO {
 
-    private Long product_no;
-    private String product_name;
-    private String product_size;
-    private String product_weight;
-    private String product_detail;
-    private String product_guide;
-    private String product_type;
-    private String product_method;
+    private Long productNo;
+    private String productName;
+    private String productSize;
+    private String productWeight;
+    private String productDetail;
+    private String productGuide;
+    private String productType;
+    private String productMethod;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date product_rdate;
-    private String product_company;
+    private Date productRdate;
+    private String productCompany;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date regDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updateDate;
-    private String img_url;
-    private String detail_url;
-    private List<ColorVO> colors;
-    private List<FunctionVO> functions;
+    private String imgUrl;
+    private String detailUrl;
+    private Long productSales;
+    private String productFunction;
+    private String productModel;
+    private Long productRentalPrice;
+    private Long productPrice;
+    private String productColor;
+    //private List<ColorVO> colors;
+    //private List<FunctionVO> functions;
 }

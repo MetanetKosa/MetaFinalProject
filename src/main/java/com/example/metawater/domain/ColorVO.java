@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ColorVO {
-    private Long color_no;
-    private String color_name;
-    private Long product_no;
+    private Long colorNo;
+    private String colorName;
+    private Long productNo;
 }

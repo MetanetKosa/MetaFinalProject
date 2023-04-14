@@ -8,8 +8,8 @@ import java.util.List;
 @Mapper
 public interface ProductMapper {
     public List<ProductVO> getProductList();
-
-    public List<ProductVO> getProduct(Long product_no);
+    public List<ProductVO> getBestProductList();
+    public ProductVO getProduct(Long product_no);
 
     public void productInsert(ProductVO product);
 
