@@ -22,23 +22,23 @@
 <!--        <result property="imgUrl" column="IMG_URL"/>-->
 <!--    </resultMap>-->
 
-    <select id="getMyProductList" resultMap="productResultMap">
-        <![CDATA[
-        select * from product
-                 where product_no =
-                       (select product_no from pr_order
-                                          where mem_no = #{memNo} and order_state = '설치 완료');
-        ]]>
-    </select>
+<!--    <select id="getMyProductList" resultMap="productResultMap">-->
+<!--        <![CDATA[-->
+<!--        select * from product-->
+<!--                 where product_no =-->
+<!--                       (select product_no from pr_order-->
+<!--                                          where mem_no = #{memNo} and order_state = '설치 완료');-->
+<!--        ]]>-->
+<!--    </select>-->
 
-    <select id="getMyOrderList" resultMap="orderResultMap">
- 		<![CDATA[
-        select * from pr_order
-                 where mem_no = #{memNo};
-        ]]>
- 	</select>
+<!--    <select id="getMyOrderList" resultMap="orderResultMap">-->
+<!-- 		<![CDATA[-->
+<!--        select * from pr_order-->
+<!--                 where mem_no = #{memNo};-->
+<!--        ]]>-->
+<!-- 	</select>-->
 
-    <delete id="orderDelete">
-        delete from pr_order where order_no = #{orderNo}
-    </delete>
+<!--    <delete id="orderDelete">-->
+<!--        delete from pr_order where order_no = #{orderNo}-->
+<!--    </delete>-->
 </mapper>
