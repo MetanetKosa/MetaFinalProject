@@ -43,7 +43,7 @@ public class ProductController {
     //상품 상세조회
     @GetMapping("/products/{productNo}")
     public ProductVO get(@PathVariable Long productNo){
-        System.out.println("ssssssssssss");
+        System.out.println("GET 요청 확인");
         return service.getProduct(productNo);
     }
 
