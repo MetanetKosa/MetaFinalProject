@@ -37,12 +37,18 @@
         <result property="function_price" column="function_price"/>
     </resultMap>
 
-    <select id="getProductList" resultMap="productMap">
-        select distinct p.*, c.color_name, f.function_name
-        from product p
-                 left join product_color c on p.product_no = c.product_no
-                 left join product_function f on p.product_no = f.product_no
-        order by p.product_no
+<!--    <select id="getProductList" resultMap="productMap">-->
+<!--        select distinct p.*, c.color_name, f.function_name-->
+<!--        from product p-->
+<!--                 left join product_color c on p.product_no = c.product_no-->
+<!--                 left join product_function f on p.product_no = f.product_no-->
+<!--        order by p.product_no-->
+<!--    </select>-->
+
+    <select id="getProductList" resultType="ProductVO">
+       <![CDATA[
+        select  * from product where product_no > 0
+        ]]>
     </select>
 
 <!--    <select id="getProduct" resultMap="productMap">-->
@@ -55,12 +61,14 @@
 <!--    </select>-->
 
     <insert id="productInsert">
-        INSERT INTO POST(product_no, product_name, product_size,product_weight, product_detail,
+        INSERT INTO product(product_no, product_name, product_size,product_weight, product_detail,
                          product_guide, product_type,  product_method,
-                         product_rdate, product_company, regDate, updateDate, detail_url,img_url)
+                         product_rdate, product_company, regDate, updateDate, detail_url,img_url, product_sales, product_function,
+                            product_model, product_rentalPrice, product_price, product_color)
         VALUES(
                   product_seq.nextval,#{product_name},#{product_size},#{product_weight},#{product_detail},#{product_guide},#{product_type},#{product_method},
-                  sysdate,#{product_company},sysdate,sysdate,#{detail_url},#{img_url})
+                 sysdate,#{product_company},sysdate,sysdate,'detail_url',#{img_url},4,#{product_function},#{product_model},
+                  #{product_rentalPrice},#{product_price},#{product_color})
     </insert>
 
     <delete id="productDelete" parameterType="Long">

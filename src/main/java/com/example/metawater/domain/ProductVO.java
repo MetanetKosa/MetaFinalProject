@@ -26,6 +26,15 @@ public class ProductVO {
     private Date updateDate;
     private String img_url;
     private String detail_url;
-    private List<ColorVO> colors;
-    private List<FunctionVO> functions;
+    private int product_sales;
+
+    private String product_function;
+
+    private String product_model;
+
+    private int product_rentalPrice;
+
+    private int product_price;
+
+    private String product_color;
 }
