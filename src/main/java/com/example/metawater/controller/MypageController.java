@@ -12,17 +12,17 @@ import java.util.List;
 
 @RestController
 public class MypageController {
-
-    @Autowired
-    private MypageService mypageService;
-
-    @GetMapping("/mypage/myproduct/{memNo}")
-    public List<ProductVO> getMyProductList(@PathVariable Long memNo){
-        return mypageService.getMyProductList(memNo);
-    }
-
-    @GetMapping("/mypage/myorder/{memNo}")
-    public List<ProductVO> getMyOrderList(@PathVariable Long memNo){
-        return mypageService.getMyOrderList(memNo);
-    }
+//
+//    @Autowired
+//    private MypageService mypageService;
+//
+//    @GetMapping("/mypage/myproduct/{memNo}")
+//    public List<ProductVO> getMyProductList(@PathVariable Long memNo){
+//        return mypageService.getMyProductList(memNo);
+//    }
+//
+//    @GetMapping("/mypage/myorder/{memNo}")
+//    public List<ProductVO> getMyOrderList(@PathVariable Long memNo){
+//        return mypageService.getMyOrderList(memNo);
+//    }
 }

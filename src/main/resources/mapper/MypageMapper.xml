@@ -37,4 +37,8 @@
                  where mem_no = #{memNo};
         ]]>
  	</select>
+
+    <delete id="orderDelete">
+        delete from pr_order where order_no = #{orderNo}
+    </delete>
 </mapper>
