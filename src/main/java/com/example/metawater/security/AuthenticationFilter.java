@@ -21,18 +21,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+//스프링 시큐리티 필터의 주요 역할이 인증 관련된 정보를 토큰이라는 객체로 만들어서 전달
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private MemberService memberService;
     private Environment env;
 
+    //인증=주민증=스스로증명 -> 아이디/패스워드에 대해서 검증하는 행위
     public AuthenticationFilter(AuthenticationManager authenticationManager, MemberService memberService, Environment env) {
         super.setAuthenticationManager(authenticationManager);
         this.memberService = memberService;
         this.env = env;
         //setFilterProcessesUrl("/login");
     }
+    //attempAu
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
@@ -68,7 +70,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 //        System.out.println("memberDetail: 멤버디테일 확인 " + memberDetail);
 //
 //        String token = Jwts.builder()
-//                .setSubject(memberDetail.getMem_id())
+//                .setSubject(memberDetail.getMemId())
 //                .setExpiration(new Date(System.currentTimeMillis() +
 //                                            Long.parseLong(env.getProperty("token.expiration_time"))))
 //                .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret"))
@@ -76,6 +78,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 //
 //        response.addHeader("token", token);
 //        response.addHeader("auth", memberDetail.getAuth());
-//        response.addHeader("ID", memberDetail.getMem_id());
+//        response.addHeader("ID", memberDetail.getMemId());
 //    }
 }

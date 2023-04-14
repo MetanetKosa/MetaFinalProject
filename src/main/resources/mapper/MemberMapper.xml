@@ -25,6 +25,11 @@
         values (member_seq.nextval, #{memId}, #{memPw}, #{memName}, #{memPhone},#{memEmail},#{auth})
     </insert>
 
+    <!-- 회원정보 확인 -->
+    <select id="getUserById" parameterType="MemberVO">
+        select * from member where mem_id = #{mem_id}
+    </select>
+
     <!-- 모든 회원정보 확인 -->
     <select id="findAllUsers" resultMap="memberMap">
         SELECT * FROM member
@@ -70,9 +75,5 @@
         select * from member where mem_id = #{mem_id}
     </select>
 
-    <!-- 회원정보 확인 -->
-    <select id="getUserById" parameterType="MemberVO">
-        select * from member where mem_id = #{mem_id}
-    </select>
 
 </mapper>

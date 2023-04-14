@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.beans.SimpleBeanInfo;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -32,8 +35,14 @@ public class MemberVO implements UserDetails {
     private String memEmail;
     private String auth;
 
+    //계정이 갖고 있는 권한 목록은 리턴
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection< GrantedAuthority > collectors = new ArrayList<>();
+//        collectors.add() -> {
+//            return "ROLE_MEMBER";
+//        }
+        collectors.add(new SimpleGrantedAuthority("Rold"));
         return null;
     }
 
@@ -42,26 +51,30 @@ public class MemberVO implements UserDetails {
         return null;
     }
 
+    //시큐리티의 userName -> 따라서 얘는 인증할 때 id를 봄
     @Override
     public String getUsername() {
         return null;
     }
-
+    //계정이 만료되지 않았는지 리턴(true: 만료 안됨)
     @Override
     public boolean isAccountNonExpired() {
         return false;
     }
 
+    //계정이 잠겨있는지 않았는지 리턴(true: 잠기지 않음)
     @Override
     public boolean isAccountNonLocked() {
         return false;
     }
 
+    //비밀번호가 만료되지 않았는지 리턴한다. (true: 만료 안됨)
     @Override
     public boolean isCredentialsNonExpired() {
         return false;
     }
 
+    //계정이 활성화(사용가능)인지 리턴(true: 활성화)
     @Override
     public boolean isEnabled() {
         return false;
