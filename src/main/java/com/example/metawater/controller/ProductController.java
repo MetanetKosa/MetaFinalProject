@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
@@ -53,4 +54,15 @@ public class ProductController {
         product.setProduct_no(product_no);
         service.updateProduct(product);
     }
+//    @PostMapping("/product/productInsert")
+//    public String uploadFile(@RequestParam("files") MultipartFile[] uploadFiles){
+//        for(MultipartFile uploadFile : uploadFiles){
+//            String originalName = uploadFile.getOriginalFilename();
+//            String fileName = originalName.substring(originalName.lastIndexOf("\\")+1);
+////           log.info("fileName: " + fileName);
+//       }
+//        return "success";
+//    }
+
+
 }

@@ -67,7 +67,7 @@
                             product_model, product_rentalPrice, product_price, product_color)
         VALUES(
                   product_seq.nextval,#{product_name},#{product_size},#{product_weight},#{product_detail},#{product_guide},#{product_type},#{product_method},
-                 sysdate,#{product_company},sysdate,sysdate,'detail_url',#{img_url},4,#{product_function},#{product_model},
+                 sysdate,#{product_company},sysdate,sysdate,#{detail_url},#{img_url},4,#{product_function},#{product_model},
                   #{product_rentalPrice},#{product_price},#{product_color})
     </insert>
 
