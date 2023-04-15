@@ -41,7 +41,7 @@ public class ProductController {
     public List<ProductVO> bestList() { return service.getBestProductList();}
 
     //상품 상세조회
-    @GetMapping("/products/{productNo}")
+    @GetMapping("/{productNo}")
     public ProductVO get(@PathVariable Long productNo){
         System.out.println("GET 요청 확인");
         return service.getProduct(productNo);

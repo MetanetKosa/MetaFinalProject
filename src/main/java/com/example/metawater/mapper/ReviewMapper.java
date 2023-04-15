@@ -8,13 +8,21 @@ import java.util.List;
 
 @Mapper
 public interface ReviewMapper {
+    //모든 리뷰 조회
     public List<ReviewVO> getReviewList();
 
-    public ReviewVO getReview(Long re_no);
+    //상품 리뷰 조회
+    public List<ReviewVO> getReviewListByProductId(Long productNo);
 
+    //리뷰 상세 조회
+    public ReviewVO getReview(Long productNo, Long reviewNo);
+
+    //리뷰 등록
     public void reviewInsert(ReviewVO review);
 
+    //리뷰 수정
     public int reviewUpdate(ReviewVO review);
 
-    public int reviewDelete(Long re_no);
+    //리뷰 삭제
+    public int reviewDelete(Long reviewNo);
 }

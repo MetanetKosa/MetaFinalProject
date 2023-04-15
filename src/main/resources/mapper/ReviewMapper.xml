@@ -5,32 +5,53 @@
 
 <mapper namespace="com.example.metawater.mapper.ReviewMapper">
 
+    <resultMap id="reviewMap" type="com.example.metawater.domain.ReviewVO">
+    <id property="reviewNo" column="re_no"/>
+    <result property="orderNo" column="order_no"/>
+    <result property="productNo" column="product_no"/>
+    <result property="memberNo" column="mem_no"/>
+    <result property="reStar" column="re_star"/>
+    <result property="reImageUrl" column="re_image"/>
+    <result property="reContent" column="re_content"/>
+    <result property="reDate" column="re_date"/>
+    </resultMap>
 
-    <select id="getReviewList">
-        SELECT * FROM REVIEW
+    <select id="getReviewList" resultMap="reviewMap">
+        select r.*, m.member_name, p.product_name, p.product_function, p.product_model
+        from review r, member m, product p
+        where r.mem_no = m.mem_no and r.product_no = p.product_no
     </select>
 
-    <select id="getReview" parameterType="Long">
-        SELECT * FROM REVIEW
-        WHERE re_no = #{re_no}
+    <select id="getReviewListByProductId" parameterType="Long" resultMap="reviewMap">
+        select r.*, m.mem_name, p.product_name, p.product_function, p.product_model
+        from review r, member m, product p
+        where r.mem_no = m.mem_no and r.product_no = p.product_no
+        and r.product_no = #{productNo}
+    </select>
+
+    <select id="getReview" parameterType="Long" resultMap="reviewMap">
+        select r.*, m.mem_name, p.product_name, p.product_function, p.product_model
+        from review r, member m, product p
+        where r.mem_no = m.mem_no and r.product_no = p.product_no
+        and r.re_no = #{reviewNo} and r.product_no = #{productNo}
     </select>
 
     <insert id="reviewInsert">
-        INSERT INTO REVIEW (re_no, re_star, re_image, re_content, re_date)
-        VALUES (review_seq.nextval, #{re_star}, #{re_image}, #{re_content}, sysdate)
+        INSERT INTO REVIEW (re_no, re_star, re_image, re_content, re_date, mem_no, product_no)
+        VALUES (review_seq.nextval, #{reStar}, #{reImageUrl}, #{reContent}, sysdate, #{memberNo}, #{productNo})
     </insert>
 
     <update id="reviewUpdate">
         UPDATE REVIEW
-        SET re_star = #{re_star},
-            re_image = #{re_content},
+        SET re_star = #{reStar},
+            re_image = #{reContent},
             re_date = sysdate
-        WHERE re_no = #{re_no}
+        WHERE re_no = #{returnNo}
     </update>
 
     <delete id="reviewDelete" parameterType="Long">
         DELETE FROM REVIEW
-        WHERE re_no = #{re_no}
+        WHERE re_no = #{returnNo}
     </delete>
 
 </mapper>
