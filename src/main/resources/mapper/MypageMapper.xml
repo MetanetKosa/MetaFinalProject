@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.metawater.mapper.MypageMapper">
+
+<!--    <resultMap type="com.example.metajobs.vo.ProductVO" id="myProductResultMap">-->
+<!--        <id property="productNo" column="PRODUCT_NO"/>-->
+<!--        <result property="productName" column="PRODUCT_NAME"/>-->
+<!--        <result property="productSize" column="PRODUCT_SIZE"/>-->
+<!--        <result property="productWeight" column="PRODUCT_WEIGHT"/>-->
+<!--        <result property="productDetail" column="PRODUCT_DETAIL"/>-->
+<!--        <result property="productGuide" column="PRODUCT_GUIDE"/>-->
+<!--        <result property="productType" column="PRODUCT_TYPE"/>-->
+<!--        <result property="productMethod" column="PRODUCT_METHOD"/>-->
+<!--        <result property="productRdate" column="PRODUCT_RDATE"/>-->
+<!--        <result property="productCompany" column="PRODUCT_COMPANY"/>-->
+<!--        <result property="regDate" column="REGDATE"/>-->
+<!--        <result property="updateDate" column="UPDATEDATE"/>-->
+<!--        <result property="imgUrl" column="IMG_URL"/>-->
+<!--        <result property="colors" column="COLORS"/>-->
+<!--        <result property="imgUrl" column="IMG_URL"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="getMyProductList" resultMap="productResultMap">-->
+<!--        <![CDATA[-->
+<!--        select * from product-->
+<!--                 where product_no =-->
+<!--                       (select product_no from pr_order-->
+<!--                                          where mem_no = #{memNo} and order_state = '설치 완료');-->
+<!--        ]]>-->
+<!--    </select>-->
+
+<!--    <select id="getMyOrderList" resultMap="orderResultMap">-->
+<!-- 		<![CDATA[-->
+<!--        select * from pr_order-->
+<!--                 where mem_no = #{memNo};-->
+<!--        ]]>-->
+<!-- 	</select>-->
+
+<!--    <delete id="orderDelete">-->
+<!--        delete from pr_order where order_no = #{orderNo}-->
+<!--    </delete>-->
+</mapper>
