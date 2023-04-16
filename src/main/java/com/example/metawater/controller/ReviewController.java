@@ -23,6 +23,12 @@ public class ReviewController {
         return reviewService.findByProduct(productNo);
     }
 
+    @GetMapping("/product/{productNo}/reviewStar")
+    public Float avg(@PathVariable Long productNo) {
+        System.out.println("리뷰 평점 GET 요청 확인");
+        return reviewService.avgStar(productNo);
+    }
+
     @GetMapping("/product/{productNo}/review/detail/{reviewNo}")
     public ReviewVO detail(@PathVariable Long productNo, @PathVariable Long reviewNo) {
         return reviewService.getReview(productNo, reviewNo);

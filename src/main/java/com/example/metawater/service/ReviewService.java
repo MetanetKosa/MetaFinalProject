@@ -15,6 +15,8 @@ public interface ReviewService {
 
     public ReviewVO getReview(Long productNo, Long reviewNo);
 
+    public Float avgStar(Long productNo);
+
     public void insertReview(ReviewVO review);
 
     public boolean updateReview(ReviewVO review);

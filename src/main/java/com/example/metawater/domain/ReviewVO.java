@@ -18,4 +18,7 @@ public class ReviewVO {
     private String reImageUrl;
     private String reContent;
     private Date reDate;
+
+    private MemberVO member;
+    private ProductVO product;
 }

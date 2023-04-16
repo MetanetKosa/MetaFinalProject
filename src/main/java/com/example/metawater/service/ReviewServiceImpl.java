@@ -29,6 +29,11 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
+    public Float avgStar(Long productNo) {
+        return reviewMapper.avgStartByProductId(productNo);
+    }
+
+    @Override
     public void insertReview(ReviewVO review) {
         reviewMapper.reviewInsert(review);
     }
