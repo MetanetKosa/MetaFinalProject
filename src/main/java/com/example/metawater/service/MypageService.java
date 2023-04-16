@@ -20,4 +20,7 @@ public class MypageService {
         return mypageMapper.getMyOrderList(memNo);
         }
 
+    public ProductVO getMyProduct(Long productNo){
+        return mypageMapper.getMyProduct(productNo);
+    }
     }

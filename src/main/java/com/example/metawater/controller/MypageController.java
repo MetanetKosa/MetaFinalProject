@@ -27,4 +27,9 @@ public class MypageController {
     public List<ProductVO> getMyOrderList(@PathVariable Long memNo){
         return mypageService.getMyOrderList(memNo);
     }
+
+    @GetMapping("/myproduct/detail/{productNo}")
+    public ProductVO getMyProduct(@PathVariable Long productNo){
+        return mypageService.getMyProduct(productNo);
+    }
 }

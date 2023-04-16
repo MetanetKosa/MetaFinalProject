@@ -60,6 +60,13 @@
         ]]>
  	</select>
 
+
+    <select id="getMyProduct" resultMap="productMap">
+ 		<![CDATA[
+        select * from product
+        where product_no = #{productNo}
+        ]]>
+ 	</select>
 <!--    <delete id="orderDelete">-->
 <!--        delete from pr_order where order_no = #{orderNo};-->
 <!--    </delete>-->
