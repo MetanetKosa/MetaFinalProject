@@ -3,16 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.metawater.mapper.ProductQMapper">
+<mapper namespace="com.example.metawater.mapper.ProductInqMapper">
 
-    <resultMap id="questionMap" type="com.example.metawater.domain.ProductQVO">
+    <resultMap id="questionMap" type="com.example.metawater.domain.ProductInqVO">
         <id property="proqNo" column="proq_no"/>
         <result property="memNo" column="mem_no"/>
         <result property="productNo" column="product_no"/>
         <result property="proqTitle" column="proq_title"/>
         <result property="proqContent" column="proq_content"/>
-        <result property="progDate" column="proq_date"/>
-        <result property="progState" column="proq_state"/>
+        <result property="proqDate" column="proq_date"/>
+        <result property="proqState" column="proq_state"/>
         <result property="answerDate" column="proq_awn_date"/>
         <result property="answerContent" column="proq_awn_content"/>
         <result property="answerTrue" column="proq_true"/>
@@ -76,8 +76,16 @@
     </select>
 
     <insert id="questionInsert">
-        INSERT INTO product_inquire (proq_no, proq_title, proq_content, proq_date, proq_state, proq_awn_date, proq_awn_content, proq_true, mem_no, product_no)
-        VALUES (1, #{proq_title}, #{proq_content}, sysdate, '답변 대기중', null, null, true, 1, #{productNo})
+        INSERT INTO product_inquire (
+            proq_no, proq_title, proq_content, proq_date, proq_state, proq_awn_date, proq_awn_content,
+            proq_email, proq_true, mem_no, product_no
+        )
+        VALUES (
+                   1, #{proqTitle}, #{proqContent}, SYSDATE, '답변 대기중', NULL, NULL, NULL,
+                   0, 1, #{productNo}
+               )
+--         INSERT INTO product_inquire (proq_no, proq_title, proq_content, proq_date, proq_state, proq_awn_date, proq_awn_content, proq_email, proq_true, mem_no, product_no)
+--         VALUES (1, #{proqTitle}, #{proqContent}, sysdate, '답변 대기중', null, null, null, 0, 1, #{productNo,jdbcType=NUMERIC})
     </insert>
 
 <!--    <update id="questionUpdate">-->
