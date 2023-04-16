@@ -4,41 +4,64 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.metawater.mapper.MypageMapper">
 
-<!--    <resultMap type="com.example.metajobs.vo.ProductVO" id="myProductResultMap">-->
-<!--        <id property="productNo" column="PRODUCT_NO"/>-->
-<!--        <result property="productName" column="PRODUCT_NAME"/>-->
-<!--        <result property="productSize" column="PRODUCT_SIZE"/>-->
-<!--        <result property="productWeight" column="PRODUCT_WEIGHT"/>-->
-<!--        <result property="productDetail" column="PRODUCT_DETAIL"/>-->
-<!--        <result property="productGuide" column="PRODUCT_GUIDE"/>-->
-<!--        <result property="productType" column="PRODUCT_TYPE"/>-->
-<!--        <result property="productMethod" column="PRODUCT_METHOD"/>-->
-<!--        <result property="productRdate" column="PRODUCT_RDATE"/>-->
-<!--        <result property="productCompany" column="PRODUCT_COMPANY"/>-->
-<!--        <result property="regDate" column="REGDATE"/>-->
-<!--        <result property="updateDate" column="UPDATEDATE"/>-->
-<!--        <result property="imgUrl" column="IMG_URL"/>-->
-<!--        <result property="colors" column="COLORS"/>-->
-<!--        <result property="imgUrl" column="IMG_URL"/>-->
-<!--    </resultMap>-->
 
-<!--    <select id="getMyProductList" resultMap="productResultMap">-->
-<!--        <![CDATA[-->
-<!--        select * from product-->
-<!--                 where product_no =-->
-<!--                       (select product_no from pr_order-->
-<!--                                          where mem_no = #{memNo} and order_state = '설치 완료');-->
-<!--        ]]>-->
-<!--    </select>-->
+    <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
+        <id property="productNo" column="product_no"/>
+        <result property="productName" column="product_name"/>
+        <result property="productSize" column="product_size"/>
+        <result property="productWeight" column="product_weight"/>
+        <result property="productDetail" column="product_detail"/>
+        <result property="productGuide" column="product_guide"/>
+        <result property="productType" column="product_type"/>
+        <result property="productMethod" column="product_method"/>
+        <result property="productRdate" column="product_rdate"/>
+        <result property="productCompany" column="product_company"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="detailUrl" column="detail_url"/>
+        <result property="productSales" column="product_sales"/>
+        <result property="productFunction" column="product_function"/>
+        <result property="productModel" column="product_model"/>
+        <result property="productRentalPrice" column="product_rentalPrice"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="productColor" column="product_color"/>
+    </resultMap>
 
-<!--    <select id="getMyOrderList" resultMap="orderResultMap">-->
-<!-- 		<![CDATA[-->
-<!--        select * from pr_order-->
-<!--                 where mem_no = #{memNo};-->
-<!--        ]]>-->
-<!-- 	</select>-->
+    <resultMap id="orderMap" type="com.example.metawater.domain.OrderVO">
+        <result property="orderNo" column="order_no"/>
+        <result property="productNo" column="product_no"/>
+        <result property="memNo" column="mem_no"/>
+        <result property="renNo" column="ren_no"/>
+        <result property="orderState" column="order_state"/>
+        <result property="orderHopedate" column="order_hopedate"/>
+        <result property="orderAdd" column="order_add"/>
+        <result property="orderName" column="order_name"/>
+        <result property="orderPhone" column="order_phone"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="orderType" column="order_type"/>
+    </resultMap>
+
+
+    <select id="getMyProductList" resultMap="productMap">
+        <![CDATA[
+        select * from product
+                 where product_no IN
+                       (select product_no from pr_order
+                                          where mem_no = #{memNo} and order_state = '설치 완료')
+        ]]>
+    </select>
+
+
+    <select id="getMyOrderList" resultMap="orderMap">
+ 		<![CDATA[
+        select * from pr_order
+                 where mem_no = #{memNo}
+        ]]>
+ 	</select>
 
 <!--    <delete id="orderDelete">-->
-<!--        delete from pr_order where order_no = #{orderNo}-->
+<!--        delete from pr_order where order_no = #{orderNo};-->
 <!--    </delete>-->
+
 </mapper>
