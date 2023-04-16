@@ -37,4 +37,6 @@ public class ProductVO {
     private int product_price;
 
     private String product_color;
+
+    private List<UploadResultDTO> attachList;
 }

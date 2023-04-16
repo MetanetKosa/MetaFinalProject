@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderVO {
-    private String orderNo;
+    private Long orderNo;
     private String productNo;
-    private String memNo;
+    private Long memNo;
     private String renNo;
     private String orderState;
     private String orderHopedate;
@@ -19,4 +19,6 @@ public class OrderVO {
     private String orderPhone;
     private String orderDate;
     private String orderType;
+
+    private MemberVO member;
 }

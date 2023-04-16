@@ -43,7 +43,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/WEB-INF/", "/META-INF/").permitAll()
                 //USER, ADMIN 접근 허용
                 .antMatchers("/login", "/signup").permitAll() //모든 사용자에게 허락
-                .antMatchers("/admin/**").hasRole("ADMIN")
+//                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**").permitAll()
                 .antMatchers("/member/**").hasAnyRole("MEMBER", "ADMIN")
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()

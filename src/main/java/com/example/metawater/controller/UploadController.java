@@ -41,7 +41,10 @@ public class UploadController {
     public ResponseEntity<List<UploadResultDTO>> uploadFiles(@RequestParam("files") MultipartFile[] uploadFiles){
         List<UploadResultDTO> resultDTOList = new ArrayList<>();
 
+
         for(MultipartFile uploadFile : uploadFiles){
+
+            UploadResultDTO uploadResultDTO = new UploadResultDTO();
 
             //이미지 파일만 업로드 가능
             if(uploadFile.getContentType().startsWith("image") == false){
@@ -52,12 +55,15 @@ public class UploadController {
             String originalName = uploadFile.getOriginalFilename();
             String fileName = originalName.substring(originalName.lastIndexOf("\\")+1);
             log.info("fileName: " + fileName);
+            uploadResultDTO.setFileName(fileName);
+
 
             //날짜 폴더 생성
             String folderPath = makeFolder();
 
             //UUID
             String uuid = UUID.randomUUID().toString();
+
 
             //저장할 파일 이름 중간에 "-"를 이용해서 구분
             String saveName = uploadPath + File.separator + folderPath + File.separator + uuid + "_" + fileName;
@@ -66,16 +72,21 @@ public class UploadController {
 
             try{
                 uploadFile.transferTo(savePath);
+                uploadResultDTO.setUuid(uuid);
+                uploadResultDTO.setFolderPath(folderPath);
 
-                //섬네일 생성
-                String thumbnailSaveName = uploadPath + File.separator + folderPath + File.separator + "s_" + uuid +"_" + fileName;
+//                //섬네일 생성
+//                String thumbnailSaveName = uploadPath + File.separator + folderPath + File.separator + "s_" + uuid +"_" + fileName;
+//
+//                //섬네일 파일 이름은 중간에 s_로 시작하도록
+//                File thumbnailFile = new File(thumbnailSaveName);
+//
+//                //섬네일 생성
+//                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
 
-                //섬네일 파일 이름은 중간에 s_로 시작하도록
-                File thumbnailFile = new File(thumbnailSaveName);
 
-                //섬네일 생성
-                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
-                resultDTOList.add(new UploadResultDTO(fileName,uuid,folderPath));
+
+                resultDTOList.add(uploadResultDTO);
             } catch (IOException e){
                 e.printStackTrace();
             }

@@ -61,12 +61,17 @@
 <!--    </select>-->
 
     <insert id="productInsert">
+        <selectKey keyProperty="product_no" order="BEFORE"
+                   resultType="long">
+            select product_seq.nextval from dual
+        </selectKey>
+
         INSERT INTO product(product_no, product_name, product_size,product_weight, product_detail,
                          product_guide, product_type,  product_method,
                          product_rdate, product_company, regDate, updateDate, detail_url,img_url, product_sales, product_function,
                             product_model, product_rentalPrice, product_price, product_color)
         VALUES(
-                  product_seq.nextval,#{product_name},#{product_size},#{product_weight},#{product_detail},#{product_guide},#{product_type},#{product_method},
+                 #{product_no},#{product_name},#{product_size},#{product_weight},#{product_detail},#{product_guide},#{product_type},#{product_method},
                  sysdate,#{product_company},sysdate,sysdate,#{detail_url},#{img_url},4,#{product_function},#{product_model},
                   #{product_rentalPrice},#{product_price},#{product_color})
     </insert>
