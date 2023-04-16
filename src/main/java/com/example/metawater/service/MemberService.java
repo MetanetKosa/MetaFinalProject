@@ -1,7 +1,10 @@
 package com.example.metawater.service;
 
+import com.example.metawater.domain.MemberDTO;
 import com.example.metawater.domain.MemberVO;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,11 +12,12 @@ import java.util.List;
 @Service
 public interface MemberService extends UserDetailsService {
 
+    //회원가입
     public void createMember(MemberVO memberVO);
-
-    public MemberVO getUserById(String id);
-
-//    public boolean remove(Long userid);
+    //로그인
+    UserDetails loadUserByUsername(String memId);
+    boolean checkMemberInfo(MemberDTO memberDTO);
+    //    public boolean remove(Long userid);
 //    public List<MemberVO> getUserList();
 
     //회원가입

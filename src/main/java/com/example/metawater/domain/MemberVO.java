@@ -35,6 +35,7 @@ public class MemberVO implements UserDetails {
     private String memEmail;
     private String auth;
 
+
     //계정이 갖고 있는 권한 목록은 리턴
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -65,6 +66,8 @@ public class MemberVO implements UserDetails {
     //계정이 잠겨있는지 않았는지 리턴(true: 잠기지 않음)
     @Override
     public boolean isAccountNonLocked() {
+//        if (authStatus == 1)
+//            return true;
         return false;
     }
 

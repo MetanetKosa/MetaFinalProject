@@ -10,10 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Log4j2
@@ -33,13 +30,30 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).body(member);
     }
 
-    //로그인  //get/post
     /**
      * 로그인 폼
      * @return
      */
-    @GetMapping("/login")
-    public String login(){
+    @RequestMapping(value = "/login")
+    public String member(@RequestParam(value="memId", required=false) String memId,
+                         @RequestParam(value="memPw", required=false) String memPw,
+                        @RequestBody MemberDTO memberDTO,
+                        @RequestParam(value="error", required=false) String error,
+                        @RequestParam(value="exception", required=false) String exception,
+                        Model model){
+        System.out.println("이로그인컨트롤러조차실행이안");
+        System.out.println("String memId, 확인" + memId);
+        System.out.println("String memPw, 확인" + memPw);
+        System.out.println("회원 아이디" + memberDTO.getMemId());
+        System.out.println("회원 비밀번호" + memberDTO.getMemPw());
+        // 입력받은 정보가 회원정보와 일치하는지 확인
+//        if(memberService.checkMemberInfo(memberDTO)){
+//            model.addAttribute("error", error);
+//        }
+//        else{
+//            model.addAttribute("error", error);
+//            model.addAttribute("exception", "입력하신 정보와 일치하는 회원이 없습니다.");
+//        }
         return "/";
     }
 
