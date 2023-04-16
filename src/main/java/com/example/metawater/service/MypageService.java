@@ -1,6 +1,7 @@
 package com.example.metawater.service;
 
 import com.example.metawater.domain.ProductVO;
+import com.example.metawater.domain.ReturnVO;
 import com.example.metawater.mapper.MypageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,9 @@ public class MypageService {
 
     public ProductVO getMyProduct(Long productNo){
         return mypageMapper.getMyProduct(productNo);
+    }
+
+    public void returnInsert(ReturnVO returnVO){
+        mypageMapper.returnInsert(returnVO);
     }
     }

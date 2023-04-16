@@ -32,4 +32,9 @@ public class MypageController {
     public ProductVO getMyProduct(@PathVariable Long productNo){
         return mypageService.getMyProduct(productNo);
     }
+
+    @GetMapping("/return/{orderNo}/")
+    public void returnInsert(@PathVariable Long orderNo){
+
+    }
 }

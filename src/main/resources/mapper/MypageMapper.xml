@@ -42,6 +42,22 @@
         <result property="orderType" column="order_type"/>
     </resultMap>
 
+    <resultMap id="ReturnMap" type="com.example.metawater.domain.ReturnVO">
+        <id property="returnNo" column="return_no"/>
+        <result property="returnDate" column="return_date"/>
+        <result property="returnAdd" column="return_add"/>
+        <result property="returnPrice" column="return_price"/>
+        <result property="returnMethod" column="return_method"/>
+        <result property="returnTrue" column="return_true"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="memNo" column="mem_no"/>
+    </resultMap>
+
+    <!-- 해지신청 -->
+    <insert id="returnInsert">
+        INSERT INTO REVIEW (return_no, return_date, return_add, return_price, return_method, return_true, order_no, mem_no)
+        VALUES (return_seq.nextval, #{returnDate}, #{returnAdd}, #{returnPrice}, #{returnMethod}, #{returnTrue}, #{orderNo}, #{memNo})
+    </insert>
 
     <select id="getMyProductList" resultMap="productMap">
         <![CDATA[
@@ -70,5 +86,7 @@
 <!--    <delete id="orderDelete">-->
 <!--        delete from pr_order where order_no = #{orderNo};-->
 <!--    </delete>-->
+
+
 
 </mapper>
