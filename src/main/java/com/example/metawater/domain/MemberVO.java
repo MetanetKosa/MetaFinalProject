@@ -11,7 +11,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.beans.SimpleBeanInfo;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 
 @Data
@@ -33,18 +35,36 @@ public class MemberVO implements UserDetails {
     @NotBlank(message = "이메일은 필수 입력 값입니다.")
     @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$", message = "이메일 형식이 올바르지 않습니다.")
     private String memEmail;
-    private String auth;
+    private String roles;
+
+    public MemberVO(MemberVO memberVO){
+        this.setMemId(memberVO.getMemId());
+        this.setMemPw(memberVO.getMemPw());
+        this.setMemPw(memberVO.getMemPw());
+        this.setMemName(memberVO.getMemName());
+        this.setMemPhone(memberVO.getMemPhone());
+        this.setMemEmail(memberVO.getMemEmail());
+        this.setRoles(memberVO.getRoles());
+    }
+
+    // ENUM으로 안하고 ,로 해서 구분해서 ROLE을 입력 -> 그걸 파싱!!
+    public List<String> getRoleList(){
+        if(this.roles.length() > 0){
+            return Arrays.asList(this.roles.split(","));
+        }
+        return new ArrayList<>();
+    }
 
 
     //계정이 갖고 있는 권한 목록은 리턴
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection< GrantedAuthority > collectors = new ArrayList<>();
-//        collectors.add() -> {
-//            return "ROLE_MEMBER";
-//        }
-        collectors.add(new SimpleGrantedAuthority("Rold"));
-        return null;
+        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        getRoleList().forEach(r -> {
+            authorities.add(()->{ return r;});
+        });
+        return authorities;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.metawater.service;
 import com.example.metawater.domain.MemberDTO;
 import com.example.metawater.domain.MemberVO;
 import com.example.metawater.mapper.MemberMapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +17,7 @@ import java.util.Collections;
 
 
 @Service
+@Log4j2
 public class MemberServiceImpl implements MemberService {
 
     @Autowired
@@ -24,7 +26,6 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-    private MemberDTO memberDTO;
     private MemberVO memberVO;
 
 //    회원가입
@@ -39,31 +40,23 @@ public class MemberServiceImpl implements MemberService {
     //로그인
     @Override
     public UserDetails loadUserByUsername(String memId) throws UsernameNotFoundException {
+        //authentication 매니저가 낚아챔
+        log.info("MemberServiceImpl클래스 에서 loadUserByUsername 진입");
         //여기서 받은 유저 아이디와 패스워드와 비교하여 로그인 인증
+        MemberVO findUser = memberMapper.findByUserId(memId);
 
-        System.out.println("MemberserviceImpl메서드확인");
-        System.out.println("MemberserviceImpl메서드확인memId데이터확인 " + memId);
-        MemberVO findUser = memberMapper.getUserById(memId);
-//        System.out.println("memberserviceImpl 아이디 데이터확인" + findUser.getMemId());
-//        System.out.println("memberserviceImpl 비밀번호 데이터확인"+ findUser.getMemPw());
-//        System.out.println("memberserviceImpl 이름 데이터확인"+ findUser.getMemName());
-
-        return User.builder()
-                .username("bb22")
-                .password("$2a$10$cIAQoG5.zjBFHVnfmLyJmuTSsBdmm1tNStb5SCcgZyzgGlR2CTQSa")
-                .roles() //TODO: 이 role()은 무엇일까?
-                .build();
+        return new MemberVO(findUser);
     }
 //  return User.builder()
 //          .username(findUser.getMemId())
 //            .password(findUser.getMemPw())
-//            .roles() //TODO: 이 role()은 무엇일까?
+//            .roles()
 //                .build();
     // 입력한 정보와 일치하는 회원이 있는지 판별
     public boolean checkMemberInfo(MemberDTO memberDTO) throws UsernameNotFoundException {
         //vue에서 가져온 데이터//TODO: vue에서 가져온 MemberDTO()은 무엇일까?
         String memId = memberDTO.getMemId();
-        MemberVO findUser = memberMapper.getUserById(memId);
+        MemberVO findUser = memberMapper.findByUserId(memId);
 
         if (memberVO != null && memberVO.getUsername().equals(findUser.getUsername())) {
             return true;

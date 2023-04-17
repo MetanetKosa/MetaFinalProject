@@ -23,7 +23,7 @@ public class MemberController {
     @PostMapping("/signup")
     public ResponseEntity<MemberVO> createUser(@RequestBody MemberVO member) {
         System.out.println("회원가입 데이터 확인" + member.getPassword());
-        member.setAuth("ROLE_MEMBER");
+        member.setRoles("ROLE_MEMBER");
         System.out.println(member);
         memberService.createMember(member);
 
@@ -34,18 +34,18 @@ public class MemberController {
      * 로그인 폼
      * @return
      */
-    @RequestMapping(value = "/login")
-    public String member(@RequestParam(value="memId", required=false) String memId,
-                         @RequestParam(value="memPw", required=false) String memPw,
-                        @RequestBody MemberDTO memberDTO,
-                        @RequestParam(value="error", required=false) String error,
-                        @RequestParam(value="exception", required=false) String exception,
-                        Model model){
-        System.out.println("이로그인컨트롤러조차실행이안");
-        System.out.println("String memId, 확인" + memId);
-        System.out.println("String memPw, 확인" + memPw);
-        System.out.println("회원 아이디" + memberDTO.getMemId());
-        System.out.println("회원 비밀번호" + memberDTO.getMemPw());
+//    @RequestMapping(value = "/login")
+//    public String member(@RequestParam(value="memId", required=false) String memId,
+//                         @RequestParam(value="memPw", required=false) String memPw,
+//                        @RequestBody MemberDTO memberDTO,
+//                        @RequestParam(value="error", required=false) String error,
+//                        @RequestParam(value="exception", required=false) String exception,
+//                        Model model){
+//        System.out.println("이로그인컨트롤러조차실행이안");
+//        System.out.println("String memId, 확인" + memId);
+//        System.out.println("String memPw, 확인" + memPw);
+//        System.out.println("회원 아이디" + memberDTO.getMemId());
+//        System.out.println("회원 비밀번호" + memberDTO.getMemPw());
         // 입력받은 정보가 회원정보와 일치하는지 확인
 //        if(memberService.checkMemberInfo(memberDTO)){
 //            model.addAttribute("error", error);
@@ -54,6 +54,15 @@ public class MemberController {
 //            model.addAttribute("error", error);
 //            model.addAttribute("exception", "입력하신 정보와 일치하는 회원이 없습니다.");
 //        }
+//        return "/";
+//    }
+    @GetMapping("/login")
+    public String login(Authentication authentication) {
+        MemberVO memberPrincipal = (MemberVO) authentication.getPrincipal();
+        System.out.println("loginController: "+memberPrincipal.getMemId());
+        System.out.println("loginController : "+memberPrincipal.getMemName());
+        System.out.println("loginController: "+memberPrincipal.getMemPw());
+
         return "/";
     }
 

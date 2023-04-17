@@ -1,66 +1,54 @@
 package com.example.metawater.security;
 
-import com.example.metawater.domain.MemberDTO;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import com.example.metawater.mapper.MemberMapper;
+import com.example.metawater.security.jwt.JwtAuthorizationFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
-@EnableWebSecurity  // 스프링 시큐리티 필터를 스프링 필터체인에 등록함
 @Configuration
-@RequiredArgsConstructor
-@Log4j2
-public class SecurityConfig {
+@EnableWebSecurity // 시큐리티 활성화 -> 기본 스프링 필터체인에 등록
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private MemberMapper memberMapper;
+	
+	@Autowired
+	private CorsConfig corsConfig;
 
-    private final AuthenticationFailureHandler customFailureHandler;
-
-    private MemberDTO memberDTO;
-
-    @Bean  // 해당 메서드의 리턴되는 오브젝트를 IoC로 등록해준다.
-    //Service에서 비밀번호를 암호화할 수 있도록 Bean으로 등록한다. //TODO: 비밀번호 암호화
+	@Bean  // 해당 메서드의 리턴되는 오브젝트를 IoC로 등록해준다.//TODO: 비밀번호 암호화
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/error");
-    }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+				.addFilter(corsConfig.corsFilter())
+				.csrf().disable()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.formLogin().disable()
+				.httpBasic().disable()
 
-    @Bean
-//    @Order(SecurityProperties.BASIC_AUTH_ORDER)
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .authorizeRequests()//HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정 (토큰 사용 시 모든 요청에 대한 접근이 가능하도록 함)
-//            .antMatchers("/").authenticated()  // TODO: 나중에 원하는 페이지만 접근 허용하도록 설정 변경하기
-//                .antMatchers("/auth/login").hasRole("ROLE_MEMBER")
-//                .antMatchers("/auth/login").hasRole("ROLE_ADMIN")
-            .anyRequest().permitAll()
-
-            .and()// 토큰을 활용하면 세션이 필요 없으므로 STATELESS로 설정하여 Session을 사용하지 않는다
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
-            .and()
-            .formLogin()
-            .loginPage("/login")  // 권한이 없는 페이지 요청 시 로그인 페이지로 이동시킴
-            .loginProcessingUrl("/auth/login")  // 이 주소가 호출되면 spring security가 낚아채서 로그인작업을 진행해준다.
-            .defaultSuccessUrl("/auth/login?error=false")  // 로그인 성공 후 리다이렉트 주소
-            .failureUrl("/autn/login?error=true")  // 로그인 실패 후 리다이렉트 주소
-            .usernameParameter("memId")
-            .passwordParameter("memPw")
-            .failureHandler(customFailureHandler)
-            .and()
-            .logout()
-            .logoutSuccessUrl("/")
-            .invalidateHttpSession(true);
-        return http.build();
-    }
+				.addFilter(new JwtAuthorizationFilter(authenticationManager()))
+				.addFilter(new JwtAuthorizationFilter(authenticationManager(), memberMapper))
+				.authorizeRequests()
+				.antMatchers("/**")
+				.access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+//				.antMatchers("/auth/login")
+//					.access("hasRole('ROLE_ADMIN')")
+				.anyRequest().permitAll();
+	}
 }
+
+
+
+
+
+

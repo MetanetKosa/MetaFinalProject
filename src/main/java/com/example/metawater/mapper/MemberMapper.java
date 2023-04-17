@@ -13,7 +13,7 @@ public interface MemberMapper {
     public void insertMember(MemberVO memberVO);
 
     //로그인
-    public MemberVO getUserById(String id);
+    public MemberVO findByUserId(String id);
 
     //로그인
     //public UserDTO loginMember(UserDTO user);
