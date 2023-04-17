@@ -46,19 +46,19 @@ public class AdminController {
     }
 
     //상품 삭제
-    @DeleteMapping("/product/{product_no}")
-    public void delete(@PathVariable Long product_no){
-        List<UploadResultDTO> attachList = service.getAttachList(product_no);
+    @DeleteMapping("/product/{productNo}")
+    public void delete(@PathVariable Long productNo){
+        List<UploadResultDTO> attachList = service.getAttachList(productNo);
 
-        if( service.deleteProduct(product_no)) {
+        if( service.deleteProduct(productNo)) {
             deleteFiles(attachList);
         }
     }
 
     //상품 수정
-    @PatchMapping("/product/{product_no}")
-    public void update(@PathVariable Long product_no, @RequestBody ProductVO product){
-        product.setProduct_no(product_no);
+    @PatchMapping("/product/{productNo}")
+    public void update(@PathVariable Long productNo, @RequestBody ProductVO product){
+        product.setProductNo(productNo);
         service.updateProduct(product);
     }
 

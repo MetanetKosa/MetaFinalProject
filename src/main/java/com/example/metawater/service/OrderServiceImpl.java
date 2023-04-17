@@ -25,8 +25,16 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.orderList();
     }
 
+    //주문 상태 변경
+    @Override
+    public boolean orderStateUpdate(OrderVO orderVO) {
+        return orderMapper.updateOrderState(orderVO) == 1;
+    }
 
-
+    @Override
+    public OrderVO orderDetail(Long orderNo) {
+        return orderMapper.orderDetail(orderNo);
+    }
 
 
 }

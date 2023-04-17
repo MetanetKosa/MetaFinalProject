@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService
             return;
         }
         product.getAttachList().forEach(attach -> {
-            attach.setProduct_no(product.getProduct_no());
+            attach.setProduct_no(product.getProductNo());
             System.out.println(attach);
             attachmapper.insertFile(attach);
         });
@@ -38,9 +38,9 @@ public class ProductServiceImpl implements ProductService
     }
 
     @Override
-    public boolean deleteProduct(Long product_no) {
-        attachmapper.deleteFileAll(product_no);
-        return mapper.productDelete(product_no) == 1;
+    public boolean deleteProduct(Long productNo) {
+        attachmapper.deleteFileAll(productNo);
+        return mapper.productDelete(productNo) == 1;
     }
 
     @Override
@@ -49,17 +49,17 @@ public class ProductServiceImpl implements ProductService
     }
 
     @Override
-    public ProductVO getProduct(Long product_no) {
-        return mapper.getProduct(product_no);
+    public ProductVO getProduct(Long productNo) {
+        return mapper.getProduct(productNo);
     }
 
     @Override
-    public List<UploadResultDTO> getAttachList(Long product_no) {
-        return attachmapper.findByPno(product_no);
+    public List<UploadResultDTO> getAttachList(Long productNo) {
+        return attachmapper.findByPno(productNo);
     }
 
     @Override
-    public void deleteAttach(Long product_no) {
-        attachmapper.deleteFileAll(product_no);
+    public void deleteAttach(Long productNo) {
+        attachmapper.deleteFileAll(productNo);
     }
 }

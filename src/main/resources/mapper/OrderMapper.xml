@@ -3,8 +3,8 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.metawater.mapper.OrderMapper">
-    <resultMap id="orderMap" type="com.example.metawater.vo.OrderVO">
-        <result property="orderNo" column="order_no"/>
+    <resultMap id="orderMap" type="com.example.metawater.domain.OrderVO">
+        <id property="orderNo" column="order_no"/>
         <result property="productNo" column="product_no"/>
         <result property="memNo" column="mem_no"/>
         <result property="renNo" column="ren_no"/>
@@ -15,11 +15,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="orderPhone" column="order_phone"/>
         <result property="orderDate" column="order_date"/>
         <result property="orderType" column="order_type"/>
-        <association property="member" resultMap="memberResultMap"/>
+        <result property="orderPay" column="order_pay"/>
+        <association property="member" resultMap="memberMap"/>
+        <association property="product" resultMap="productMap"/>
     </resultMap>
 
-    <resultMap id="member" type="com.example.metawater.vo.MemberVO">
-        <result property="memNo" column="mem_no"/>
+    <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
+        <id property="memNo" column="mem_no"/>
         <result property="memId" column="mem_id"/>
         <result property="memPw" column="mem_pw"/>
         <result property="memName" column="mem_name"/>
@@ -27,7 +29,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="memEmail" column="mem_email"/>
     </resultMap>
 
-    <resultMap id="rentalMap" type="com.example.metawater.vo.RentalVO">
+    <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
+        <id property="productNo" column="product_no"/>
+        <result property="productName" column="product_name"/>
+        <result property="productRentalPrice" column="product_rentalPrice"/>
+        <result property="productPrice" column="product_price"/>
+    </resultMap>
+
+    <resultMap id="rentalMap" type="com.example.metawater.domain.RentalVO">
         <result property="renNo" column="ren_no"/>
         <result property="renInstallCost" column="ren_installcost"/>
         <result property="renEndDate" column="ren_enddate"/>
@@ -48,8 +57,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="orderList" resultMap="orderMap">
         select * from
         pr_order inner join member
-        on pr_order.memNo = member.memNo;
+        on pr_order.mem_no = member.mem_no
+        inner join product
+        on pr_order.product_no = product.product_no
+    </select>
 
+<!--주문 상세 조회-->
+    <select id="orderDetail" resultMap="orderMap">
+        select * from
+            pr_order inner join member
+                                on pr_order.mem_no = member.mem_no
+                     inner join product
+                                on pr_order.product_no = product.product_no
+                     where order_no=#{orderNo}
     </select>
     
 <!--    주문 상태 변경-->

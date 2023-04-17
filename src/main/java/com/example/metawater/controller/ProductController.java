@@ -52,25 +52,25 @@ public class ProductController {
     }
 
     //상품 상세조회
-    @GetMapping("/product/products/{product_no}")
-    public ProductVO get(@PathVariable Long product_no){
-        return service.getProduct(product_no);
+    @GetMapping("/product/products/{productNo}")
+    public ProductVO get(@PathVariable Long productNo){
+        return service.getProduct(productNo);
     }
 
     //상품 삭제
-    @DeleteMapping("/product/products/{product_no}")
-    public void delete(@PathVariable Long product_no){
-        List<UploadResultDTO> attachList = service.getAttachList(product_no);
+    @DeleteMapping("/product/products/{productNo}")
+    public void delete(@PathVariable Long productNo){
+        List<UploadResultDTO> attachList = service.getAttachList(productNo);
 
-        if( service.deleteProduct(product_no)) {
+        if( service.deleteProduct(productNo)) {
             deleteFiles(attachList);
         }
     }
 
     //상품 수정
-    @PatchMapping("/product/products/{product_no}")
-    public void update(@PathVariable Long product_no, @RequestBody ProductVO product){
-        product.setProduct_no(product_no);
+    @PatchMapping("/product/products/{productNo}")
+    public void update(@PathVariable Long productNo, @RequestBody ProductVO product){
+        product.setProductNo(productNo);
         service.updateProduct(product);
     }
 

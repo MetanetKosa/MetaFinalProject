@@ -15,10 +15,11 @@ public class OrderVO {
     private String orderState;
     private String orderHopedate;
     private String orderAdd;
+    private String orderPay;
     private String orderName;
     private String orderPhone;
     private String orderDate;
     private String orderType;
-
     private MemberVO member;
+    private ProductVO product;
 }

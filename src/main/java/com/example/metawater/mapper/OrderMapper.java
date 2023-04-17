@@ -17,4 +17,7 @@ public interface OrderMapper {
 
     //주문 상태 변경
     public int updateOrderState(OrderVO order);
+
+    //주문 상세 조회
+    public OrderVO orderDetail(Long orderNo);
 }

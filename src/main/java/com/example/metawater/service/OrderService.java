@@ -14,4 +14,9 @@ public interface OrderService{
     public void rentalInsert(RentalVO rentalVO);
 
     public List<OrderVO> orderList();
+
+    public boolean orderStateUpdate(OrderVO orderVO);
+
+    public OrderVO orderDetail(Long orderNo);
+
 }
