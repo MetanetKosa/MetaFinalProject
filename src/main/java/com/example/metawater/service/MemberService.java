@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface MemberService extends UserDetailsService {
+public interface MemberService {
 
     //회원가입
     public void createMember(MemberVO memberVO);
     //로그인
-    UserDetails loadUserByUsername(String memId);
+//    UserDetails loadUserByUsername(String memId);
     boolean checkMemberInfo(MemberDTO memberDTO);
     //    public boolean remove(Long userid);
 //    public List<MemberVO> getUserList();

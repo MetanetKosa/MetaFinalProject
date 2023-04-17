@@ -26,9 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+	//CORS 허용
+	//Security Session -> Authentication -> UserDetails(PrincipalDetails)
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
+				http
 				.addFilter(corsConfig.corsFilter())
 				.csrf().disable()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -36,13 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.formLogin().disable()
 				.httpBasic().disable()
 
-				.addFilter(new JwtAuthorizationFilter(authenticationManager()))
+//				.addFilter(new JwtAuthorizationFilter(authenticationManager()))
 				.addFilter(new JwtAuthorizationFilter(authenticationManager(), memberMapper))
 				.authorizeRequests()
 				.antMatchers("/**")
 				.access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-//				.antMatchers("/auth/login")
-//					.access("hasRole('ROLE_ADMIN')")
 				.anyRequest().permitAll();
 	}
 }

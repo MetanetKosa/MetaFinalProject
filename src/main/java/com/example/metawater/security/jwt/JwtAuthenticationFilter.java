@@ -3,9 +3,11 @@ package com.example.metawater.security.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.metawater.domain.MemberDTO;
-import com.example.metawater.domain.MemberVO;
+import com.example.metawater.security.auth.PrincipalDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,8 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
+
+//인증
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
+
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	private final AuthenticationManager authenticationManager;
 	
@@ -29,25 +35,26 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		
-		System.out.println("JwtAuthenticationFilter : 진입");
+
+		logger.info("----------------------------------------------------------------------");
+		logger.info("JwtAuthenticationFilter : 진입");
 		
 		// request에 있는 username과 password를 파싱해서 자바 Object로 받기
-		ObjectMapper om = new ObjectMapper();
-		MemberDTO loginRequestDto = null;
+		ObjectMapper objectMapper = new ObjectMapper();
+		MemberDTO memberDTO = null;
 		try {
-			loginRequestDto = om.readValue(request.getInputStream(), MemberDTO.class);
+			memberDTO = objectMapper.readValue(request.getInputStream(), MemberDTO.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("JwtAuthenticationFilter : "+loginRequestDto);
+
+		logger.info("JwtAuthenticationFilter : "+memberDTO);
 		
 		// 유저네임패스워드 토큰 생성
 		UsernamePasswordAuthenticationToken authenticationToken = 
 				new UsernamePasswordAuthenticationToken(
-						loginRequestDto.getMemId(),
-						loginRequestDto.getMemPw());
+						memberDTO.getMemId(),
+						memberDTO.getMemPw());
 		
 		System.out.println("JwtAuthenticationFilter : 토큰생성완료");
 		
@@ -63,8 +70,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		Authentication authentication = 
 				authenticationManager.authenticate(authenticationToken);
 		
-		MemberVO memberVODetailis = (MemberVO) authentication.getPrincipal();
-		System.out.println("Authentication : "+memberVODetailis.getUsername());
+		PrincipalDetails principalDetailis = (PrincipalDetails) authentication.getPrincipal();
+		System.out.println("Authentication : "+principalDetailis.getUser().getMemName());
 		return authentication;
 	}
 
@@ -72,16 +79,21 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
+
+		logger.info("-----------------------------------------------");
 		
-		MemberVO memberVODetailis = (MemberVO) authResult.getPrincipal();
-		
+		PrincipalDetails principalDetailis = (PrincipalDetails) authResult.getPrincipal();
+
+		logger.debug("MemberID :: {}", principalDetailis.getUser().getMemId());
+		logger.debug("MemberPw :: {}", principalDetailis.getUser().getMemPw());
+
 		String jwtToken = JWT.create()
-				.withSubject(memberVODetailis.getMemName())
-				.withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.EXPIRATION_TIME))
-				.withClaim("id", memberVODetailis.getMemId())
-				.withClaim("username", memberVODetailis.getMemName())
+				.withSubject(principalDetailis.getUsername())
+				.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
+				.withClaim("memId", principalDetailis.getUser().getMemId())
+				.withClaim("memPw", principalDetailis.getUser().getMemName())
 				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
-		
+		logger.info("-----------------------------------------------");
 		response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX+jwtToken);
 	}
 	

@@ -2,7 +2,9 @@ package com.example.metawater.controller;
 
 import com.example.metawater.domain.MemberDTO;
 import com.example.metawater.domain.MemberVO;
-import com.example.metawater.service.MemberService;
+//import com.example.metawater.service.MemberService;
+import com.example.metawater.security.auth.PrincipalDetails;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,29 +14,37 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @Log4j2
-@RequestMapping("/auth")
+@RequestMapping("auth")
+@RequiredArgsConstructor
 public class MemberController {
-    @Autowired
-    MemberService memberService;
+//    @Autowired
+//    MemberService memberService;
 
     //회원가입 //get/post
     @PostMapping("/signup")
     public ResponseEntity<MemberVO> createUser(@RequestBody MemberVO member) {
-        System.out.println("회원가입 데이터 확인" + member.getPassword());
+        System.out.println("회원가입 데이터 확인" + member.getMemName());
         member.setRoles("ROLE_MEMBER");
         System.out.println(member);
-        memberService.createMember(member);
+//        memberService.createMember(member);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(member);
     }
 
-    /**
-     * 로그인 폼
-     * @return
-     */
-//    @RequestMapping(value = "/login")
+    //로그인
+    @PostMapping("login")
+    public String login(@RequestBody MemberDTO memberDTO, Authentication authentication) {
+        log.info("----------------- login ------------------------------");
+        PrincipalDetails memberPrincipal = (PrincipalDetails) authentication.getPrincipal();
+        System.out.println("loginController: "+memberPrincipal.getUser().getMemId());
+        System.out.println("loginController : "+memberPrincipal.getUser().getMemName());
+        System.out.println("loginController: "+memberPrincipal.getUser().getMemPw());
+
+        return "/";
+    }
+    //    @RequestMapping(value = "/login")
 //    public String member(@RequestParam(value="memId", required=false) String memId,
 //                         @RequestParam(value="memPw", required=false) String memPw,
 //                        @RequestBody MemberDTO memberDTO,
@@ -46,7 +56,7 @@ public class MemberController {
 //        System.out.println("String memPw, 확인" + memPw);
 //        System.out.println("회원 아이디" + memberDTO.getMemId());
 //        System.out.println("회원 비밀번호" + memberDTO.getMemPw());
-        // 입력받은 정보가 회원정보와 일치하는지 확인
+    // 입력받은 정보가 회원정보와 일치하는지 확인
 //        if(memberService.checkMemberInfo(memberDTO)){
 //            model.addAttribute("error", error);
 //        }
@@ -56,15 +66,6 @@ public class MemberController {
 //        }
 //        return "/";
 //    }
-    @GetMapping("/login")
-    public String login(Authentication authentication) {
-        MemberVO memberPrincipal = (MemberVO) authentication.getPrincipal();
-        System.out.println("loginController: "+memberPrincipal.getMemId());
-        System.out.println("loginController : "+memberPrincipal.getMemName());
-        System.out.println("loginController: "+memberPrincipal.getMemPw());
-
-        return "/";
-    }
 
 
 //    @PostMapping("/login")  // .loginPage("LOGIN_PAGE")에서 설정한 LOGIN_PAGE와 일치해야 함

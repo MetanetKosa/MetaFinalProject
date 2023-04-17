@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MemberVO implements UserDetails {
+public class MemberVO {
 
     private Long memNo;
 
@@ -37,15 +37,6 @@ public class MemberVO implements UserDetails {
     private String memEmail;
     private String roles;
 
-    public MemberVO(MemberVO memberVO){
-        this.setMemId(memberVO.getMemId());
-        this.setMemPw(memberVO.getMemPw());
-        this.setMemPw(memberVO.getMemPw());
-        this.setMemName(memberVO.getMemName());
-        this.setMemPhone(memberVO.getMemPhone());
-        this.setMemEmail(memberVO.getMemEmail());
-        this.setRoles(memberVO.getRoles());
-    }
 
     // ENUM으로 안하고 ,로 해서 구분해서 ROLE을 입력 -> 그걸 파싱!!
     public List<String> getRoleList(){
@@ -55,53 +46,4 @@ public class MemberVO implements UserDetails {
         return new ArrayList<>();
     }
 
-
-    //계정이 갖고 있는 권한 목록은 리턴
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection< GrantedAuthority > collectors = new ArrayList<>();
-        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        getRoleList().forEach(r -> {
-            authorities.add(()->{ return r;});
-        });
-        return authorities;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    //시큐리티의 userName -> 따라서 얘는 인증할 때 id를 봄
-    @Override
-    public String getUsername() {
-        return null;
-    }
-    //계정이 만료되지 않았는지 리턴(true: 만료 안됨)
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    //계정이 잠겨있는지 않았는지 리턴(true: 잠기지 않음)
-    @Override
-    public boolean isAccountNonLocked() {
-//        if (authStatus == 1)
-//            return true;
-        return false;
-    }
-
-    //비밀번호가 만료되지 않았는지 리턴한다. (true: 만료 안됨)
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    //계정이 활성화(사용가능)인지 리턴(true: 활성화)
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
-    //private Long enabled;
-    //private List<AuthVO> auth;
 }

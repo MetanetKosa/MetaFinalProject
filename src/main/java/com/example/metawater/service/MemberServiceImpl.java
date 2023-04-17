@@ -37,32 +37,37 @@ public class MemberServiceImpl implements MemberService {
         memberMapper.insertMember(memberVO);
     }
 
-    //로그인
     @Override
-    public UserDetails loadUserByUsername(String memId) throws UsernameNotFoundException {
-        //authentication 매니저가 낚아챔
-        log.info("MemberServiceImpl클래스 에서 loadUserByUsername 진입");
-        //여기서 받은 유저 아이디와 패스워드와 비교하여 로그인 인증
-        MemberVO findUser = memberMapper.findByUserId(memId);
-
-        return new MemberVO(findUser);
+    public boolean checkMemberInfo(MemberDTO memberDTO) {
+        return false;
     }
+
+    //로그인
+//    @Override
+//    public UserDetails loadUserByUsername(String memId) throws UsernameNotFoundException {
+//        //authentication 매니저가 낚아챔
+//        log.info("MemberServiceImpl클래스 에서 loadUserByUsername 진입");
+//        //여기서 받은 유저 아이디와 패스워드와 비교하여 로그인 인증
+//        MemberVO findUser = memberMapper.findByUserId(memId);
+//
+//        return new MemberVO(findUser);
+//    }
 //  return User.builder()
 //          .username(findUser.getMemId())
 //            .password(findUser.getMemPw())
 //            .roles()
 //                .build();
     // 입력한 정보와 일치하는 회원이 있는지 판별
-    public boolean checkMemberInfo(MemberDTO memberDTO) throws UsernameNotFoundException {
-        //vue에서 가져온 데이터//TODO: vue에서 가져온 MemberDTO()은 무엇일까?
-        String memId = memberDTO.getMemId();
-        MemberVO findUser = memberMapper.findByUserId(memId);
-
-        if (memberVO != null && memberVO.getUsername().equals(findUser.getUsername())) {
-            return true;
-        }
-        return false;
-    }
+//    public boolean checkMemberInfo(MemberDTO memberDTO) throws UsernameNotFoundException {
+//        //vue에서 가져온 데이터//TODO: vue에서 가져온 MemberDTO()은 무엇일까?
+//        String memId = memberDTO.getMemId();
+//        MemberVO findUser = memberMapper.findByUserId(memId);
+//
+//        if (memberVO != null && memberVO.getUsername().equals(findUser.getUsername())) {
+//            return true;
+//        }
+//        return false;
+//    }
 
 
 

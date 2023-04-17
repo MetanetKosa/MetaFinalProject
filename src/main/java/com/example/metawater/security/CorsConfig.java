@@ -9,16 +9,16 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class CorsConfig {
 
-   @Bean
+   @Bean //Cross-Origin Resource Sharing
    public CorsFilter corsFilter() {
-      UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
       CorsConfiguration config = new CorsConfiguration();
       config.setAllowCredentials(true);
-      config.addAllowedOriginPattern("*"); // e.g. http://domain1.com
-      config.addAllowedHeader("*");
-      config.addAllowedMethod("*");
+      config.addAllowedOriginPattern("*"); // 허용할 URL
+      config.addAllowedHeader("*"); //허용할 Header
+      config.addAllowedMethod("*"); //허용할 Http Method
 
-      source.registerCorsConfiguration("/**", config);
+       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+       source.registerCorsConfiguration("/auth/**", config);
       return new CorsFilter(source);
    }
 
