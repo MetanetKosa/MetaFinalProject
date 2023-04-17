@@ -28,7 +28,10 @@ public class ProductInqServiceIml implements ProductInqService {
     }
 
     @Override
-    public void insertQuestion(Long productNo, ProductInqVO question) {
-        qMapper.questionInsert(productNo, question);
+//    public void insertQuestion(Long productNo, ProductInqVO question) {
+//        qMapper.questionInsert(productNo, question);
+//    }
+    public void insertQuestion(ProductInqVO question) {
+        qMapper.questionInsert(question);
     }
 }

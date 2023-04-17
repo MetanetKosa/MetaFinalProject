@@ -33,9 +33,9 @@ public class ProductInqController {
 
     //문의 등록
     @PostMapping("/{productNo}/qnaInsert")
-    public ResponseEntity insert(@PathVariable Long productNo, @RequestBody ProductInqVO question) {
+    public ResponseEntity insert(@PathVariable("productNo") Long productNo, @RequestBody ProductInqVO question) {
         question.setProductNo(productNo);
-        pqService.insertQuestion(productNo, question);
+        pqService.insertQuestion(question);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

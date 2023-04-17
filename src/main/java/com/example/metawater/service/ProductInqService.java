@@ -14,7 +14,8 @@ public interface ProductInqService {
 
     public ProductInqVO getQuestion(Long productNo, Long proqNo);
 
-    public void insertQuestion(Long productNo, ProductInqVO question);
+    //public void insertQuestion(Long productNo, ProductInqVO question);
+    public void insertQuestion(ProductInqVO question);
 
     //public boolean updateQuestion(ProductQVO question);
 

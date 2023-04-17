@@ -12,6 +12,7 @@
         <result property="proqTitle" column="proq_title"/>
         <result property="proqContent" column="proq_content"/>
         <result property="proqDate" column="proq_date"/>
+        <result property="proqEmail" column="proq_email"/>
         <result property="proqState" column="proq_state"/>
         <result property="answerDate" column="proq_awn_date"/>
         <result property="answerContent" column="proq_awn_content"/>
@@ -81,11 +82,9 @@
             proq_email, proq_true, mem_no, product_no
         )
         VALUES (
-                   1, #{proqTitle}, #{proqContent}, SYSDATE, '답변 대기중', NULL, NULL, NULL,
+                   product_inquire_seq.nextval, #{proqTitle}, #{proqContent}, SYSDATE, '답변 대기중', NULL, NULL, NULL,
                    0, 1, #{productNo}
                )
---         INSERT INTO product_inquire (proq_no, proq_title, proq_content, proq_date, proq_state, proq_awn_date, proq_awn_content, proq_email, proq_true, mem_no, product_no)
---         VALUES (1, #{proqTitle}, #{proqContent}, sysdate, '답변 대기중', null, null, null, 0, 1, #{productNo,jdbcType=NUMERIC})
     </insert>
 
 <!--    <update id="questionUpdate">-->

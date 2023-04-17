@@ -14,6 +14,8 @@ public class ProductInqVO {
     private String proqContent;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date proqDate;
+
+    private String proqEmail;
     private String proqState;
     //답변
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -21,6 +23,7 @@ public class ProductInqVO {
     private String answerContent;
     //이메일 수신 여부
     private boolean answerTrue;
+
 
     public ProductVO product;
     public MemberVO member;

@@ -16,7 +16,8 @@ public interface ProductInqMapper {
     public ProductInqVO getQuestion(Long productNo, Long proqNo);
 
     //문의 등록
-    public void questionInsert(@Param("productNo")Long productNo, @Param("question")ProductInqVO question);
+    //public void questionInsert(@Param("productNo")Long productNo, @Param("question")ProductInqVO question);
+    public void questionInsert(ProductInqVO question);
 
     //문의 수정
     public int questionUpdate(ProductInqVO question);
