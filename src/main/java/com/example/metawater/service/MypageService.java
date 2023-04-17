@@ -28,4 +28,10 @@ public class MypageService {
     public void returnInsert(ReturnVO returnVO){
         mypageMapper.returnInsert(returnVO);
     }
+
+    public void deleteOrder(Long orderNo){
+        mypageMapper.deleteReturn(orderNo);
+        mypageMapper.deleteReview(orderNo);
+        mypageMapper.deleteOrder(orderNo);
+    }
     }

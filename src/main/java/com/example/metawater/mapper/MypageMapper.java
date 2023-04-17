@@ -18,4 +18,7 @@ public interface MypageMapper {
     public ProductVO getMyProduct(Long productNo);
 
     public void returnInsert(ReturnVO returnVO);
+    public void deleteOrder(Long orderNo);
+    public void deleteReturn(Long orderNo);
+    public void deleteReview(Long orderNo);
 }

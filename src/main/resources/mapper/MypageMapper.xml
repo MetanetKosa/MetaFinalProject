@@ -83,9 +83,18 @@
         where product_no = #{productNo}
         ]]>
  	</select>
-<!--    <delete id="orderDelete">-->
-<!--        delete from pr_order where order_no = #{orderNo};-->
-<!--    </delete>-->
+
+    <delete id="deleteReview" parameterType="long">
+            delete from review where order_no = #{orderNo, jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteReturn" parameterType="long">
+            delete from return where order_no = #{orderNo, jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteOrder" parameterType="long">
+            delete from pr_order where order_no = #{orderNo, jdbcType=BIGINT}
+    </delete>
 
 
 

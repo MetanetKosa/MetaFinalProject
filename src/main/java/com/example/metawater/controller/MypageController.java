@@ -4,10 +4,7 @@ import com.example.metawater.domain.ProductVO;
 import com.example.metawater.mapper.MypageMapper;
 import com.example.metawater.service.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,8 +30,13 @@ public class MypageController {
         return mypageService.getMyProduct(productNo);
     }
 
-    @GetMapping("/return/{orderNo}/")
-    public void returnInsert(@PathVariable Long orderNo){
+//    @GetMapping("/return/{orderNo}/")
+//    public void returnInsert(@PathVariable Long orderNo){
+//
+//    }
 
+    @DeleteMapping("/myorder/{orderNo}")
+    public void deleteOrder(@PathVariable Long orderNo){
+        mypageService.deleteOrder(orderNo);
     }
 }
