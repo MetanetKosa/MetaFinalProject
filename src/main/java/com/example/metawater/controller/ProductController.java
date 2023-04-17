@@ -40,6 +40,12 @@ public class ProductController {
     @GetMapping("/best")
     public List<ProductVO> bestList() { return service.getBestProductList();}
 
+    // 상품 검색
+    @GetMapping("/search/{searchKeyword}")
+    public List<ProductVO> search(@PathVariable String searchKeyword) {
+        return service.getProductListBySearch(searchKeyword);
+    }
+
     //상품 상세조회
     @GetMapping("/{productNo}")
     public ProductVO get(@PathVariable Long productNo){
