@@ -30,7 +30,7 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public Float avgStar(Long productNo) {
-        return reviewMapper.avgStartByProductId(productNo);
+        return reviewMapper.avgStarByProductId(productNo);
     }
 
     @Override

@@ -28,7 +28,9 @@ public class ReviewController {
     @GetMapping("/{productNo}/reviewStar")
     public Float avg(@PathVariable Long productNo) {
         System.out.println("리뷰 평점 GET 요청 확인");
-        return reviewService.avgStar(productNo);
+
+        Float avgStar = reviewService.avgStar(productNo);
+        return avgStar != null ? avgStar : 0.0f;
     }
 
     @GetMapping("/{productNo}/review/detail/{reviewNo}")

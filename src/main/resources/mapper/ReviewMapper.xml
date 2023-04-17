@@ -73,7 +73,7 @@
         and r.re_no = #{reviewNo} and r.product_no = #{productNo}
     </select>
 
-    <select id="avgStartByProductId" parameterType="Long" resultType="Float">
+    <select id="avgStarByProductId" parameterType="Long" resultType="Float">
         select ROUND(AVG(re_star), 1) from review where product_no = #{productNo}
     </select>
 

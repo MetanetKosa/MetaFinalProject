@@ -17,7 +17,7 @@ public interface ReviewMapper {
     //리뷰 상세 조회
     public ReviewVO getReview(Long productNo, Long reviewNo);
 
-    public float avgStartByProductId(Long productNo);
+    public float avgStarByProductId(Long productNo);
 
     //리뷰 등록
     public void reviewInsert(ReviewVO review);

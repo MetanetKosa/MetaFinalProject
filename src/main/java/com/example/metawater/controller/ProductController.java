@@ -44,6 +44,7 @@ public class ProductController {
     @GetMapping("/search/{searchKeyword}")
     public List<ProductVO> search(@PathVariable String searchKeyword) {
         System.out.println("검색 GET 요청 확인");
+        System.out.println(service.getProductListBySearch(searchKeyword));
         return service.getProductListBySearch(searchKeyword);
     }
 
