@@ -2,11 +2,13 @@ package com.example.metawater.security;
 
 import com.example.metawater.domain.MemberDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -14,6 +16,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 @EnableWebSecurity  // 스프링 시큐리티 필터를 스프링 필터체인에 등록함
 @Configuration
 @RequiredArgsConstructor
+@Log4j2
 public class SecurityConfig {
 
     private final AuthenticationFailureHandler customFailureHandler;
@@ -21,6 +24,7 @@ public class SecurityConfig {
     private MemberDTO memberDTO;
 
     @Bean  // 해당 메서드의 리턴되는 오브젝트를 IoC로 등록해준다.
+    //Service에서 비밀번호를 암호화할 수 있도록 Bean으로 등록한다. //TODO: 비밀번호 암호화
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -33,12 +37,17 @@ public class SecurityConfig {
     @Bean
 //    @Order(SecurityProperties.BASIC_AUTH_ORDER)
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        System.out.println("여기 SecurityConfig메서드는 실행이 되고있는건가요?...ㅠㅠㅠ");
         http
             .csrf().disable()
-            .authorizeRequests()
+            .authorizeRequests()//HttpServletRequest를 사용하는 요청들에 대한 접근제한을 설정 (토큰 사용 시 모든 요청에 대한 접근이 가능하도록 함)
 //            .antMatchers("/").authenticated()  // TODO: 나중에 원하는 페이지만 접근 허용하도록 설정 변경하기
+//                .antMatchers("/auth/login").hasRole("ROLE_MEMBER")
+//                .antMatchers("/auth/login").hasRole("ROLE_ADMIN")
             .anyRequest().permitAll()
+
+            .and()// 토큰을 활용하면 세션이 필요 없으므로 STATELESS로 설정하여 Session을 사용하지 않는다
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
             .and()
             .formLogin()
             .loginPage("/login")  // 권한이 없는 페이지 요청 시 로그인 페이지로 이동시킴
