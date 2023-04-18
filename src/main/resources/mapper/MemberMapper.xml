@@ -12,22 +12,18 @@
         <result property="memPhone" column="mem_phone" />
         <result property="memEmail" column="mem_email" />
         <result property="auth" column="auth" />
+        <result property="status" column="status" />
     </resultMap>
 
     <!-- 회원 등록 -->
     <insert id="insertMember">
-        <selectKey keyProperty="memNo" order="BEFORE"
-                   resultType="long">
-            select member_seq.nextval from dual
-        </selectKey>
-
         insert into member (mem_no, mem_id, mem_pw, mem_name, mem_phone, mem_email, auth)
         values (member_seq.nextval, #{memId}, #{memPw}, #{memName}, #{memPhone},#{memEmail},#{auth})
     </insert>
 
     <!-- 회원정보 확인 -->
     <select id="findByUserId" parameterType="String" resultMap="memberMap">
-        select mem_no, mem_id, mem_pw, mem_name, mem_phone, mem_email, auth from member where mem_id = #{memId}
+        select * from member where mem_id = #{memId}
     </select>
 
     <select id="idGet" resultType="MemberVO">

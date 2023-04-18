@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Log4j2
-@RequestMapping("auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class MemberController {
     @Autowired
@@ -25,8 +25,6 @@ public class MemberController {
     //회원가입 //get/post
     @PostMapping("/signup")
     public ResponseEntity<MemberVO> createUser(@RequestBody MemberVO member) {
-        System.out.println("회원가입 데이터 확인" + member.getMemName());
-        member.setAuth("ROLE_MEMBER");
         System.out.println(member);
         memberService.createMember(member);
 
@@ -43,11 +41,11 @@ public class MemberController {
         return new ResponseEntity<>("fail",HttpStatus.OK);
     }
 
-    @Secured("ROLE_USER")
-    @PostMapping ("/aftersignup")
-    public String aftersignup(){
-        return "여기는 멤버 토큰있는사람만 올수있어";
-    }
+//    @Secured("ROLE_USER")
+//    @PostMapping ("/aftersignup")
+//    public String aftersignup(){
+//        return "여기는 멤버 토큰있는사람만 올수있어";
+//    }
 
     //로그인
 //    @PostMapping("login")
@@ -94,24 +92,6 @@ public class MemberController {
 //
 //        return "/";
 //    }
-
-    @PostMapping("/logout") //post
-    public void getLogout(){
-
-    }
-
-    //로그인한 사용자만 접근
-    @GetMapping("/member")
-    public String member() {
-        return "user/member";
-    }
-
-    //관리자 권한이 있는 사용자만 접근
-    @GetMapping("/admin")
-    public String admin() {
-        return "user/admin";
-    }
-
 
 //    //로그인을 하지 않은 사용자도 접근
 //    @GetMapping("/all")

@@ -9,19 +9,56 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-public class WebConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private MemberMapper memberMapper;
     private MemberService memberService;
 
-    public WebConfig(MemberMapper memberMapper, MemberService memberService) {
+    public SecurityConfig(MemberMapper memberMapper, MemberService memberService) {
         this.memberMapper = memberMapper;
         this.memberService = memberService;
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/auth/signup");
+        // 이 요청들에 대해서는 spring security 필터 체인을 적용하지 않겠다
+    }
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/**").permitAll()
+            .antMatchers("/auth/login").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .addFilter(getAuthenticationFilter()) //회원 로그인
+            .addFilter(JwtFilter()).authorizeRequests()//회원 토큰 생성
+            .and()
+            .formLogin()
+            .and()
+            .logout();
+    }
+
+    //토큰
+    private JwtFilter JwtFilter() throws Exception {
+        return new JwtFilter(authenticationManager(), memberMapper);
+    }
+
+    //인증 필터(사용자 이름, 비밀번호)
+    private AuthenticationFilter getAuthenticationFilter() throws Exception {
+        return new AuthenticationFilter(authenticationManager(), memberMapper);
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
     }
 
     //패스워드 암호화
@@ -30,53 +67,7 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
-    }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-                //        .antMatchers("/**")
-                .antMatchers("/auth")
-                .antMatchers("/auth/error")
-                .antMatchers("/auth/checkid")
-                .antMatchers("/auth/signup");
-        // 이 요청들에 대해서는 spring security 필터 체인을 적용하지 않겠다
-    }
-
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.authorizeRequests()
-                .antMatchers("/auth").permitAll()
-                .antMatchers("/auth/error").permitAll()
-                .antMatchers("/auth/checkid").permitAll()
-                .antMatchers("/auth/login").access("hasRole('ROLE_USER')")
-                .and()
-                .formLogin().disable()
-                .addFilter(authenticationFilter()) //회원 로그인
-                .addFilter(JwtFilter()).authorizeRequests()//회원 토큰 생성
-                .anyRequest()
-                .authenticated()
-                .and()
-                .logout();
-    }
-
-    //인증 필터(사용자 이름, 비밀번호)
-    private AuthenticationFilter authenticationFilter() throws Exception {
-        return new AuthenticationFilter(authenticationManager(), memberMapper);
-    }
-
-    private JwtFilter JwtFilter() throws Exception {
-        return new JwtFilter(authenticationManager(), memberMapper);
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
-    }
 
     /*
      * 시큐리티 설정 제거
@@ -88,4 +79,8 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
      * }
      */
 
+    //                .antMatchers("/auth/modify/{memberIdx}","/auth/admin/").hasRole("MEMBER","ADMIN");
+//                .antMatchers("/auth/signup").permitAll()
+//                .antMatchers("/auth/login").permitAll()
+//                .antMatchers("/auth/login").access("hasRole('ROLE_USER')")
 }

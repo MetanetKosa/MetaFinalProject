@@ -31,40 +31,43 @@ public class MemberServiceImpl implements MemberService {
     private MemberMapper memberMapper;
 
     @Autowired
-    private BCryptPasswordEncoder encoder;
-
-    private MemberVO memberVO;
+    private BCryptPasswordEncoder passwordEncoder;
 
 //    회원가입
     @Override
     public void createMember(MemberVO memberVO) {
-        String password = memberVO.getMemPw();
-        memberVO.setMemPw(encoder.encode(password));
-        System.out.println("회원가입 " + memberVO);
+        memberVO.setMemPw(passwordEncoder.encode(memberVO.getMemPw()));
         memberVO.setAuth("ROLE_USER");
+        memberVO.setStatus(1);
+        System.out.println("createMember 회원가입 auth, status 값 확인" + memberVO);
         memberMapper.insertMember(memberVO);
-//        memberMapper.userRole(memberVO.getMemNo());
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        logger.info("=========== loadUserByUsername 메서드 실행한다. ================");
         MemberVO member = memberMapper.findByUserId(username);
+        logger.info("------------member데이터 전체-------------" + member);
+        logger.info("------------member.getAuth()-------------" + member.getAuth());
+        return member;
+    }
 
 //        ManagerDTO manager = managerMapper.managerGetUserByIdAndPassword(username);
-        if (member != null){
-            System.out.println("멤버 권한 부여");
-            String memberId = member.getMemId();
-            String memberPw = member.getMemPw();
-            System.out.println("멤버 권한 부여memberId " + memberId);
-            System.out.println("멤버 권한 부여memberPw " + memberPw);
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("USER")); // member 객체에 ROLE_USER role 추가
-            UserDetails userDetails = new User(memberId,memberPw,authorities);
-            return userDetails;
-        } else {
-            throw new UsernameNotFoundException("id :인 " + username + " 을 찾을 수 없습니다.");
-        }
-    }
+//        if (member != null){
+//            System.out.println("멤버 권한 부여");
+//            String memberId = member.getMemId();
+//            String memberPw = member.getMemPw();
+//            System.out.println("멤버 권한 부여memberId " + memberId);
+//            System.out.println("멤버 권한 부여memberPw " + memberPw);
+//            List<GrantedAuthority> authorities = new ArrayList<>();
+//            authorities.add(new SimpleGrantedAuthority("ROLE_USER")); // member 객체에 ROLE_USER role 추가// member 객체에 ROLE_USER role 추가
+//            logger.info("-------------authorities----------------" + authorities);
+//            UserDetails userDetails = new User(memberId,memberPw,authorities);
+//            return userDetails;
+//        } else {
+//            throw new UsernameNotFoundException("id :인 " + username + " 을 찾을 수 없습니다.");
+//        }
+
 
     @Override
     public boolean checkMemberInfo(MemberDTO memberDTO) {
@@ -73,9 +76,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean getId(String id) {
-        return memberMapper.idGet(id) == null? false : true;
+        return false;
     }
-
 
 
     //로그인

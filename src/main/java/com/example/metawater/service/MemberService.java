@@ -19,7 +19,8 @@ public interface MemberService extends UserDetailsService {
     boolean checkMemberInfo(MemberDTO memberDTO);
     public boolean getId(String id);
 
-    UserDetails loadUserByUsername(String userId);
+    @Override
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException;
 
     //    public boolean remove(Long userid);
 //    public List<MemberVO> getUserList();

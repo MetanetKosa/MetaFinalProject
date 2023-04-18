@@ -22,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -32,12 +33,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
     //로그인 처리 /인증필터
     public AuthenticationFilter(AuthenticationManager authenticationManager,MemberMapper memberMapper){
         super.setAuthenticationManager(authenticationManager);
         this.memberMapper = memberMapper;
-        //이 주소가 호출되면 spring security 가 낚아채서 로그인작업을 진행해준다.
+        //이 주소가 호출되면 spring security 가 낚아채서 로그인 작업을 진행해준다.
         setFilterProcessesUrl("/auth/login");
     }
 
@@ -45,11 +45,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
         try {
-            MemberVO mem = new ObjectMapper().readValue(request.getInputStream(), MemberVO.class);
-            logger.info("===============request에서=======getMemId확인===== " +mem.getMemId());
-            MemberVO memberVO = memberMapper.findByUserId(mem.getMemId());
-            logger.info("---------------memberVO객체 값---------------" + memberVO.getMemId());
-            //customUserDetailService.loadUserByUsername(memberVO.getMemId());
+            MemberVO memberVO = new ObjectMapper().readValue(request.getInputStream(), MemberVO.class);
+            logger.info("=============== request에서 getMemId확인========= " + memberVO.getMemId());
 
             if (memberVO != null) {
                 System.out.println("===========attemptAuthentication 맴버================");
@@ -71,11 +68,12 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
-        String userName = ((User)authResult.getPrincipal()).getUsername();
+        MemberVO memberVO = (MemberVO) authResult.getPrincipal();
+        String username = memberVO.getUsername();
 
         String jwt = Jwts.builder()
                 .setHeaderParam("type", "jwt")
-                .setSubject(userName)
+                .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis()+1*(1000*60*60*24*365)))
                 .signWith(SignatureAlgorithm.HS256, "hello")
                 .compact();
