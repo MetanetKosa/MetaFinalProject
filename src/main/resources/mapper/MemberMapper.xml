@@ -30,6 +30,14 @@
         select * from member where mem_id = #{memId}
     </select>
 
+    <select id="idGet" resultType="MemberVO">
+        select * from member where mem_id = #{memId}
+    </select>
+
+    <insert id ="userRole">
+        insert into memberauth values(#{memberIdx}, 'ROLE_USER')
+    </insert>
+
     <!-- 모든 회원정보 확인 -->
     <select id="findAllUsers" resultMap="memberMap">
         SELECT * FROM member

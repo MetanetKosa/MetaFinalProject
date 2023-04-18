@@ -35,11 +35,17 @@ public class MemberServiceImpl implements MemberService {
         memberVO.setMemPw(encoder.encode(password));
         System.out.println("회원가입 " + memberVO);
         memberMapper.insertMember(memberVO);
+        memberMapper.userRole(memberVO.getMemNo());
     }
 
     @Override
     public boolean checkMemberInfo(MemberDTO memberDTO) {
         return false;
+    }
+
+    @Override
+    public boolean getId(String id) {
+        return memberMapper.idGet(id) == null? false : true;
     }
 
     //로그인

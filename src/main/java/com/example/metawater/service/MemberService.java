@@ -17,6 +17,9 @@ public interface MemberService {
     //로그인
 //    UserDetails loadUserByUsername(String memId);
     boolean checkMemberInfo(MemberDTO memberDTO);
+
+    public boolean getId(String id);
+
     //    public boolean remove(Long userid);
 //    public List<MemberVO> getUserList();
 

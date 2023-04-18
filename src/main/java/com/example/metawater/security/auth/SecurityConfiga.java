@@ -1,4 +1,4 @@
-package com.example.metawater.security;
+package com.example.metawater.security.auth;
 
 //
 //@Configuration

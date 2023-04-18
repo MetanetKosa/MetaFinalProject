@@ -2,13 +2,13 @@ package com.example.metawater.controller;
 
 import com.example.metawater.domain.MemberDTO;
 import com.example.metawater.domain.MemberVO;
-//import com.example.metawater.service.MemberService;
-import com.example.metawater.security.auth.PrincipalDetails;
+import com.example.metawater.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("auth")
 @RequiredArgsConstructor
 public class MemberController {
-//    @Autowired
-//    MemberService memberService;
+    @Autowired
+    MemberService memberService;
 
     //회원가입 //get/post
     @PostMapping("/signup")
@@ -28,22 +28,38 @@ public class MemberController {
         System.out.println("회원가입 데이터 확인" + member.getMemName());
         member.setRoles("ROLE_MEMBER");
         System.out.println(member);
-//        memberService.createMember(member);
+        memberService.createMember(member);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(member);
     }
 
-    //로그인
-    @PostMapping("login")
-    public String login(@RequestBody MemberDTO memberDTO, Authentication authentication) {
-        log.info("----------------- login ------------------------------");
-        PrincipalDetails memberPrincipal = (PrincipalDetails) authentication.getPrincipal();
-        System.out.println("loginController: "+memberPrincipal.getUser().getMemId());
-        System.out.println("loginController : "+memberPrincipal.getUser().getMemName());
-        System.out.println("loginController: "+memberPrincipal.getUser().getMemPw());
-
-        return "/";
+    //id확인
+    @PostMapping("/checkid")
+    public ResponseEntity<String> checkId(@RequestBody MemberDTO memberDTO) {
+        String id = memberDTO.getMemId();
+        if(memberService.getId(id)){
+            return new ResponseEntity<>("success",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("fail",HttpStatus.OK);
     }
+
+    @Secured("ROLE_USER")
+    @PostMapping ("/aftersignup")
+    public String aftersignup(){
+        return "여기는 멤버 토큰있는사람만 올수있어";
+    }
+
+    //로그인
+//    @PostMapping("login")
+//    public String login(@RequestBody MemberDTO memberDTO, Authentication authentication) {
+//        log.info("----------------- login ------------------------------");
+//        PrincipalDetails memberPrincipal = (PrincipalDetails) authentication.getPrincipal();
+//        System.out.println("loginController: "+memberPrincipal.getUser().getMemId());
+//        System.out.println("loginController : "+memberPrincipal.getUser().getMemName());
+//        System.out.println("loginController: "+memberPrincipal.getUser().getMemPw());
+//
+//        return "/";
+//    }
     //    @RequestMapping(value = "/login")
 //    public String member(@RequestParam(value="memId", required=false) String memId,
 //                         @RequestParam(value="memPw", required=false) String memPw,

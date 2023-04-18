@@ -2,6 +2,7 @@ package com.example.metawater.mapper;
 
 import com.example.metawater.domain.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,9 +12,11 @@ public interface MemberMapper {
     
     //회원가입
     public void insertMember(MemberVO memberVO);
+    public void userRole(@Param("memNo") Long memNo);
 
     //로그인
-    public MemberVO findByUserId(String id);
+    public MemberVO findByUserId(@Param("memId") String id);
+    public MemberVO idGet(@Param("memId") String id);
 
     //로그인
     //public UserDTO loginMember(UserDTO user);
