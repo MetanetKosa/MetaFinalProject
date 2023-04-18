@@ -1,12 +1,5 @@
-package com.example.metawater.security;
+package com.example.metawater.security.auth;
 
-import com.example.metawater.service.MemberService;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //
 //@Configuration
 //@Log4j2

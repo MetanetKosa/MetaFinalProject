@@ -76,10 +76,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 //.accessDeniedPage("/denied");
     }
 
-    private AuthenticationFilter getAuthenticationFilter() throws Exception {
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager(), memberService, env);
-        return authenticationFilter;
-    }
+//    private AuthenticationFilter getAuthenticationFilter() throws Exception {
+//        AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager(), memberService, env);
+//        return authenticationFilter;
+//    }
 
     //AuthenticationManager 회원/관리자 구분
     //로그인 인증 처리 메소드

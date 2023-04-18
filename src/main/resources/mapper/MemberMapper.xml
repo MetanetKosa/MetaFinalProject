@@ -15,20 +15,28 @@
     </resultMap>
 
     <!-- 회원 등록 -->
-    <insert id="insertMember" parameterType="MemberVO">
+    <insert id="insertMember">
         <selectKey keyProperty="memNo" order="BEFORE"
                    resultType="long">
             select member_seq.nextval from dual
         </selectKey>
 
-        insert into member (mem_no, mem_id, mem_pw, mem_name, mem_phone,mem_email,auth)
+        insert into member (mem_no, mem_id, mem_pw, mem_name, mem_phone, mem_email, auth)
         values (member_seq.nextval, #{memId}, #{memPw}, #{memName}, #{memPhone},#{memEmail},#{auth})
     </insert>
 
     <!-- 회원정보 확인 -->
-    <select id="getUserById" parameterType="MemberVO">
-        select * from member where mem_id = #{mem_id}
+    <select id="findByUserId" resultMap="memberMap">
+        select * from member where mem_id = #{memId}
     </select>
+
+    <select id="idGet" resultType="MemberVO">
+        select * from member where mem_id = #{memId}
+    </select>
+
+    <insert id ="userRole">
+        insert into memberauth values(#{memberIdx}, 'ROLE_USER')
+    </insert>
 
     <!-- 모든 회원정보 확인 -->
     <select id="findAllUsers" resultMap="memberMap">

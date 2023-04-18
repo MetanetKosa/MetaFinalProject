@@ -1,7 +1,9 @@
 package com.example.metawater.service;
 
+import com.example.metawater.domain.MemberDTO;
 import com.example.metawater.domain.MemberVO;
 import com.example.metawater.mapper.MemberMapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,6 +17,7 @@ import java.util.Collections;
 
 
 @Service
+@Log4j2
 public class MemberServiceImpl implements MemberService {
 
     @Autowired
@@ -23,6 +26,8 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
+    private MemberVO memberVO;
+
 //    회원가입
     @Override
     public void createMember(MemberVO memberVO) {
@@ -30,23 +35,48 @@ public class MemberServiceImpl implements MemberService {
         memberVO.setMemPw(encoder.encode(password));
         System.out.println("회원가입 " + memberVO);
         memberMapper.insertMember(memberVO);
+        memberMapper.userRole(memberVO.getMemNo());
     }
 
     @Override
-    public MemberVO getUserById(String id) {
-        return null;
+    public boolean checkMemberInfo(MemberDTO memberDTO) {
+        return false;
+    }
+
+    @Override
+    public boolean getId(String id) {
+        return memberMapper.idGet(id) == null? false : true;
     }
 
     //로그인
-    @Override
-    public UserDetails loadUserByUsername(String memId) throws UsernameNotFoundException {
-        //여기서 받은 유저 패스워드와 비교하여 로그인 인증
-        MemberVO memberVO = memberMapper.getUserById(memId);
-        if(memberVO == null){
-            throw new UsernameNotFoundException("User not authorized.");
-        }
-        return null;
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String memId) throws UsernameNotFoundException {
+//        //authentication 매니저가 낚아챔
+//        log.info("MemberServiceImpl클래스 에서 loadUserByUsername 진입");
+//        //여기서 받은 유저 아이디와 패스워드와 비교하여 로그인 인증
+//        MemberVO findUser = memberMapper.findByUserId(memId);
+//
+//        return new MemberVO(findUser);
+//    }
+//  return User.builder()
+//          .username(findUser.getMemId())
+//            .password(findUser.getMemPw())
+//            .roles()
+//                .build();
+    // 입력한 정보와 일치하는 회원이 있는지 판별
+//    public boolean checkMemberInfo(MemberDTO memberDTO) throws UsernameNotFoundException {
+//        //vue에서 가져온 데이터//TODO: vue에서 가져온 MemberDTO()은 무엇일까?
+//        String memId = memberDTO.getMemId();
+//        MemberVO findUser = memberMapper.findByUserId(memId);
+//
+//        if (memberVO != null && memberVO.getUsername().equals(findUser.getUsername())) {
+//            return true;
+//        }
+//        return false;
+//    }
+
+
+
 
     //인증
     //로그인 후 db에서 데이터 확인 후 맞으면 session 발급
