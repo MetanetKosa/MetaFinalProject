@@ -18,13 +18,30 @@
         <association property="product" resultMap="productMap"/>
     </resultMap>
 
+    <resultMap id="orderMap" type="com.example.metawater.domain.OrderVO">
+        <id property="orderNo" column="order_no"/>
+        <result property="memberNo" column="mem_no"/>
+        <result property="rentalNo" column="ren_no"/>
+        <result property="productNo" column="product_no"/>
+        <result property="orderState" column="order_state"/>
+        <result property="orderHopedate" column="order_hopedate"/>
+        <result property="orderAdd" column="order_add"/>
+        <result property="orderName" column="order_name"/>
+        <result property="orderPhone" column="order_phone"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="orderPay" column="order_pay"/>
+        <result property="orderType" column="order_type"/>
+        <association property="member" resultMap="memberMap"/>
+        <association property="product" resultMap="productMap"/>
+    </resultMap>
+
     <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
-        <id property="mem_no" column="mem_no"/>
-        <result property="mem_id" column="mem_id"/>
-        <result property="mem_pw" column="mem_pw"/>
-        <result property="mem_name" column="mem_name"/>
-        <result property="mem_phone" column="mem_phone"/>
-        <result property="mem_email" column="mem_email"/>
+        <id property="memNo" column="mem_no"/>
+        <result property="memId" column="mem_id"/>
+        <result property="memPw" column="mem_pw"/>
+        <result property="memName" column="mem_name"/>
+        <result property="memPhone" column="mem_phone"/>
+        <result property="memEmail" column="mem_email"/>
         <result property="auth" column="auth"/>
     </resultMap>
 
@@ -52,7 +69,7 @@
         <!--        <collection property="colors" resultMap="colorMap"></collection>-->
         <!--        <collection property="functions" resultMap="functionMap"></collection>-->
     </resultMap>
-    
+
     <select id="getReviewList" resultMap="reviewMap">
         select r.*, m.member_name, p.product_name, p.product_function, p.product_model
         from review r, member m, product p
@@ -63,14 +80,29 @@
         select r.*, m.mem_name, p.product_name, p.product_function, p.product_model
         from review r, member m, product p
         where r.mem_no = m.mem_no and r.product_no = p.product_no
-        and r.product_no = #{productNo}
+          and r.product_no = #{productNo}
     </select>
 
     <select id="getReview" parameterType="Long" resultMap="reviewMap">
         select r.*, m.mem_name, p.product_name, p.product_function, p.product_model
         from review r, member m, product p
         where r.mem_no = m.mem_no and r.product_no = p.product_no
-        and r.re_no = #{reviewNo} and r.product_no = #{productNo}
+          and r.re_no = #{reviewNo} and r.product_no = #{productNo}
+    </select>
+
+    <select id="availableReviews" parameterType="Long" resultMap="orderMap">
+        SELECT o.*, p.*, m.*
+        FROM pr_order o
+                 INNER JOIN product p ON o.product_no = p.product_no
+                 INNER JOIN member m ON o.mem_no = m.mem_no
+        WHERE o.mem_no = #{memNo}
+          AND o.order_no NOT IN (
+            SELECT r.order_no
+            FROM review r
+            WHERE r.mem_no = #{memNo}
+        )
+          AND p.product_no = #{productNo}
+          AND o.order_state = '설치 완료'
     </select>
 
     <select id="avgStarByProductId" parameterType="Long" resultType="Float">

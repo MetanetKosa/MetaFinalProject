@@ -14,14 +14,14 @@ import java.util.Collection;
 @NoArgsConstructor
 public class MemberVO implements UserDetails {
 
-    private Long mem_no;
+    private Long memNo;
 
     //UserDTO user;
-    private String mem_id;     //ID
-    private String mem_pw;    //PW
-    private String mem_name;
-    private String mem_phone;
-    private String mem_email;
+    private String memId;     //ID
+    private String memPw;    //PW
+    private String memName;
+    private String memPhone;
+    private String memEmail;
     private String auth;
 
     @Override

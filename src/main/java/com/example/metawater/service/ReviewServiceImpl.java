@@ -1,5 +1,6 @@
 package com.example.metawater.service;
 
+import com.example.metawater.domain.OrderVO;
 import com.example.metawater.domain.ReviewVO;
 import com.example.metawater.mapper.ReviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class ReviewServiceImpl implements ReviewService{
     @Override
     public Float avgStar(Long productNo) {
         return reviewMapper.avgStarByProductId(productNo);
+    }
+
+    @Override
+    public List<OrderVO> findAvailableOrder(Long memNo, Long productNo) {
+        return reviewMapper.availableReviews(memNo, productNo);
     }
 
     @Override

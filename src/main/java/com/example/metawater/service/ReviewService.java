@@ -1,6 +1,6 @@
 package com.example.metawater.service;
 
-import com.example.metawater.domain.ProductVO;
+import com.example.metawater.domain.OrderVO;
 import com.example.metawater.domain.ReviewVO;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,8 @@ public interface ReviewService {
     public ReviewVO getReview(Long productNo, Long reviewNo);
 
     public Float avgStar(Long productNo);
+
+    public List<OrderVO> findAvailableOrder(Long memNo, Long productNo);
 
     public void insertReview(ReviewVO review);
 
