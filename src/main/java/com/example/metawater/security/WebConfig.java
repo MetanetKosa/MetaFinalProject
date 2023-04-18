@@ -1,6 +1,7 @@
 package com.example.metawater.security;
 
 import com.example.metawater.mapper.MemberMapper;
+import com.example.metawater.service.MemberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -15,21 +17,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebConfig extends WebSecurityConfigurerAdapter {
 
     private MemberMapper memberMapper;
-//    private ManagerMapper managerMapper;
+    private MemberService memberService;
 
-    private CustomUserDetailService customUserDetailService;
-
-    public WebConfig(MemberMapper memberMapper,
-                     CustomUserDetailService customUserDetailService) {
+    public WebConfig(MemberMapper memberMapper, MemberService memberService) {
         this.memberMapper = memberMapper;
-//        this.managerMapper = managerMapper;
-        this.customUserDetailService = customUserDetailService;
+        this.memberService = memberService;
     }
 
     //패스워드 암호화
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
     }
 
     @Override
@@ -50,29 +53,29 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth").permitAll()
                 .antMatchers("/auth/error").permitAll()
                 .antMatchers("/auth/checkid").permitAll()
-                .antMatchers("/auth/signup").permitAll()
-                .antMatchers("/auth/aftersignup").access("hasRole('ROLE_USER')")
+                .antMatchers("/auth/login").access("hasRole('ROLE_USER')")
                 .and()
                 .formLogin().disable()
-                .addFilter(authenticationFilter())
-                .addFilter(JwtFilter()).authorizeRequests()
+                .addFilter(authenticationFilter()) //회원 로그인
+                .addFilter(JwtFilter()).authorizeRequests()//회원 토큰 생성
                 .anyRequest()
                 .authenticated()
                 .and()
                 .logout();
     }
 
-    private JwtFilter JwtFilter() throws Exception {
-        return new JwtFilter(authenticationManager(), memberMapper);
-    }
-
+    //인증 필터(사용자 이름, 비밀번호)
     private AuthenticationFilter authenticationFilter() throws Exception {
         return new AuthenticationFilter(authenticationManager(), memberMapper);
     }
 
+    private JwtFilter JwtFilter() throws Exception {
+        return new JwtFilter(authenticationManager(), memberMapper);
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
     }
 
     /*

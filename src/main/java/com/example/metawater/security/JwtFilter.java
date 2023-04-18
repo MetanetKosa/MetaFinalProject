@@ -35,12 +35,10 @@ public class JwtFilter extends BasicAuthenticationFilter {
     private MemberMapper memberMapper;
 //    private ManagerMapper managerMapper;
 
-
     public JwtFilter(AuthenticationManager authenticationManager, MemberMapper memberMapper) {
         super(authenticationManager);
         this.memberMapper = memberMapper;
     }
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest request2, HttpServletResponse response2,
@@ -70,16 +68,16 @@ public class JwtFilter extends BasicAuthenticationFilter {
                 UserDetails user = User.builder()
                         .username(memberVO.getMemId())
                         .password(memberVO.getMemPw()) //TODO: 여기서 Auth(회원/관리자) 구분
-                        .authorities(memberVO.getRoles())
+                        .authorities(memberVO.getAuth())
 //                        .authorities(memberVO.getRoles().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth())))
                         .build();
 
                 Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-                authorities.add(new SimpleGrantedAuthority(memberVO.getRoles()));
+                authorities.add(new SimpleGrantedAuthority(memberVO.getAuth()));
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
-                       user,
-                       memberVO.getMemPw(),
+                        user,
+                        memberVO.getMemPw(),
                         authorities
 //                        memberVO.getRoles().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList())
                 );
@@ -147,4 +145,3 @@ public class JwtFilter extends BasicAuthenticationFilter {
         response.sendError(HttpServletResponse.SC_FORBIDDEN,httpStatus);
     }
 }
-

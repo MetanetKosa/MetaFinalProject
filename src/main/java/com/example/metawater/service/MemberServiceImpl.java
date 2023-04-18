@@ -4,7 +4,10 @@ import com.example.metawater.domain.MemberDTO;
 import com.example.metawater.domain.MemberVO;
 import com.example.metawater.mapper.MemberMapper;
 import lombok.extern.log4j.Log4j2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,12 +16,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Member;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 
 @Service
 @Log4j2
 public class MemberServiceImpl implements MemberService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private MemberMapper memberMapper;
@@ -34,8 +41,29 @@ public class MemberServiceImpl implements MemberService {
         String password = memberVO.getMemPw();
         memberVO.setMemPw(encoder.encode(password));
         System.out.println("회원가입 " + memberVO);
+        memberVO.setAuth("ROLE_USER");
         memberMapper.insertMember(memberVO);
-        memberMapper.userRole(memberVO.getMemNo());
+//        memberMapper.userRole(memberVO.getMemNo());
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        MemberVO member = memberMapper.findByUserId(username);
+
+//        ManagerDTO manager = managerMapper.managerGetUserByIdAndPassword(username);
+        if (member != null){
+            System.out.println("멤버 권한 부여");
+            String memberId = member.getMemId();
+            String memberPw = member.getMemPw();
+            System.out.println("멤버 권한 부여memberId " + memberId);
+            System.out.println("멤버 권한 부여memberPw " + memberPw);
+            List<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority("USER")); // member 객체에 ROLE_USER role 추가
+            UserDetails userDetails = new User(memberId,memberPw,authorities);
+            return userDetails;
+        } else {
+            throw new UsernameNotFoundException("id :인 " + username + " 을 찾을 수 없습니다.");
+        }
     }
 
     @Override
@@ -47,6 +75,8 @@ public class MemberServiceImpl implements MemberService {
     public boolean getId(String id) {
         return memberMapper.idGet(id) == null? false : true;
     }
+
+
 
     //로그인
 //    @Override
