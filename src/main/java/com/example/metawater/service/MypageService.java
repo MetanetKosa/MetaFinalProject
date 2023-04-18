@@ -1,5 +1,6 @@
 package com.example.metawater.service;
 
+import com.example.metawater.domain.MyOrderProductVO;
 import com.example.metawater.domain.ProductVO;
 import com.example.metawater.domain.ReturnVO;
 import com.example.metawater.mapper.MypageMapper;
@@ -33,5 +34,9 @@ public class MypageService {
         mypageMapper.deleteReturn(orderNo);
         mypageMapper.deleteReview(orderNo);
         mypageMapper.deleteOrder(orderNo);
+    }
+
+    public List<MyOrderProductVO> getOrderProductDetail(Long memNo){
+        return mypageMapper.getOrderProductDetail(memNo);
     }
     }

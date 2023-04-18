@@ -1,5 +1,6 @@
 package com.example.metawater.mapper;
 
+import com.example.metawater.domain.MyOrderProductVO;
 import com.example.metawater.domain.ProductVO;
 import com.example.metawater.domain.ReturnVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,4 +22,6 @@ public interface MypageMapper {
     public void deleteOrder(Long orderNo);
     public void deleteReturn(Long orderNo);
     public void deleteReview(Long orderNo);
+
+    public List<MyOrderProductVO> getOrderProductDetail(Long memNo);
 }
