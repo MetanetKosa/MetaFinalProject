@@ -11,10 +11,10 @@ public class HelloController {
         return "hello";
     }
 
-    @GetMapping("/uploadEx")
-    public void uploadEx(){
-
-    }
+//    @GetMapping("/uploadEx")
+//    public void uploadEx(){
+//
+//    }
     @GetMapping("/detail")
     public String detail(){
         return "detail";

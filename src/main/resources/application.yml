@@ -28,3 +28,5 @@ mybatis:
   type-aliases-package: com.example.metawater
 #  type-aliases-package: com.example.metajobs
 
+metawater.upload.path : C:\\upload
+
