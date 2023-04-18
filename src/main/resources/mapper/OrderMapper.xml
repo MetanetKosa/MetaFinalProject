@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="orderPay" column="order_pay"/>
         <association property="member" resultMap="memberMap"/>
         <association property="product" resultMap="productMap"/>
+        <association property="rental" resultMap="rentalMap"/>
     </resultMap>
 
     <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
@@ -37,11 +38,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <resultMap id="rentalMap" type="com.example.metawater.domain.RentalVO">
-        <result property="renNo" column="ren_no"/>
-        <result property="renInstallCost" column="ren_installcost"/>
-        <result property="renEndDate" column="ren_enddate"/>
+        <id property="renNo" column="ren_no"/>
+        <result property="renInstallCost" column="ren_installCost"/>
+        <result property="renEndDate" column="ren_endDate"/>
         <result property="renTerm" column="ren_term"/>
-        <result property="renPayDate" column="ren_paydate"/>
+        <result property="renPayDate" column="ren_payDate"/>
         <result property="productNo" column="product_no"/>
     </resultMap>
 
@@ -53,13 +54,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </insert>
 
-<!--    주문 목록 조회-->
+<!--    구매 목록 조회-->
     <select id="orderList" resultMap="orderMap">
         select * from
         pr_order inner join member
         on pr_order.mem_no = member.mem_no
         inner join product
         on pr_order.product_no = product.product_no
+        where order_type = '구매'
+    </select>
+
+    <select id="orderRentalList" resultMap="orderMap">
+        select * from
+            pr_order inner join member
+                                on pr_order.mem_no = member.mem_no
+                     inner join rental
+                                on pr_order.ren_no = rental.ren_no
+                     inner join product
+                                on pr_order.product_no = product.product_no
+        where order_type = '렌탈'
     </select>
 
 <!--주문 상세 조회-->

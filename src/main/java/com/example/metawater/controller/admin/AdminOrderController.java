@@ -17,7 +17,7 @@ public class AdminOrderController {
     @Autowired
     private OrderService service;
 
-    //주문 목록 조회
+    //구매 목록 조회
     @GetMapping("/orders")
     public ResponseEntity getOrders(){
         List<OrderVO> orderList = new ArrayList<>();
@@ -25,6 +25,16 @@ public class AdminOrderController {
 
         return new ResponseEntity(orderList, HttpStatus.OK);
     }
+
+    //렌탈 목록 조회
+    @GetMapping("/orders/rental")
+    public ResponseEntity getRentalOrders(){
+        List<OrderVO> orderRentalList = new ArrayList<>();
+        orderRentalList=service.orderRentalList();
+
+        return new ResponseEntity(orderRentalList, HttpStatus.OK);
+    }
+
 
 
     //주문 상태 수정

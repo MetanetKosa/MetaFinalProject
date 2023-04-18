@@ -37,6 +37,7 @@ public class UploadController {
 
 
 
+    //파일 여러개 업로드
     @PostMapping("/upload/files")
     public ResponseEntity<List<UploadResultDTO>> uploadFiles(@RequestParam("files") MultipartFile[] uploadFiles){
         List<UploadResultDTO> resultDTOList = new ArrayList<>();
@@ -94,6 +95,7 @@ public class UploadController {
         return new ResponseEntity<>(resultDTOList, HttpStatus.OK);
     }
 
+    //사용설명서 업로드
     @PostMapping("/upload/guide")
     public ResponseEntity<UploadResultDTO> uploadGuide(@RequestParam("file") MultipartFile uploadFile){
         UploadResultDTO uploadResult = new UploadResultDTO();
@@ -131,6 +133,7 @@ public class UploadController {
         return new ResponseEntity<>(uploadResult, HttpStatus.OK);
     }
 
+    //대표이미지, 상세이미지 업로드
     @PostMapping("/upload/file")
     public ResponseEntity<UploadResultDTO> uploadFile(@RequestParam("file") MultipartFile uploadFile){
 

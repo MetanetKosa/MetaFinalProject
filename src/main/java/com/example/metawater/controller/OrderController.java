@@ -16,10 +16,10 @@ public class OrderController {
 //렌탈주문
     @PostMapping("/rental/rentalInsert")
     private void rentalInsert(@RequestBody RentalVO rentalVO){
-        System.out.println(rentalVO.getRen_installcost());
-        System.out.println(rentalVO.getRen_term());
-        System.out.println(rentalVO.getRen_paydate());
-        System.out.println(rentalVO.getProduct_no());
+        System.out.println(rentalVO.getRenInstallCost());
+        System.out.println(rentalVO.getRenTerm());
+        System.out.println(rentalVO.getRenPayDate());
+        System.out.println(rentalVO.getProductNo());
         orderService.rentalInsert(rentalVO);
         System.out.println("insert result confirm !!!!");
     }

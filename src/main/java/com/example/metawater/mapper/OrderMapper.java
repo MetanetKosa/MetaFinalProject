@@ -12,8 +12,11 @@ import java.util.List;
 public interface OrderMapper {
     public void rentalInsert(RentalVO rentalVO);
 
-    //주문 목록 조회
+    //구매 목록 조회
     public List<OrderVO> orderList();
+
+    //렌탈 목록 조회
+    public List<OrderVO> orderRentalList();
 
     //주문 상태 변경
     public int updateOrderState(OrderVO order);

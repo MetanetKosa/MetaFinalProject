@@ -22,4 +22,6 @@ public class OrderVO {
     private String orderType;
     private MemberVO member;
     private ProductVO product;
+
+    private RentalVO rental;
 }

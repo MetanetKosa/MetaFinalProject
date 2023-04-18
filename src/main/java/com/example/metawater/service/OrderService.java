@@ -13,7 +13,11 @@ public interface OrderService{
 
     public void rentalInsert(RentalVO rentalVO);
 
+    //구매 목록 조회
     public List<OrderVO> orderList();
+
+    //
+    public List<OrderVO> orderRentalList();
 
     public boolean orderStateUpdate(OrderVO orderVO);
 

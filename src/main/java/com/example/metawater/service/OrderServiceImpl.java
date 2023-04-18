@@ -25,6 +25,11 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.orderList();
     }
 
+    @Override
+    public List<OrderVO> orderRentalList() {
+        return orderMapper.orderRentalList();
+    }
+
     //주문 상태 변경
     @Override
     public boolean orderStateUpdate(OrderVO orderVO) {
