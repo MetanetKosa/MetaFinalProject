@@ -81,6 +81,13 @@
             SELECT * from (select * from product order by product_sales desc) where rownum <= 5
         ]]>
     </select>
+
+    <select id="getProductListBySearch" parameterType="String" resultMap="productMap">
+        SELECT *
+        FROM product
+        WHERE product_name LIKE '%' || #{searchKeyword} || '%'
+    </select>
+
 <!--
 
     <select id="getProduct" resultMap="productMap" parameterType="Long">
@@ -96,6 +103,7 @@
     <select id="getProduct" resultMap="productMap" parameterType="Long">
         SELECT * from product where product_no = #{productNo}
     </select>
+
 
     <insert id="productInsert">
         <selectKey keyProperty="product_no" order="BEFORE"

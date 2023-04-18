@@ -9,6 +9,8 @@ import java.util.List;
 public interface ProductMapper {
     public List<ProductVO> getProductList();
     public List<ProductVO> getBestProductList();
+    public List<ProductVO> getProductListBySearch(String searchKeyword);
+    //public List<ProductVO> getProductListByCategory();
     public ProductVO getProduct(Long product_no);
 
     public void productInsert(ProductVO product);

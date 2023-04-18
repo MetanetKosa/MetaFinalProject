@@ -55,6 +55,11 @@ public class ProductServiceImpl implements ProductService
     }
 
     @Override
+    public List<ProductVO> getProductListBySearch(String searchKeyword) {
+        return mapper.getProductListBySearch(searchKeyword);
+    }
+
+    @Override
     public ProductVO getProduct(Long product_no) {
         return mapper.getProduct(product_no);
     }

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.metawater.mapper.ProductInqMapper">
+
+    <resultMap id="questionMap" type="com.example.metawater.domain.ProductInqVO">
+        <id property="proqNo" column="proq_no"/>
+        <result property="memNo" column="mem_no"/>
+        <result property="productNo" column="product_no"/>
+        <result property="proqTitle" column="proq_title"/>
+        <result property="proqContent" column="proq_content"/>
+        <result property="proqDate" column="proq_date"/>
+        <result property="proqEmail" column="proq_email"/>
+        <result property="proqState" column="proq_state"/>
+        <result property="answerDate" column="proq_awn_date"/>
+        <result property="answerContent" column="proq_awn_content"/>
+        <result property="answerTrue" column="proq_true"/>
+        <association property="member" resultMap="memberMap"/>
+        <association property="product" resultMap="productMap"/>
+    </resultMap>
+
+    <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
+        <id property="productNo" column="product_no"/>
+        <result property="productName" column="product_name"/>
+        <result property="productSize" column="product_size"/>
+        <result property="productWeight" column="product_weight"/>
+        <result property="productDetail" column="product_detail"/>
+        <result property="productGuide" column="product_guide"/>
+        <result property="productType" column="product_type"/>
+        <result property="productMethod" column="product_method"/>
+        <result property="productRdate" column="product_rdate"/>
+        <result property="productCompany" column="product_company"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="detailUrl" column="detail_url"/>
+        <result property="productSales" column="product_sales"/>
+        <result property="productFunction" column="product_function"/>
+        <result property="productModel" column="product_model"/>
+        <result property="productRentalPrice" column="product_rentalPrice"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="productColor" column="product_color"/>
+        <!--        <collection property="colors" resultMap="colorMap"></collection>-->
+        <!--        <collection property="functions" resultMap="functionMap"></collection>-->
+    </resultMap>
+
+    <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
+        <id property="mem_no" column="mem_no"/>
+        <result property="mem_id" column="mem_id"/>
+        <result property="mem_pw" column="mem_pw"/>
+        <result property="mem_name" column="mem_name"/>
+        <result property="mem_phone" column="mem_phone"/>
+        <result property="mem_email" column="mem_email"/>
+        <result property="auth" column="auth"/>
+    </resultMap>
+
+    <select id="getQuestionList" resultMap="questionMap">
+        select pi.*, m.member_name, p.product_name, p.product_function, p.product_model
+        from product_inquire pi, member m, product p
+        where pi.mem_no = m.mem_no and pi.product_no = p.product_no
+    </select>
+
+    <select id="getQuestionListByProductId" parameterType="Long" resultMap="questionMap">
+        select pi.*, m.mem_name, p.product_name, p.product_function, p.product_model
+        from product_inquire pi, member m, product p
+        where pi.mem_no = m.mem_no and pi.product_no = p.product_no
+        and pi.product_no = #{productNo}
+    </select>
+
+    <select id="getQuestion" parameterType="Long" resultMap="questionMap">
+        select pi.*, m.mem_name, p.product_name, p.product_function, p.product_model
+        from product_inquire pi, member m, product p
+        where pi.mem_no = m.mem_no and pi.product_no = p.product_no
+          and pi.proq_no = #{proqNo} and pi.product_no = #{productNo}
+    </select>
+
+    <insert id="questionInsert">
+        INSERT INTO product_inquire (
+            proq_no, proq_title, proq_content, proq_date, proq_state, proq_awn_date, proq_awn_content,
+            proq_email, proq_true, mem_no, product_no
+        )
+        VALUES (
+                   product_inquire_seq.nextval, #{proqTitle}, #{proqContent}, SYSDATE, '답변 대기중', NULL, NULL, NULL,
+                   0, 1, #{productNo}
+               )
+    </insert>
+
+<!--    <update id="questionUpdate">-->
+<!--        UPDATE REVIEW-->
+<!--        SET re_star = #{reStar},-->
+<!--            re_image = #{reContent},-->
+<!--            re_date = sysdate-->
+<!--        WHERE re_no = #{returnNo}-->
+<!--    </update>-->
+
+<!--    <delete id="questionDelete" parameterType="Long">-->
+<!--        DELETE FROM REVIEW-->
+<!--        WHERE re_no = #{returnNo}-->
+<!--    </delete>-->
+
+
+</mapper>
