@@ -19,7 +19,7 @@ public class OrderVO {
     private String orderName;
     private String orderPhone;
     private String orderDate;
-    private String orderPay;
+//    private String orderPay;
     private String orderType;
     private MemberVO member;
     private ProductVO product;
