@@ -17,7 +17,9 @@ public class OrderVO {
     private String orderState;
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private Date orderHopedate;
+    private String orderAddNumber;
     private String orderAddress;
+    private String orderAddDetail;
     private String orderName;
     private String orderPhone;
     @DateTimeFormat(pattern = "yyyy/MM/dd")
