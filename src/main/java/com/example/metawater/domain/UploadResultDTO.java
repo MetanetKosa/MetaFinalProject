@@ -32,6 +32,7 @@ public class UploadResultDTO {
         return "";
     }
 
+
     //섬네일 처리
     public String getThumbnailURL() {
         try{

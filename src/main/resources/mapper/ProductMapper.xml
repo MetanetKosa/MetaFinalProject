@@ -6,35 +6,26 @@
 <mapper namespace="com.example.metawater.mapper.ProductMapper">
 
     <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
-        <id property="product_id" column="product_id"/>
-        <result property="product_name" column="product_name"/>
-        <result property="product_size" column="product_size"/>
-        <result property="product_weight" column="product_weight"/>
-        <result property="product_detail" column="product_detail"/>
-        <result property="product_guide" column="product_guide"/>
-        <result property="product_type" column="product_type"/>
-        <result property="product_method" column="product_method"/>
-        <result property="product_rdate" column="product_rdate"/>
-        <result property="product_company" column="product_company"/>
+        <id property="productNo" column="product_no"/>
+        <result property="productName" column="product_name"/>
+        <result property="productSize" column="product_size"/>
+        <result property="productWeight" column="product_weight"/>
+        <result property="productDetail" column="product_detail"/>
+        <result property="productGuide" column="product_guide"/>
+        <result property="productType" column="product_type"/>
+        <result property="productMethod" column="product_method"/>
+        <result property="productRdate" column="product_rdate"/>
+        <result property="productCompany" column="product_company"/>
         <result property="regDate" column="regDate"/>
         <result property="updateDate" column="updateDate"/>
-        <result property="img_url" column="img_url"/>
-        <result property="detail_url" column="detail_url"/>
-        <collection property="colors" resultMap="colorMap"></collection>
-        <collection property="functions" resultMap="functionMap"></collection>
-    </resultMap>
-
-    <resultMap id="colorMap" type="com.example.metawater.domain.ColorVO">
-        <id property="color_no" column="color_no"/>
-        <result property="color_name" column="color_name"/>
-    </resultMap>
-
-    <resultMap id="functionMap" type="com.example.metawater.domain.FunctionVO">
-        <id property="function_no" column="function_no"/>
-        <result property="function_name" column="function_name"/>
-        <result property="function_model" column="function_model"/>
-        <result property="function_rentalPrice" column="function_rentalPrice"/>
-        <result property="function_price" column="function_price"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="detailUrl" column="detail_url"/>
+        <result property="productFunction" column="product_function"/>
+        <result property="productModel" column="product_model"/>
+        <result property="productRentalPrice" column="product_rentalPrice"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="productColor" column="product_color"/>
+        <result property="productSales" column="product_sales"/>
     </resultMap>
 
 <!--    <select id="getProductList" resultMap="productMap">-->
@@ -45,7 +36,7 @@
 <!--        order by p.product_no-->
 <!--    </select>-->
 
-    <select id="getProductList" resultType="ProductVO">
+    <select id="getProductList" resultMap="productMap">
        <![CDATA[
         select  * from product where product_no > 0
         ]]>
@@ -61,7 +52,7 @@
 <!--    </select>-->
 
     <insert id="productInsert">
-        <selectKey keyProperty="product_no" order="BEFORE"
+        <selectKey keyProperty="productNo" order="BEFORE"
                    resultType="long">
             select product_seq.nextval from dual
         </selectKey>
@@ -71,30 +62,30 @@
                          product_rdate, product_company, regDate, updateDate, detail_url,img_url, product_sales, product_function,
                             product_model, product_rentalPrice, product_price, product_color)
         VALUES(
-                 #{product_no},#{product_name},#{product_size},#{product_weight},#{product_detail},#{product_guide},#{product_type},#{product_method},
-                 sysdate,#{product_company},sysdate,sysdate,#{detail_url},#{img_url},4,#{product_function},#{product_model},
-                  #{product_rentalPrice},#{product_price},#{product_color})
+                 #{productNo},#{productName},#{productSize},#{productWeight},#{productDetail},#{productGuide},#{productType},#{productMethod},
+                 sysdate,#{productCompany},sysdate,sysdate,#{detailUrl},#{imgUrl},4,#{productFunction},#{productModel},
+                  #{productRentalPrice},#{productPrice},#{productColor})
     </insert>
 
     <delete id="productDelete" parameterType="Long">
         delete from product where
-            product_no = #{product_no}
+            product_no = #{productNo}
     </delete>
 
     <update id="productUpdate">
         update product
-        set  product_name = #{product_name},
-             product_size = #{product_size} ,
-             product_weight = #{product_weight} ,
-             product_detail = #{product_detail} ,
-             product_guide = #{product_guide},
-             product_type = #{product_type},
-             product_method = #{product_method},
-             product_rdate = #{product_rdate},
-             product_company = #{product_company},
+        set  product_name = #{productName},
+             product_size = #{productSize} ,
+             product_weight = #{productWeight} ,
+             product_detail = #{productDetail} ,
+             product_guide = #{productGuide},
+             product_type = #{productType},
+             product_method = #{productMethod},
+             product_rdate = #{productRdate},
+             product_company = #{productCompany},
              updateDate = sysdate,
-             detail_url = #{detail_url},
-             img_url = #{ img_url}
-        where product_no = #{product_no}
+             detail_url = #{detailUrl},
+             img_url = #{imgUrl}
+        where product_no = #{productNo}
     </update>
 </mapper>

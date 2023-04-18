@@ -40,7 +40,7 @@ public class AdminController {
     }
 
     // 상품 목록 조회
-    @GetMapping("products")
+    @GetMapping("/products")
     public List<ProductVO> list(){
         return service.getProductList();
     }
