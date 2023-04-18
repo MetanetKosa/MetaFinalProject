@@ -53,20 +53,32 @@
         <result property="memNo" column="mem_no"/>
     </resultMap>
 
+    <resultMap id="RentalMap" type="com.example.metawater.domain.RentalVO">
+        <id property="ren_no" column="ren_no"/>
+        <result property="ren_installcost" column="ren_installcost"/>
+        <result property="ren_enddate" column="ren_enddate"/>
+        <result property="ren_term" column="ren_term"/>
+        <result property="ren_paydate" column="ren_paydate"/>
+        <result property="product_no" column="product_no"/>
+    </resultMap>
+
     <resultMap id="MyDetailMap" type="com.example.metawater.domain.MyOrderProductVO">
-        <result property="memNo" column="po.mem_no"/>
-        <result property="productName" column="p.product_name"/>
-        <result property="productModel" column="p.product_model"/>
-        <result property="productSize" column="p.product_size"/>
-        <result property="productGuide" column="p.product_guide"/>
-        <result property="productRentalPrice" column="p.product_rentalprice"/>
-        <result property="imgUrl" column="p.img_url"/>
-        <result property="orderHopeDate" column="po.order_hopedate"/>
-        <result property="OrderAdd" column="po.order_add"/>
-        <result property="orderPhone" column="po.order_phone"/>
-        <result property="orderType" column="po.order_type"/>
-        <result property="renTerm" column="r.ren_term"/>
-        <result property="renEndDate" column="r.ren_enddate"/>
+        <result property="productName" column="product_name"/>
+        <result property="productModel" column="product_model"/>
+        <result property="productSize" column="product_size"/>
+        <result property="productGuide" column="product_guide"/>
+        <result property="productRentalPrice" column="product_rentalprice"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="orderHopeDate" column="order_hopedate"/>
+        <result property="OrderAdd" column="order_add"/>
+        <result property="orderPhone" column="order_phone"/>
+        <result property="orderType" column="order_type"/>
+        <result property="ren_term" column="ren_term"/>
+        <result property="ren_enddate" column="ren_enddate"/>
+        <association property="order" javaType="com.example.metawater.domain.OrderVO"/>
+        <association property="rental" javaType="com.example.metawater.domain.RentalVO"/>
+        <association property="product" javaType="com.example.metawater.domain.ProductVO"/>
     </resultMap>
 
     <!-- 해지신청 -->
@@ -88,7 +100,7 @@
     <select id="getOrderProductDetail" resultMap="MyDetailMap">
     <![CDATA[
         SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
-               po.order_hopedate, po.order_add, po.order_phone, po.order_type, r.ren_term, r.ren_enddate
+               po.order_no, po.order_hopedate, po.order_add, po.order_phone, po.order_type, r.ren_term, r.ren_enddate
         FROM pr_order po
                  JOIN rental r ON po.ren_no = r.ren_no
                  JOIN product p ON po.product_no = p.product_no

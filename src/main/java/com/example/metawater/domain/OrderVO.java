@@ -3,6 +3,9 @@ package com.example.metawater.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -13,11 +16,13 @@ public class OrderVO {
     private String memNo;
     private String renNo;
     private String orderState;
-    private String orderHopedate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date orderHopedate;
     private String orderAdd;
     private String orderName;
     private String orderPhone;
-    private String orderDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date orderDate;
     private String orderPay;
     private String orderType;
 }

@@ -1,5 +1,6 @@
 package com.example.metawater.controller;
 
+import com.example.metawater.domain.MyOrderProductVO;
 import com.example.metawater.domain.ProductVO;
 import com.example.metawater.mapper.MypageMapper;
 import com.example.metawater.service.MypageService;
@@ -41,7 +42,7 @@ public class MypageController {
     }
 
     @GetMapping("/myorder/myproduct/{memNo}")
-    public void getOrderProductDetail(@PathVariable Long memNo){
-        mypageService.getOrderProductDetail(memNo);
+    public List<MyOrderProductVO> getOrderProductDetail(@PathVariable Long memNo){
+        return mypageService.getOrderProductDetail(memNo);
     }
 }
