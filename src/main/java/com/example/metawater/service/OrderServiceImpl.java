@@ -21,4 +21,10 @@ public class OrderServiceImpl implements OrderService{
     public void insertRental(OrderVO order) {
         orderMapper.insertRental(order);
     }
+
+    @Override
+    public Long getOrderNo() { return orderMapper.selectOrderNo(); }
+
+    @Override
+    public OrderVO getOrderDetail(Long orderNo) { return orderMapper.getOrderDetail(orderNo); }
 }

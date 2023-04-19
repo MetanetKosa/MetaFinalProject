@@ -15,18 +15,21 @@ public class OrderVO {
     private Long productNo;
     private Long memberNo;
     private String orderState;
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    private Date orderHopedate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date deliveryDate;
+    private String deliveryTime;
     private String orderAddNumber;
     private String orderAddress;
     private String orderAddDetail;
     private String orderName;
     private String orderPhone;
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    private Long orderPrice;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderDate;
     private String orderPay;
+    private Long rentalPrice;
     private Long rentalTerm;
-    private String rentalPaydate;
+    private String rentalPayDate;
     private MemberVO member;
     private ProductVO product;
 }

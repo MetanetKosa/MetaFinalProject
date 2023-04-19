@@ -13,4 +13,8 @@ public interface OrderService{
 
     public void insertRental(OrderVO order);
 
+    public Long getOrderNo();
+
+    public OrderVO getOrderDetail(Long orderNo);
+
 }
