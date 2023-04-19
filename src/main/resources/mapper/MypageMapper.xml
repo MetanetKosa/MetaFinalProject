@@ -96,8 +96,8 @@
         ]]>
     </select>
 
-    <!-- 상세 정보 -->
-    <select id="getOrderProductDetail" resultMap="MyDetailMap">
+    <!-- 상세 정보 리스트-->
+    <select id="getOrderProductDetailList" resultMap="MyDetailMap">
     <![CDATA[
         SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
                po.order_no, po.order_hopedate, po.order_add, po.order_phone, po.order_type, r.ren_term, r.ren_enddate
@@ -105,6 +105,18 @@
                  JOIN rental r ON po.ren_no = r.ren_no
                  JOIN product p ON po.product_no = p.product_no
         WHERE po.mem_no = #{memNo}
+        ]]>
+</select>
+
+    <!-- 상세 정보 디테일-->
+    <select id="getOrderProductDetail" resultMap="MyDetailMap">
+    <![CDATA[
+        SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
+               po.order_no, po.order_hopedate, po.order_add, po.order_phone, po.order_type, r.ren_term, r.ren_enddate
+        FROM pr_order po
+                 JOIN rental r ON po.ren_no = r.ren_no
+                 JOIN product p ON po.product_no = p.product_no
+        WHERE po.order_no = #{orderNo}
         ]]>
 </select>
 

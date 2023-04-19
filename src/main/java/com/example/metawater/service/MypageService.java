@@ -36,7 +36,11 @@ public class MypageService {
         mypageMapper.deleteOrder(orderNo);
     }
 
-    public List<MyOrderProductVO> getOrderProductDetail(Long memNo){
-        return mypageMapper.getOrderProductDetail(memNo);
+    public List<MyOrderProductVO> getOrderProductDetailList(Long memNo){
+        return mypageMapper.getOrderProductDetailList(memNo);
+    }
+
+    public MyOrderProductVO getOrderProductDetail(Long orderNo){
+        return mypageMapper.getOrderProductDetail(orderNo);
     }
     }

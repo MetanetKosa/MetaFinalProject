@@ -23,5 +23,6 @@ public interface MypageMapper {
     public void deleteReturn(Long orderNo);
     public void deleteReview(Long orderNo);
 
-    public List<MyOrderProductVO> getOrderProductDetail(Long memNo);
+    public List<MyOrderProductVO> getOrderProductDetailList(Long memNo);
+    public MyOrderProductVO getOrderProductDetail(Long orderNo);
 }

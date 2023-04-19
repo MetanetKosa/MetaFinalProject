@@ -41,8 +41,13 @@ public class MypageController {
         mypageService.deleteOrder(orderNo);
     }
 
-    @GetMapping("/myorder/myproduct/{memNo}")
-    public List<MyOrderProductVO> getOrderProductDetail(@PathVariable Long memNo){
-        return mypageService.getOrderProductDetail(memNo);
+    @GetMapping("/myorder/myproducts/{memNo}")
+    public List<MyOrderProductVO> getOrderProductDetailList(@PathVariable Long memNo){
+        return mypageService.getOrderProductDetailList(memNo);
+    }
+
+    @GetMapping("/myorder/myproduct/{orderNo}")
+    public MyOrderProductVO getOrderProductDetail(@PathVariable Long orderNo){
+        return mypageService.getOrderProductDetail(orderNo);
     }
 }
