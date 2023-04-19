@@ -11,10 +11,10 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RentalVO {
-    private int ren_no;
-    private String ren_installcost;
-    private Date ren_enddate;
-    private String ren_term;
-    private String ren_paydate;
+    private int rentalNo;
+    private String installPrice;
+    private Date rentalEndDate;
+    private String rentalTerm;
+    private String rentalPayDate;
     private int product_no;
 }

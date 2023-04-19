@@ -27,8 +27,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void createMember(MemberVO memberVO) {
         String password = memberVO.getMemPw();
-        memberVO.setMemPw(encoder.encode(password));
-        System.out.println("회원가입 " + memberVO);
+        //memberVO.getMemPw(encoder.encode(password));
+        System.out.println(memberVO);
         memberMapper.insertMember(memberVO);
     }
 
@@ -50,27 +50,26 @@ public class MemberServiceImpl implements MemberService {
 
     //인증
     //로그인 후 db에서 데이터 확인 후 맞으면 session 발급
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        MemberVO memberVO = memberMapper.getUser(username);
-//        System.out.println(memberVO);
-//        if(memberVO == null) {
-//            throw new UsernameNotFoundException("id: " + username + " is not found");
-//        }
-//
-//        String id = memberVO.getMemId();
-//        String pw = memberVO.getMemPw();
-//        String auth = memberVO.getAuth();
-//        System.out.println("id: "+id+", pw: "+pw+", auth: "+auth);
-//
-//        return User.builder()
-//                .username(id)
-//                .password(pw)
-//                .authorities(auth)
-//                .build();
-//
-////        return new User(memberVO.getUsername(), memberVO.getMemPw(), Collections.singleton(new SimpleGrantedAuthority(memberVO.getAuth())));
-//    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {MemberVO memberVO = memberMapper.getUser(username);
+        System.out.println(memberVO);
+        if(memberVO == null) {
+            throw new UsernameNotFoundException("id: " + username + " is not found");
+        }
+
+        String id = memberVO.getMemId();
+        String pw = memberVO.getMemPw();
+        String auth = memberVO.getAuth();
+        System.out.println("id: "+id+", pw: "+pw+", auth: "+auth);
+
+        return User.builder()
+                .username(id)
+                .password(pw)
+                .authorities(auth)
+                .build();
+
+        //return new User(memberVO.getMem_name(), memberVO.getMem_pw(), Collections.singleton(new SimpleGrantedAuthority(memberVO.getAuth())));
+    }
 
 //
 //    public void updateMember(MemberVO updateUser) {

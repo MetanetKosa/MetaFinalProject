@@ -11,18 +11,25 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderVO {
-    private String orderNo;
-    private String productNo;
-    private String memNo;
-    private String renNo;
+    private Long orderNo;
+    private Long productNo;
+    private Long memberNo;
     private String orderState;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date orderHopedate;
-    private String orderAdd;
+    private Date deliveryDate;
+    private String deliveryTime;
+    private String orderAddNumber;
+    private String orderAddress;
+    private String orderAddDetail;
     private String orderName;
     private String orderPhone;
+    private Long orderPrice;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderDate;
     private String orderPay;
-    private String orderType;
+    private Long rentalPrice;
+    private Long rentalTerm;
+    private String rentalPayDate;
+    private MemberVO member;
+    private ProductVO product;
 }

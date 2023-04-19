@@ -11,5 +11,6 @@ public interface ProductService {
     public boolean deleteProduct(Long product_no);
     public List<ProductVO> getProductList();
     public List<ProductVO> getBestProductList();
+    public List<ProductVO> getProductListBySearch(String searchKeyword);
     public ProductVO getProduct(Long product_no);
 }

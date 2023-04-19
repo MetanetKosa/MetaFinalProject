@@ -3,19 +3,61 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.metawater.mapper.OrderMapper">
-<!--    <resultMap id="orderMap" type="com.example.metawater.vo.OrderVO">-->
-<!--        <result property="orderNo" column="order_no"/>-->
-<!--        <result property="productNo" column="product_no"/>-->
-<!--        <result property="memNo" column="mem_no"/>-->
-<!--        <result property="renNo" column="ren_no"/>-->
-<!--        <result property="orderState" column="order_state"/>-->
-<!--        <result property="orderHopedate" column="order_hopedate"/>-->
-<!--        <result property="orderAdd" column="order_add"/>-->
-<!--        <result property="orderName" column="order_name"/>-->
-<!--        <result property="orderPhone" column="order_phone"/>-->
-<!--        <result property="orderDate" column="order_date"/>-->
-<!--        <result property="orderType" column="order_type"/>-->
-<!--    </resultMap>-->
+
+    <resultMap id="orderMap" type="com.example.metawater.domain.OrderVO">
+        <result property="orderNo" column="order_no"/>
+        <result property="productNo" column="product_no"/>
+        <result property="memberNo" column="mem_no"/>
+        <result property="orderState" column="order_state"/>
+        <result property="deliveryDate" column="order_devDate"/>
+        <result property="deliveryTime" column="order_devTime"/>
+        <result property="orderAddNumber" column="order_addNumber"/>
+        <result property="orderAddress" column="order_address"/>
+        <result property="orderAddDetail" column="order_addDetail"/>
+        <result property="orderName" column="order_name"/>
+        <result property="orderPhone" column="order_phone"/>
+        <result property="orderPrice" column="order_price"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="orderPay" column="order_pay"/>
+        <result property="rentalPrice" column="rental_price"/>
+        <result property="rentalTerm" column="rental_term"/>
+        <result property="rentalPayDate" column="rental_payDate"/>
+        <association property="member" resultMap="memberMap"/>
+        <association property="product" resultMap="productMap"/>
+    </resultMap>
+
+    <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
+        <id property="memNo" column="mem_no"/>
+        <result property="memId" column="mem_id"/>
+        <result property="memPw" column="mem_pw"/>
+        <result property="memName" column="mem_name"/>
+        <result property="memPhone" column="mem_phone"/>
+        <result property="memEmail" column="mem_email"/>
+        <result property="auth" column="auth"/>
+    </resultMap>
+
+    <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
+        <id property="productNo" column="product_no"/>
+        <result property="productName" column="product_name"/>
+        <result property="productSize" column="product_size"/>
+        <result property="productWeight" column="product_weight"/>
+        <result property="productDetail" column="product_detail"/>
+        <result property="productGuide" column="product_guide"/>
+        <result property="productType" column="product_type"/>
+        <result property="productMethod" column="product_method"/>
+        <result property="productRdate" column="product_rdate"/>
+        <result property="productCompany" column="product_company"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="detailUrl" column="detail_url"/>
+        <result property="productSales" column="product_sales"/>
+        <result property="productFunction" column="product_function"/>
+        <result property="productModel" column="product_model"/>
+        <result property="productRentalPrice" column="product_rentalPrice"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="productColor" column="product_color"/>
+    </resultMap>
 
 <!--    <resultMap id="rentalMap" type="com.example.metawater.vo.RentalVO">-->
 <!--        <result property="renNo" column="ren_no"/>-->
@@ -26,12 +68,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--        <result property="productNo" column="product_no"/>-->
 <!--    </resultMap>-->
 
-    <insert id="rentalInsert">
-        INSERT INTO rental VALUES (RENTAL_SEQ.nextval,#{ren_installcost},'2022/02/23',#{ren_term},#{ren_paydate},41)
+    <insert id="insertOrder" parameterType="com.example.metawater.domain.OrderVO">
+        INSERT INTO orders
+        (order_no, product_no, mem_no, order_state, order_devDate, order_devTime, order_addNumber, order_address, order_addDetail, order_name, order_phone, order_price, order_date, order_pay, rental_price, rental_term, rental_payDate)
+        VALUES
+            (orders_seq.nextval, #{productNo}, #{memberNo}, '주문 완료', #{deliveryDate}, #{deliveryTime}, #{orderAddNumber}, #{orderAddress}, #{orderAddDetail}, #{orderName}, #{orderPhone}, #{orderPrice}, sysdate, #{orderPay}, null, null, null)
     </insert>
 
-    <insert id="orderInsert">
-
+    <insert id="insertRental" parameterType="com.example.metawater.domain.OrderVO">
+        INSERT INTO orders
+        (order_no, product_no, mem_no, order_state, order_devDate, order_devTime, order_addNumber, order_address, order_addDetail, order_name, order_phone, order_price, order_date, order_pay, rental_price, rental_term, rental_payDate)
+            VALUES (orders_seq.nextval, #{productNo}, #{memberNo}, '주문 완료', #{deliveryDate}, #{deliveryTime}, #{orderAddNumber}, #{orderAddress}, #{orderAddDetail}, #{orderName}, #{orderPhone}, null, sysdate, #{orderPay}, #{rentalPrice}, #{rentalTerm}, #{rentalPayDate})
     </insert>
 
+    <select id="selectOrderNo" resultType="Long">
+        SELECT order_no
+        FROM( SELECT * FROM orders ORDER BY ROWNUM DESC )
+        WHERE ROWNUM = 1
+    </select>
+
+    <select id="getOrderDetail" parameterType="Long" resultMap="orderMap">
+        select o.*, m.*, p.*
+        from orders o, member m, product p
+        where o.product_no = p.product_no and o.mem_no = m.mem_no
+        and o.order_no = #{orderNo}
+    </select>
 </mapper>
