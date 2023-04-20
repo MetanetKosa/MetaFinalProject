@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductInqServiceIml implements ProductInqService {
+public class ProductInqServiceImpl implements ProductInqService {
 
     @Autowired
     private ProductInqMapper qMapper;

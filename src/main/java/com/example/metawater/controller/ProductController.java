@@ -26,7 +26,7 @@ public class ProductController {
     private String uploadDir;
 
     @Autowired
-    private ProductService service;
+    public ProductService service;
 
     public ProductController(ProductService service) {
         this.service = service;
@@ -46,25 +46,23 @@ public class ProductController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    // 상품 목록 조회
+    //상품 목록 조회
     @GetMapping("/products")
     public List<ProductVO> list(){
         return service.getProductList();
     }
 
-    // best5
+    //best5
     @GetMapping("/best")
     public List<ProductVO> bestList() { return service.getBestProductList();}
 
-    // 상품 검색
+    //상품 검색
     @GetMapping("/search/{searchKeyword}")
     public List<ProductVO> search(@PathVariable String searchKeyword) {
         System.out.println("검색 GET 요청 확인");
         System.out.println(service.getProductListBySearch(searchKeyword));
         return service.getProductListBySearch(searchKeyword);
     }
-
-    //상품 상세조회
 
     @GetMapping("/{productNo}")
     public ProductVO get(@PathVariable Long productNo){

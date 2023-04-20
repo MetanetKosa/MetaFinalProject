@@ -31,18 +31,18 @@
 <!--        <collection property="functions" resultMap="functionMap"></collection>-->
     </resultMap>
 
-    <resultMap id="colorMap" type="com.example.metawater.domain.ColorVO">
-        <id property="colorNo" column="color_no"/>
-        <result property="colorName" column="color_name"/>
-    </resultMap>
+<!--    <resultMap id="colorMap" type="com.example.metawater.domain.ColorVO">-->
+<!--        <id property="colorNo" column="color_no"/>-->
+<!--        <result property="colorName" column="color_name"/>-->
+<!--    </resultMap>-->
 
-    <resultMap id="functionMap" type="com.example.metawater.domain.FunctionVO">
-        <id property="functionNo" column="function_no"/>
-        <result property="functionName" column="function_name"/>
-        <result property="functionModel" column="function_model"/>
-        <result property="functionRentalPrice" column="function_rentalPrice"/>
-        <result property="functionPrice" column="function_price"/>
-    </resultMap>
+<!--    <resultMap id="functionMap" type="com.example.metawater.domain.FunctionVO">-->
+<!--        <id property="functionNo" column="function_no"/>-->
+<!--        <result property="functionName" column="function_name"/>-->
+<!--        <result property="functionModel" column="function_model"/>-->
+<!--        <result property="functionRentalPrice" column="function_rentalPrice"/>-->
+<!--        <result property="functionPrice" column="function_price"/>-->
+<!--    </resultMap>-->
 
 <!--    <select id="getProductList" resultMap="productMap">-->
 <!--        select distinct p.*, c.color_name, f.function_name-->

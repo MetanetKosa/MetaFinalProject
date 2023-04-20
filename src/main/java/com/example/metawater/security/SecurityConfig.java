@@ -30,6 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/members/**")
                 .antMatchers("/mypage/**")
                 .antMatchers("/auth/members")
+                .antMatchers("/order/**")
+                .antMatchers("/product/**")
+                .antMatchers("/product/{productNo}/**")
                 .antMatchers("/css/**", "/js/**", "/img/**");
         // 이 요청들에 대해서는 spring security 필터 체인을 적용하지 않겠다
     }

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface ProductInqService {
 
     public List<ProductInqVO> findAll();

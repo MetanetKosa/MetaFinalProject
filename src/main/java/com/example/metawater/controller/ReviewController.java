@@ -42,7 +42,7 @@ public class ReviewController {
         return reviewService.getReview(productNo, reviewNo);
     }
 
-    //상품,회원별 리뷰 작성가능한 주문 조회
+    //상품,회원별 리뷰작성 가능한 주문 조회
     @GetMapping("/{productNo}/{memNo}/reviewOrders")
     public List<OrderVO> orderList(@PathVariable Long memNo, @PathVariable Long productNo) {
         return reviewService.findAvailableOrder(memNo, productNo);
