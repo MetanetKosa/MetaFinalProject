@@ -40,6 +40,7 @@ public class MemberController {
         MemberVO memberVO = memberService.findByUserId(id);
         System.out.println("즈기여 postman에서 성공적이라잖아요 왜 안나타나냐고요!! 아놔..하...");
         System.out.println("memberVO 객체의 값은? " + memberVO);
+        System.out.println("머지후 클래스 확인");
         return ResponseEntity.status(HttpStatus.CREATED).body(memberVO);
     }
 
