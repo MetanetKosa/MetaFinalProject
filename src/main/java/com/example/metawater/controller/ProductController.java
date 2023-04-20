@@ -21,8 +21,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 public class ProductController {
 
-    @Value("${metawater.upload.path}")
-    private String uploadDir;
 
     @Autowired
     private ProductService service;
