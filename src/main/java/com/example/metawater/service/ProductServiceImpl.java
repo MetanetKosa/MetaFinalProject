@@ -50,8 +50,19 @@ public class ProductServiceImpl implements ProductService
     }
 
     @Override
-    public ProductVO getProduct(Long productNo) {
-        return mapper.getProduct(productNo);
+
+    public List<ProductVO> getBestProductList() {
+        return mapper.getBestProductList();
+    }
+
+    @Override
+    public List<ProductVO> getProductListBySearch(String searchKeyword) {
+        return mapper.getProductListBySearch(searchKeyword);
+    }
+
+    @Override
+    public ProductVO getProduct(Long product_no) {
+        return mapper.getProduct(product_no);
     }
 
     @Override

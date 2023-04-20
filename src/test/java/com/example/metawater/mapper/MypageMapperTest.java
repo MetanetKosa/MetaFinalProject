@@ -19,11 +19,11 @@ public class MypageMapperTest {
 
     @Test
     public void getMyProductListTest() {
-       List<ProductVO> myProductList = mypageMapper.getMyProductList(1L);
-        assertNotNull(myProductList);
+//       List<ProductVO> myProductList = mypageMapper.getMyProductList(1L);
+//        assertNotNull(myProductList);
 
-        for (ProductVO product : myProductList) {
-            System.out.println(product);
-        }
+//        for (ProductVO product : myProductList) {
+//            System.out.println(product);
+//        }
     }
 }

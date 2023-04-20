@@ -5,30 +5,34 @@
 <mapper namespace="com.example.metawater.mapper.MemberMapper">
 
     <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
-        <id column="memNo" property="mem_no"/>
-        <result column="memId" property="mem_id" />
-        <result column="memPw" property="mem_pw" />
-        <result column="memName" property="mem_name" />
-        <result column="memPhone" property="mem_phone" />
-        <result column="memEmail" property="mem_email" />
-        <result column="auth" property="auth" />
+        <id property="memNo" column="mem_no"/>
+        <result property="memId" column="mem_id" />
+        <result property="memPw" column="mem_pw" />
+        <result property="memName" column="mem_name" />
+        <result property="memPhone" column="mem_phone" />
+        <result property="memEmail" column="mem_email" />
+        <result property="auth" column="auth" />
+        <result property="status" column="status" />
     </resultMap>
 
     <!-- 회원 등록 -->
-    <insert id="insertMember" parameterType="MemberVO">
-        <selectKey keyProperty="memNo" order="BEFORE"
-                   resultType="long">
-            select member_seq.nextval from dual
-        </selectKey>
-
-        insert into member (mem_no, mem_id, mem_pw, mem_name, mem_phone,mem_email,auth)
+    <insert id="insertMember">
+        insert into member (mem_no, mem_id, mem_pw, mem_name, mem_phone, mem_email, auth)
         values (member_seq.nextval, #{memId}, #{memPw}, #{memName}, #{memPhone},#{memEmail},#{auth})
     </insert>
 
     <!-- 회원정보 확인 -->
-    <select id="getUserById" parameterType="MemberVO">
-        select * from member where mem_id = #{mem_id}
+    <select id="findByUserId" parameterType="String" resultMap="memberMap">
+        select * from member where mem_id = #{memId}
     </select>
+
+    <select id="idGet" resultType="MemberVO">
+        select * from member where mem_id = #{memId}
+    </select>
+
+    <insert id ="userRole">
+        insert into memberauth values(#{memberIdx}, 'ROLE_USER')
+    </insert>
 
     <!-- 모든 회원정보 확인 -->
     <select id="findAllUsers" resultMap="memberMap">
@@ -66,7 +70,7 @@
     <!-- 회원정보 수정 -->
     <select id="updatePw" resultType="String">
         update member
-            set mem_pw = #{mem_pw}
+        set mem_pw = #{mem_pw}
         where mem_id = {mem_id} and mem_name = #{mem_name}
     </select>
 

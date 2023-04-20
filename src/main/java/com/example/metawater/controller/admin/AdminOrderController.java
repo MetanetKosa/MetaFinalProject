@@ -1,3 +1,4 @@
+
 package com.example.metawater.controller.admin;
 
 import com.example.metawater.domain.OrderVO;
@@ -14,8 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 public class AdminOrderController {
-
-
 
     @Autowired
     private OrderService service;
@@ -58,3 +57,4 @@ public class AdminOrderController {
 
     }
 }
+

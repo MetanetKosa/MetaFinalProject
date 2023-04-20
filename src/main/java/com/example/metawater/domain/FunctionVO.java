@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FunctionVO {
-    private Long function_no;
-    private String function_name;
-    private String function_model;
-    private String function_rentalPrice;
-    private String function_price;
-    private Long product_no;
+    private Long functionNo;
+    private String functionName;
+    private String functionModel;
+    private String functionRentalPrice;
+    private String functionPrice;
+    private Long productNo;
 }

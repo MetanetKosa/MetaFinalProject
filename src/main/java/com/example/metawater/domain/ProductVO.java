@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductVO {
-
     private Long productNo;
     private String productName;
     private String productSize;
@@ -21,13 +20,16 @@ public class ProductVO {
     private String productGuide;
     private String productType;
     private String productMethod;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date productRdate;
     private String productCompany;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date regDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updateDate;
     private String imgUrl;
     private String detailUrl;
+
     private int productSales;
 
     private String productFunction;
@@ -41,4 +43,5 @@ public class ProductVO {
     private String productColor;
 
     private List<UploadResultDTO> attachList;
+
 }

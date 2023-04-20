@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.metawater.mapper.ReviewMapper">
+
+    <resultMap id="reviewMap" type="com.example.metawater.domain.ReviewVO">
+        <id property="reviewNo" column="re_no"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="productNo" column="product_no"/>
+        <result property="memberNo" column="mem_no"/>
+        <result property="reStar" column="re_star"/>
+        <result property="reImageUrl" column="re_image"/>
+        <result property="reContent" column="re_content"/>
+        <result property="reDate" column="re_date"/>
+        <association property="member" resultMap="memberMap"/>
+        <association property="product" resultMap="productMap"/>
+    </resultMap>
+
+    <resultMap id="orderMap" type="com.example.metawater.domain.OrderVO">
+        <id property="orderNo" column="order_no"/>
+        <result property="memberNo" column="mem_no"/>
+        <result property="rentalNo" column="ren_no"/>
+        <result property="productNo" column="product_no"/>
+        <result property="orderState" column="order_state"/>
+        <result property="orderHopedate" column="order_hopedate"/>
+        <result property="orderAdd" column="order_add"/>
+        <result property="orderName" column="order_name"/>
+        <result property="orderPhone" column="order_phone"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="orderPay" column="order_pay"/>
+        <result property="orderType" column="order_type"/>
+        <association property="member" resultMap="memberMap"/>
+        <association property="product" resultMap="productMap"/>
+    </resultMap>
+
+    <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
+        <id property="memNo" column="mem_no"/>
+        <result property="memId" column="mem_id"/>
+        <result property="memPw" column="mem_pw"/>
+        <result property="memName" column="mem_name"/>
+        <result property="memPhone" column="mem_phone"/>
+        <result property="memEmail" column="mem_email"/>
+        <result property="auth" column="auth"/>
+    </resultMap>
+
+    <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
+        <id property="productNo" column="product_no"/>
+        <result property="productName" column="product_name"/>
+        <result property="productSize" column="product_size"/>
+        <result property="productWeight" column="product_weight"/>
+        <result property="productDetail" column="product_detail"/>
+        <result property="productGuide" column="product_guide"/>
+        <result property="productType" column="product_type"/>
+        <result property="productMethod" column="product_method"/>
+        <result property="productRdate" column="product_rdate"/>
+        <result property="productCompany" column="product_company"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="detailUrl" column="detail_url"/>
+        <result property="productSales" column="product_sales"/>
+        <result property="productFunction" column="product_function"/>
+        <result property="productModel" column="product_model"/>
+        <result property="productRentalPrice" column="product_rentalPrice"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="productColor" column="product_color"/>
+        <!--        <collection property="colors" resultMap="colorMap"></collection>-->
+        <!--        <collection property="functions" resultMap="functionMap"></collection>-->
+    </resultMap>
+
+    <select id="getReviewList" resultMap="reviewMap">
+        select r.*, m.member_name, p.product_name, p.product_function, p.product_model
+        from review r, member m, product p
+        where r.mem_no = m.mem_no and r.product_no = p.product_no
+    </select>
+
+    <select id="getReviewListByProductId" parameterType="Long" resultMap="reviewMap">
+        select r.*, m.mem_name, p.product_name, p.product_function, p.product_model
+        from review r, member m, product p
+        where r.mem_no = m.mem_no and r.product_no = p.product_no
+          and r.product_no = #{productNo}
+    </select>
+
+    <select id="getReview" parameterType="Long" resultMap="reviewMap">
+        select r.*, m.mem_name, p.product_name, p.product_function, p.product_model
+        from review r, member m, product p
+        where r.mem_no = m.mem_no and r.product_no = p.product_no
+          and r.re_no = #{reviewNo} and r.product_no = #{productNo}
+    </select>
+
+    <select id="availableReviews" parameterType="Long" resultMap="orderMap">
+        SELECT o.*, p.*, m.*
+        FROM pr_order o
+                 INNER JOIN product p ON o.product_no = p.product_no
+                 INNER JOIN member m ON o.mem_no = m.mem_no
+        WHERE o.mem_no = #{memNo}
+          AND o.order_no NOT IN (
+            SELECT r.order_no
+            FROM review r
+            WHERE r.mem_no = #{memNo}
+        )
+          AND p.product_no = #{productNo}
+          AND o.order_state = '설치 완료'
+    </select>
+
+    <select id="avgStarByProductId" parameterType="Long" resultType="Float">
+        select ROUND(AVG(re_star), 1) from review where product_no = #{productNo}
+    </select>
+
+    <insert id="reviewInsert">
+        INSERT INTO REVIEW (re_no, re_star, re_image, re_content, re_date, mem_no, product_no)
+        VALUES (review_seq.nextval, #{reStar}, #{reImageUrl}, #{reContent}, sysdate, #{memberNo}, #{productNo})
+    </insert>
+
+    <update id="reviewUpdate">
+        UPDATE REVIEW
+        SET re_star = #{reStar},
+            re_image = #{reContent},
+            re_date = sysdate
+        WHERE re_no = #{returnNo}
+    </update>
+
+    <delete id="reviewDelete" parameterType="Long">
+        DELETE FROM REVIEW
+        WHERE re_no = #{returnNo}
+    </delete>
+
+</mapper>

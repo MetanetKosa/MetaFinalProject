@@ -10,7 +10,14 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderVO {
+public class MyOrderProductVO {
+    // 마이페이지 상세정보 VO
+    private String productName;
+    private String productModel;
+    private String productSize;
+    private String productGuide;
+    private String productRentalPrice;
+    private String imgUrl;
     private Long orderNo;
     private Long productNo;
     private Long memberNo;
@@ -30,8 +37,6 @@ public class OrderVO {
     private Long rentalPrice;
     private Long rentalTerm;
     private String rentalPayDate;
-    private MemberVO member;
+    private OrderDTO order;
     private ProductVO product;
-
-    private RentalVO rental;
 }

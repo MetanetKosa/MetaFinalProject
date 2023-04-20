@@ -20,25 +20,88 @@
         <result property="updateDate" column="updateDate"/>
         <result property="imgUrl" column="img_url"/>
         <result property="detailUrl" column="detail_url"/>
+        <result property="productSales" column="product_sales"/>
         <result property="productFunction" column="product_function"/>
         <result property="productModel" column="product_model"/>
         <result property="productRentalPrice" column="product_rentalPrice"/>
         <result property="productPrice" column="product_price"/>
         <result property="productColor" column="product_color"/>
-        <result property="productSales" column="product_sales"/>
+<!--        <collection property="colors" resultMap="colorMap"></collection>-->
+<!--        <collection property="functions" resultMap="functionMap"></collection>-->
     </resultMap>
 
+<!--    <resultMap id="colorMap" type="com.example.metawater.domain.ColorVO">-->
+<!--        <id property="colorNo" column="color_no"/>-->
+<!--        <result property="colorName" column="color_name"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap id="functionMap" type="com.example.metawater.domain.FunctionVO">-->
+<!--        <id property="functionNo" column="function_no"/>-->
+<!--        <result property="functionName" column="function_name"/>-->
+<!--        <result property="functionModel" column="function_model"/>-->
+<!--        <result property="functionRentalPrice" column="function_rentalPrice"/>-->
+<!--        <result property="functionPrice" column="function_price"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="getProductList" resultMap="productMap">-->
+<!--        select distinct p.*, c.color_name, f.function_name-->
+<!--        from product p-->
+<!--                 left join product_color c on p.product_no = c.product_no-->
+<!--                 left join product_function f on p.product_no = f.product_no-->
+<!--        order by p.product_no-->
+<!--    </select>-->
+
+<!--    <select id="getProductList" resultType="ProductVO">-->
+<!--       <![CDATA[-->
+<!--        select  * from product where product_no > 0-->
+<!--        ]]>-->
+<!--    </select>-->
 
     <select id="getProductList" resultMap="productMap">
-       <![CDATA[
-        select  * from product where product_no > 0
+        SELECT * from product
+    </select>
+<!--
+    <select id="getBestProductList" resultMap="productMap">
+        <![CDATA[
+        SELECT p.product_no, p.product_name, p.img_url, c.color_name, f.function_name, f.function_model, f.function_rentalprice, f.function_price
+        FROM (
+                 SELECT *
+                 FROM product
+                 WHERE ROWNUM <= 5
+             ) p
+                 LEFT JOIN product_color c ON p.product_no = c.product_no
+                 LEFT JOIN product_function f ON p.product_no = f.product_no
+        ]]>
+    </select>
+-->
+
+    <select id="getBestProductList" resultMap="productMap">
+        <![CDATA[
+            SELECT * from (select * from product order by product_sales desc) where rownum <= 5
         ]]>
     </select>
 
-    <select id="getProduct" resultMap="productMap">
-       <![CDATA[
-        select  * from product where product_no = #{productNo}
-        ]]>
+    <select id="getProductListBySearch" parameterType="String" resultMap="productMap">
+        SELECT *
+        FROM product
+        WHERE product_name LIKE '%' || #{searchKeyword} || '%'
+    </select>
+
+<!--
+
+    <select id="getProduct" resultMap="productMap" parameterType="Long">
+        SELECT DISTINCT p.*, c.*, f.*
+        FROM product p
+                 LEFT JOIN product_color c ON p.product_no = c.product_no
+                 LEFT JOIN product_function f ON p.product_no = f.product_no
+        WHERE p.product_no = #{product_no}
+        ORDER BY p.product_no
+    </select>
+-->
+
+    <select id="getProduct" resultMap="productMap" parameterType="Long">
+        SELECT * from product where product_no = #{productNo}
+
     </select>
 
 
