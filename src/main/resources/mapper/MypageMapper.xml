@@ -119,18 +119,7 @@
     </resultMap>
 
 
-    <!-- 상세 정보 디테일-->
-    <select id="getOrderProductDetail" resultMap="MyDetailMap">
-    <![CDATA[
-        SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
-               o.order_no, o.order_state, o.order_devDate, o.order_devTime, o.order_addNumber, o.order_address,
-               o.order_addDetail, o.order_name, o.order_phone, o.order_price, o.order_date, o.order_pay, o.rental_price,
-               o.rental_term, o.rental_payDate
-        FROM orders o
-                 JOIN product p ON o.product_no = p.product_no
-        WHERE o.order_no = #{orderNo}
-        ]]>
-</select>
+
 
     <!-- 해지신청 -->
     <insert id="returnInsert">
@@ -150,15 +139,29 @@
     <!-- 상세 정보 리스트-->
     <select id="getOrderProductDetailList" resultMap="MyDetailMap">
     <![CDATA[
-        SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
-               po.order_no, po.order_hopedate, po.order_add, po.order_phone, po.order_type, r.ren_term, r.ren_enddate
-        FROM pr_order po
-                 JOIN rental r ON po.ren_no = r.ren_no
-                 JOIN product p ON po.product_no = p.product_no
-        WHERE po.mem_no = #{memNo}
-        ]]>
-</select>
+            SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
+                   o.order_no, o.order_state, o.order_devDate, o.order_devTime, o.order_addNumber, o.order_address,
+                   o.order_addDetail, o.order_name, o.order_phone, o.order_price, o.order_date, o.order_pay, o.rental_price,
+                   o.rental_term, o.rental_payDate
+            FROM orders o
+                     JOIN product p ON o.product_no = p.product_no
+            WHERE o.mem_no = #{memNo}
+            ]]>
+    </select>
 
+
+    <!-- 상세 정보 디테일-->
+    <select id="getOrderProductDetail" resultMap="MyDetailMap">
+    <![CDATA[
+        SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
+               o.order_no, o.order_state, o.order_devDate, o.order_devTime, o.order_addNumber, o.order_address,
+               o.order_addDetail, o.order_name, o.order_phone, o.order_price, o.order_date, o.order_pay, o.rental_price,
+               o.rental_term, o.rental_payDate
+        FROM orders o
+                 JOIN product p ON o.product_no = p.product_no
+        WHERE o.order_no = #{orderNo}
+        ]]>
+    </select>
 
 
     <select id="getMyOrderList" resultMap="orderMap">
