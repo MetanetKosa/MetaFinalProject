@@ -1,6 +1,7 @@
 package com.example.metawater.controller;
 
 import com.example.metawater.domain.MyOrderProductVO;
+import com.example.metawater.domain.OrderDTO;
 import com.example.metawater.domain.ProductVO;
 import com.example.metawater.mapper.MypageMapper;
 import com.example.metawater.service.MypageService;

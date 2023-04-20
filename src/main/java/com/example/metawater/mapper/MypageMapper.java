@@ -1,6 +1,7 @@
 package com.example.metawater.mapper;
 
 import com.example.metawater.domain.MyOrderProductVO;
+import com.example.metawater.domain.OrderDTO;
 import com.example.metawater.domain.ProductVO;
 import com.example.metawater.domain.ReturnVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -25,4 +26,5 @@ public interface MypageMapper {
 
     public List<MyOrderProductVO> getOrderProductDetailList(Long memNo);
     public MyOrderProductVO getOrderProductDetail(Long orderNo);
+
 }
