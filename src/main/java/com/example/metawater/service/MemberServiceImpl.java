@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Member;
 import java.util.Collections;
 
 
@@ -23,7 +22,6 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
-//    회원가입
     @Override
     public void createMember(MemberVO memberVO) {
         String password = memberVO.getMemPw();
@@ -32,21 +30,10 @@ public class MemberServiceImpl implements MemberService {
         memberMapper.insertMember(memberVO);
     }
 
-    @Override
-    public MemberVO getUserById(String id) {
-        return null;
-    }
-
-    //로그인
-    @Override
-    public UserDetails loadUserByUsername(String memId) throws UsernameNotFoundException {
-        //여기서 받은 유저 패스워드와 비교하여 로그인 인증
-        MemberVO memberVO = memberMapper.getUserById(memId);
-        if(memberVO == null){
-            throw new UsernameNotFoundException("User not authorized.");
-        }
-        return null;
-    }
+//    @Override
+//    public MemberVO getUserById(String id) {
+//        return memberMapper.getUserById(id);
+//    }
 
     //인증
     //로그인 후 db에서 데이터 확인 후 맞으면 session 발급
@@ -111,4 +98,25 @@ public class MemberServiceImpl implements MemberService {
 //        return true;
 //    }
 
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        MemberVO user = memberMapper.getUser(username);
+//        System.out.println(user);
+//        if(user == null) {
+//            throw new UsernameNotFoundException("id: " + username + " is not found");
+//        }
+//
+////        String id = user.getUsername();
+////        String pw = user.getPassword();
+////        String auth = user.getAuth();
+////        System.out.println("id: "+id+", pw: "+pw+", auth: "+auth);
+//
+////        return User.builder()
+////                .username(id)
+////                .password(pw)
+////                .authorities(auth)
+////                .build();
+//
+//        return new User(user.getUsername(), user.getPassword(), Collections.singleton(new SimpleGrantedAuthority(user.getAuth())));
+//    }
 }
