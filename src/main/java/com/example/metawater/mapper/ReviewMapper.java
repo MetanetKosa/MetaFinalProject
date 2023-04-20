@@ -1,6 +1,6 @@
 package com.example.metawater.mapper;
 
-import com.example.metawater.domain.ProductVO;
+import com.example.metawater.domain.OrderVO;
 import com.example.metawater.domain.ReviewVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,6 +18,9 @@ public interface ReviewMapper {
     public ReviewVO getReview(Long productNo, Long reviewNo);
 
     public float avgStarByProductId(Long productNo);
+
+    //회원별 작성가능한 상품 조회
+    public List<OrderVO> availableReviews(Long memNo, Long productNo);
 
     //리뷰 등록
     public void reviewInsert(ReviewVO review);

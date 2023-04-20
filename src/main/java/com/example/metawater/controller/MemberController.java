@@ -134,7 +134,6 @@ public class MemberController {
 //    @Autowired
 //    MemberService memberService;
 //
-
 //    //로그인한 사용자만 접근
 //    @GetMapping("/member")
 //    public String member() {

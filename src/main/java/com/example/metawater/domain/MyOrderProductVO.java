@@ -1,24 +1,41 @@
 package com.example.metawater.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MyOrderProductVO {
-    private Long memNo;
     private String productName;
     private String productModel;
     private String productSize;
     private String productGuide;
     private String productRentalPrice;
-    private String umgUrl;
+    private String imgUrl;
+    private Long orderNo;
+    private Long productNo;
+    private Long memberNo;
+    private String orderState;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date orderHopeDate;
-    private String OrderAdd;
+    private Date deliveryDate;
+    private String deliveryTime;
+    private String orderAddNumber;
+    private String orderAddress;
+    private String orderAddDetail;
+    private String orderName;
     private String orderPhone;
-    private String orderType;
-    private String renTerm;
+    private Long orderPrice;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date renEndDate;
-
+    private Date orderDate;
+    private String orderPay;
+    private Long rentalPrice;
+    private Long rentalTerm;
+    private String rentalPayDate;
+    private OrderDTO order;
+    private ProductVO product;
 }

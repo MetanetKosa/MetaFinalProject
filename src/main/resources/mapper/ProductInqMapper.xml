@@ -47,12 +47,12 @@
     </resultMap>
 
     <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
-        <id property="mem_no" column="mem_no"/>
-        <result property="mem_id" column="mem_id"/>
-        <result property="mem_pw" column="mem_pw"/>
-        <result property="mem_name" column="mem_name"/>
-        <result property="mem_phone" column="mem_phone"/>
-        <result property="mem_email" column="mem_email"/>
+        <id property="memNo" column="mem_no"/>
+        <result property="memId" column="mem_id"/>
+        <result property="memPw" column="mem_pw"/>
+        <result property="memName" column="mem_name"/>
+        <result property="memPhone" column="mem_phone"/>
+        <result property="memEmail" column="mem_email"/>
         <result property="auth" column="auth"/>
     </resultMap>
 

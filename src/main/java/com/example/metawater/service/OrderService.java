@@ -6,17 +6,15 @@ import com.example.metawater.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-
+@Service
 public interface OrderService{
 
-    public void rentalInsert(RentalVO rentalVO);
+    public void insertOrder(OrderVO order);
 
-    public List<OrderVO> orderList();
+    public void insertRental(OrderVO order);
 
-    public boolean orderStateUpdate(OrderVO orderVO);
+    public Long getOrderNo();
 
-    public OrderVO orderDetail(Long orderNo);
+    public OrderVO getOrderDetail(Long orderNo);
 
 }

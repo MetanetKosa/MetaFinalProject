@@ -19,7 +19,7 @@ public interface MemberService extends UserDetailsService {
 //    UserDetails loadUserByUsername(String memId);
 //    boolean checkMemberInfo(MemberDTO memberDTO);
 
-    public MemberVO findByUserId(String id);
+//    public MemberVO getUserById(String id);
 
     public Boolean checkId(String id);
 
