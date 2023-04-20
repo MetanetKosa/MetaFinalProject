@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/login").permitAll()
                 .antMatchers("/auth").hasRole("USER")
 //                .antMatchers("/mypage").hasRole("USER")
-                .antMatchers("/admin").hasRole("ADMIN")
+//                .antMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(getAuthenticationFilter()) //회원 로그인
