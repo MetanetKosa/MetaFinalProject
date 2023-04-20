@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -29,6 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/auth/signup")
                 .antMatchers("/auth/members/**")
+                .antMatchers("/mypage/**")
+                .antMatchers("/auth/members")
                 .antMatchers("/css/**", "/js/**", "/img/**");
         // 이 요청들에 대해서는 spring security 필터 체인을 적용하지 않겠다
     }
@@ -36,14 +37,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/**").permitAll()
-            .antMatchers("/auth/login").permitAll()
+                .authorizeRequests()
+                .antMatchers("/**").permitAll()
+                .antMatchers("/auth/login").permitAll()
                 .antMatchers("/auth").hasRole("USER")
+//                .antMatchers("/mypage").hasRole("USER")
                 .antMatchers("/admin").hasRole("ADMIN")
-            .anyRequest().authenticated()
-            .and()
-            .addFilter(getAuthenticationFilter()) //회원 로그인
+                .anyRequest().authenticated()
+                .and()
+                .addFilter(getAuthenticationFilter()) //회원 로그인
             .addFilter(JwtFilter()).authorizeRequests()//회원 토큰 생성
             .and()
             .formLogin()

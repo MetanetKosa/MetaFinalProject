@@ -1,10 +1,12 @@
 package com.example.metawater.mapper;
 
 import com.example.metawater.domain.ProductInqVO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface ProductInqMapper {
     //모든 문의 조회
     public List<ProductInqVO> getQuestionList();

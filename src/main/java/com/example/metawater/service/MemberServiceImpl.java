@@ -33,6 +33,7 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    //    회원가입
     @Override
     public void createMember(MemberVO memberVO) {
         memberVO.setMemPw(passwordEncoder.encode(memberVO.getMemPw()));
@@ -42,25 +43,13 @@ public class MemberServiceImpl implements MemberService {
         memberMapper.insertMember(memberVO);
     }
 
-    //로그인 Security
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("=========== loadUserByUsername 메서드 실행한다. ================");
         MemberVO member = memberMapper.findByUserId(username);
+        logger.info("------------member데이터 전체-------------" + member);
+        logger.info("------------member.getAuth()-------------" + member.getAuth());
         return member;
-    }
-
-    //회원 확인
-    @Override
-    public MemberVO findByUserId(String id) {
-        System.out.println("Service Confirm "  + id);
-        return memberMapper.findByUserId(id);
-    }
-
-    //회원 중복 확인
-    @Override
-    public Boolean checkId(String id) {
-        return memberMapper.checkId(id);
     }
 
 //        ManagerDTO manager = managerMapper.managerGetUserByIdAndPassword(username);
@@ -79,6 +68,21 @@ public class MemberServiceImpl implements MemberService {
 //            throw new UsernameNotFoundException("id :인 " + username + " 을 찾을 수 없습니다.");
 //        }
 
+
+    @Override
+    public boolean checkMemberInfo(MemberDTO memberDTO) {
+        return false;
+    }
+
+    @Override
+    public boolean getId(String id) {
+        return false;
+    }
+
+    @Override
+    public MemberVO membersData(String id) {
+        return memberMapper.findByUserId(id);
+    }
 
 
     //로그인
@@ -113,26 +117,27 @@ public class MemberServiceImpl implements MemberService {
 
     //인증
     //로그인 후 db에서 데이터 확인 후 맞으면 session 발급
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {MemberVO memberVO = memberMapper.getUser(username);
-        System.out.println(memberVO);
-        if(memberVO == null) {
-            throw new UsernameNotFoundException("id: " + username + " is not found");
-        }
-
-        String id = memberVO.getMemId();
-        String pw = memberVO.getMemPw();
-        String auth = memberVO.getAuth();
-        System.out.println("id: "+id+", pw: "+pw+", auth: "+auth);
-
-        return User.builder()
-                .username(id)
-                .password(pw)
-                .authorities(auth)
-                .build();
-
-        //return new User(memberVO.getMem_name(), memberVO.getMem_pw(), Collections.singleton(new SimpleGrantedAuthority(memberVO.getAuth())));
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        MemberVO memberVO = memberMapper.getUser(username);
+//        System.out.println(memberVO);
+//        if(memberVO == null) {
+//            throw new UsernameNotFoundException("id: " + username + " is not found");
+//        }
+//
+//        String id = memberVO.getMemId();
+//        String pw = memberVO.getMemPw();
+//        String auth = memberVO.getAuth();
+//        System.out.println("id: "+id+", pw: "+pw+", auth: "+auth);
+//
+//        return User.builder()
+//                .username(id)
+//                .password(pw)
+//                .authorities(auth)
+//                .build();
+//
+////        return new User(memberVO.getUsername(), memberVO.getMemPw(), Collections.singleton(new SimpleGrantedAuthority(memberVO.getAuth())));
+//    }
 
 //
 //    public void updateMember(MemberVO updateUser) {
@@ -174,25 +179,4 @@ public class MemberServiceImpl implements MemberService {
 //        return true;
 //    }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        MemberVO user = memberMapper.getUser(username);
-//        System.out.println(user);
-//        if(user == null) {
-//            throw new UsernameNotFoundException("id: " + username + " is not found");
-//        }
-//
-////        String id = user.getUsername();
-////        String pw = user.getPassword();
-////        String auth = user.getAuth();
-////        System.out.println("id: "+id+", pw: "+pw+", auth: "+auth);
-//
-////        return User.builder()
-////                .username(id)
-////                .password(pw)
-////                .authorities(auth)
-////                .build();
-//
-//        return new User(user.getUsername(), user.getPassword(), Collections.singleton(new SimpleGrantedAuthority(user.getAuth())));
-//    }
 }

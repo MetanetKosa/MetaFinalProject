@@ -26,16 +26,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <association property="product" resultMap="productMap"/>
     </resultMap>
 
-    <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
-        <id property="memNo" column="mem_no"/>
-        <result property="memId" column="mem_id"/>
-        <result property="memPw" column="mem_pw"/>
-        <result property="memName" column="mem_name"/>
-        <result property="memPhone" column="mem_phone"/>
-        <result property="memEmail" column="mem_email"/>
-        <result property="auth" column="auth"/>
-    </resultMap>
-
     <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
         <id property="productNo" column="product_no"/>
         <result property="productName" column="product_name"/>
@@ -66,13 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="memName" column="mem_name"/>
         <result property="memPhone" column="mem_phone"/>
         <result property="memEmail" column="mem_email"/>
-    </resultMap>
-
-    <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
-        <id property="productNo" column="product_no"/>
-        <result property="productName" column="product_name"/>
-        <result property="productRentalPrice" column="product_rentalPrice"/>
-        <result property="productPrice" column="product_price"/>
+        <result property="auth" column="auth"/>
+        <result property="status" column="status"/>
     </resultMap>
 
     <resultMap id="rentalMap" type="com.example.metawater.domain.RentalVO">
