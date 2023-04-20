@@ -25,6 +25,7 @@ public class ProductServiceImpl implements ProductService
         if(product.getAttachList() == null || product.getAttachList().size() <= 0){
             return;
         }
+        product.setProductSales(0);
         product.getAttachList().forEach(attach -> {
             attach.setProduct_no(product.getProductNo());
             System.out.println(attach);

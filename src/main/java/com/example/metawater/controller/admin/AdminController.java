@@ -6,6 +6,7 @@ import com.example.metawater.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,9 +39,22 @@ public class AdminController {
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+    //상품 상세 조회
+    @GetMapping("/product/{productNo}")
+    public ResponseEntity productInsert(@PathVariable Long productNo){
+        ProductVO productVO = service.getProduct(productNo);
+
+        return new ResponseEntity<>(productVO,HttpStatus.CREATED);
+    }
+
+    //상품별 첨부파일 조회
+    @GetMapping(value ="/product/getAttachList/{productNo}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<UploadResultDTO>> getAttachList( @PathVariable Long productNo) {
+        return new ResponseEntity<>(service.getAttachList(productNo), HttpStatus.OK);
+    }
 
     // 상품 목록 조회
-    @GetMapping("products")
+    @GetMapping("/products")
     public List<ProductVO> list(){
         return service.getProductList();
     }

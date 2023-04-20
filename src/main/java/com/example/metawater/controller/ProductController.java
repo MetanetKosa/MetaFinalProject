@@ -32,18 +32,12 @@ public class ProductController {
         this.service = service;
     }
 
-    //상품 등록
-    @PostMapping("/product/productInsert")
-    public ResponseEntity insert(@RequestBody ProductVO product){
-        service.insertProduct(product);
+    //상품 상세 조회
+    @GetMapping("/product/{productNo}")
+    public ResponseEntity productInsert(@PathVariable Long productNo){
+        ProductVO productVO = service.getProduct(productNo);
 
-        if(product.getAttachList() != null) {
-            product.getAttachList().forEach(attach -> System.out.println(attach));
-        }
-        else{
-            System.out.println("널입니다.");
-        }
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(productVO,HttpStatus.CREATED);
     }
 
     //상품 목록 조회
@@ -71,48 +65,21 @@ public class ProductController {
     }
 
     //상품 삭제
-    @DeleteMapping("/product/products/{productNo}")
-    public void delete(@PathVariable Long productNo){
-
-        List<UploadResultDTO> attachList = service.getAttachList(productNo);
-
-        if( service.deleteProduct(productNo)) {
-            deleteFiles(attachList);
-        }
-    }
+//    @DeleteMapping("/product/products/{productNo}")
+//    public void delete(@PathVariable Long productNo){
+//
+//        List<UploadResultDTO> attachList = service.getAttachList(productNo);
+//
+//        if( service.deleteProduct(productNo)) {
+//            deleteFiles(attachList);
+//        }
+//    }
 
     //상품 수정
     @PatchMapping("/product/products/{productNo}")
     public void update(@PathVariable Long productNo, @RequestBody ProductVO product){
         product.setProductNo(productNo);
         service.updateProduct(product);
-    }
-
-
-    //파일 삭제
-    private void deleteFiles(List<UploadResultDTO> attachList) {
-
-        if(attachList == null || attachList.size() == 0) {
-            return;
-        }
-
-        attachList.forEach(attach -> {
-            try {
-                Path file  = Paths.get(uploadDir+attach.getFolderPath()+"\\" + attach.getUuid()+"_"+ attach.getFileName());
-
-                Files.deleteIfExists(file);
-
-                if(Files.probeContentType(file).startsWith("image")) {
-
-                    Path thumbNail = Paths.get(uploadDir+attach.getFolderPath()+"\\s_" + attach.getUuid()+"_"+ attach.getFileName());
-
-                    Files.delete(thumbNail);
-                }
-
-            }catch(Exception e) {
-                System.out.println(e.getMessage());
-            }
-        });
     }
 
 }

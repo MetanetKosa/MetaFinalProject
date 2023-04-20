@@ -6,6 +6,8 @@ import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderServiceImpl implements OrderService{
 
@@ -15,6 +17,21 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public void insertOrder(OrderVO order) {
         orderMapper.insertOrder(order);
+    }
+
+    public List<OrderVO> orderList() {
+        return orderMapper.orderList();
+    }
+
+    @Override
+    public List<OrderVO> orderRentalList() {
+        return orderMapper.orderRentalList();
+    }
+
+    //주문 상태 변경
+    @Override
+    public boolean orderStateUpdate(OrderVO orderVO) {
+        return orderMapper.updateOrderState(orderVO) == 1;
     }
 
     @Override
@@ -27,4 +44,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public OrderVO getOrderDetail(Long orderNo) { return orderMapper.getOrderDetail(orderNo); }
+
+    @Override
+    public OrderVO orderDetail(Long orderNo) {
+        return orderMapper.orderDetail(orderNo);
+    }
 }

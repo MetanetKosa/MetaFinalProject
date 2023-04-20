@@ -32,4 +32,6 @@ public class OrderVO {
     private String rentalPayDate;
     private MemberVO member;
     private ProductVO product;
+
+    private RentalVO rental;
 }
