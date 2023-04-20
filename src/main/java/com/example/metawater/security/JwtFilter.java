@@ -33,53 +33,49 @@ public class JwtFilter extends BasicAuthenticationFilter {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private MemberMapper memberMapper;
-//    private ManagerMapper managerMapper;
-
 
     public JwtFilter(AuthenticationManager authenticationManager, MemberMapper memberMapper) {
         super(authenticationManager);
         this.memberMapper = memberMapper;
     }
 
-
     @Override
-    protected void doFilterInternal(HttpServletRequest request2, HttpServletResponse response2,
+    protected void doFilterInternal(HttpServletRequest requestValue, HttpServletResponse responseValue,
                                     FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) request2;
-        HttpServletResponse response = (HttpServletResponse) response2;
+        HttpServletRequest requestV = requestValue;
+        HttpServletResponse responseV = responseValue;
 
-        System.out.println(request.getHeader("AUTHORIZATION"));
-        if (request.getHeader("AUTHORIZATION") == null) {
+        System.out.println(requestV.getHeader("AUTHORIZATION"));
+        if (requestV.getHeader("AUTHORIZATION") == null) {
             logger.info("AUTHORIZATION 로그인 안 한 사람");
-            onError(response, "UNAUTHORIZATION");
+            onError(responseV, "UNAUTHORIZATION");
             return;
         } else {
-            String authorizationHeader = request.getHeader("AUTHORIZATION");
+            String authorizationHeader = requestV.getHeader("AUTHORIZATION");
             System.out.println("AUTHORIZATION : " + authorizationHeader);
             String jwt = authorizationHeader.replace("Bearer", "");
             if (!isJwtValid(jwt)) {
-                logger.info("!isJwtValid 토큰 없는거 같은데?");
-                onError(response, "UNAUTHORIZATION");
+                logger.info("!isJwtValid 토큰이 없습니다 다시 확인해보세요");
+                //onError(responseV, "UNAUTHORIZATION");
                 return;
             }
-            String name = Jwts.parser().setSigningKey("hello").parseClaimsJws(jwt).getBody().getSubject();
+            String name = Jwts.parser().setSigningKey("secret").parseClaimsJws(jwt).getBody().getSubject();
             MemberVO memberVO = memberMapper.findByUserId(name);
 //            ManagerDTO managerDTO = managerMapper.managerGetUserByIdAndPassword(name);
             if (memberVO != null) {
-                logger.info("-------------------- 회원 -------------------------");
+                logger.info("회원이 로그인 시에 jwt가 많습니다.");
                 UserDetails user = User.builder()
                         .username(memberVO.getMemId())
                         .password(memberVO.getMemPw()) //TODO: 여기서 Auth(회원/관리자) 구분
-                        .authorities(memberVO.getRoles())
-//                        .authorities(memberVO.getRoles().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth())))
+                        .authorities(new SimpleGrantedAuthority(memberVO.getAuth()))
                         .build();
 
                 Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-                authorities.add(new SimpleGrantedAuthority(memberVO.getRoles()));
+                authorities.add(new SimpleGrantedAuthority(memberVO.getAuth()));
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
-                       user,
-                       memberVO.getMemPw(),
+                        user,
+                        memberVO.getMemPw(),
                         authorities
 //                        memberVO.getRoles().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList())
                 );
@@ -88,41 +84,15 @@ public class JwtFilter extends BasicAuthenticationFilter {
                 System.out.println("authentication 값 확인" + authentication);
                 if (authentication != null && authentication.isAuthenticated() && authentication.getAuthorities().stream()
                         .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_USER"))) {
-                    filterChain.doFilter(request, response);
+                    filterChain.doFilter(requestValue, responseValue);
                 }
                 else {
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    responseValue.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 }
-                filterChain.doFilter(request2, response2);
+            }else {
+                throw new UsernameNotFoundException("사용자 없음");
             }
-//            else if (managerDTO != null) {
-//                System.out.println("-------------------- 관리자 -------------------------");
-//                UserDetails user = User.builder()
-//                        .username(managerDTO.getId())
-//                        .password(managerDTO.getPassword())
-//                        .authorities(managerDTO.getRoles().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth()))
-//                                .collect(Collectors.toList()))
-//                        .build();
-//                Authentication authentication = new UsernamePasswordAuthenticationToken(
-//                        user,
-//                        managerDTO.getPassword(),
-//                        managerDTO.getRoles().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth()))
-//                                .collect(Collectors.toList()));
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//                System.out.println("authenticationauthenticationauthenticationauthentication" + authentication);
-//                if (authentication != null && authentication.isAuthenticated() && authentication.getAuthorities().stream()
-//                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_MANAGER"))) {
-//                    filterChain.doFilter(request, response);
-//                }
-//                else {
-////                    System.out.println("430430430430430430430430430403403403403403403403403403");
-//                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//                }
-//                filterChain.doFilter(request2, response2);
-//            }
-            else {
-                throw new UsernameNotFoundException("사용자 없음 UsernameNotFoundException");
-            }
+
         }
     }
 
@@ -130,7 +100,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
         boolean returnValue = true;
         String token = null;
         try {
-            token = Jwts.parser().setSigningKey("hello").parseClaimsJws(jwt).getBody().getSubject();
+            token = Jwts.parser().setSigningKey("secret").parseClaimsJws(jwt).getBody().getSubject();
             logger.info("token 생성 : " + token);
             System.out.println("token 생성 : " + token);
         }catch (Exception e){
@@ -147,4 +117,3 @@ public class JwtFilter extends BasicAuthenticationFilter {
         response.sendError(HttpServletResponse.SC_FORBIDDEN,httpStatus);
     }
 }
-

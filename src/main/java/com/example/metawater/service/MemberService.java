@@ -7,18 +7,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Service
-public interface MemberService {
+public interface MemberService extends UserDetailsService {
 
     //회원가입
     public void createMember(MemberVO memberVO);
     //로그인
 //    UserDetails loadUserByUsername(String memId);
-    boolean checkMemberInfo(MemberDTO memberDTO);
+//    boolean checkMemberInfo(MemberDTO memberDTO);
 
-    public boolean getId(String id);
+    public MemberVO findByUserId(String id);
+
+    public Boolean checkId(String id);
+
+    @Override
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException;
 
     //    public boolean remove(Long userid);
 //    public List<MemberVO> getUserList();

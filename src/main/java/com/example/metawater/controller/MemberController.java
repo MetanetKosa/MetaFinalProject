@@ -13,9 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
+
 @RestController
 @Log4j2
-@RequestMapping("auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class MemberController {
     @Autowired
@@ -24,30 +26,40 @@ public class MemberController {
     //회원가입 //get/post
     @PostMapping("/signup")
     public ResponseEntity<MemberVO> createUser(@RequestBody MemberVO member) {
-        System.out.println("회원가입 데이터 확인" + member.getMemName());
-        member.setRoles("ROLE_MEMBER");
         System.out.println(member);
         memberService.createMember(member);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(member);
     }
 
+    //회원정보
+    @GetMapping("/members/{id}")
+    public ResponseEntity<MemberVO> selectMember(@PathVariable String id) {
+        System.out.println("request 데이터 : " + id);
+        MemberVO memberVO = memberService.findByUserId(id);
+        System.out.println("즈기여 postman에서 성공적이라잖아요 왜 안나타나냐고요!! 아놔..하...");
+        System.out.println("memberVO 객체의 값은? " + memberVO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(memberVO);
+    }
+
     //id확인
     @PostMapping("/checkid")
     public ResponseEntity<String> checkId(@RequestBody MemberDTO memberDTO) {
         String id = memberDTO.getMemId();
-        if (memberService.getId(id)) {
+
+        if (memberService.checkId(id)) {
             return new ResponseEntity<>("success", HttpStatus.OK);
         }
         return new ResponseEntity<>("fail", HttpStatus.OK);
     }
-
-    @Secured("ROLE_USER")
-    @PostMapping("/aftersignup")
-    public String aftersignup() {
-        return "여기는 멤버 토큰있는사람만 올수있어";
-    }
 }
+
+
+//    @Secured("ROLE_USER")
+//    @PostMapping ("/aftersignup")
+//    public String aftersignup(){
+//        return "여기는 멤버 토큰있는사람만 올수있어";
+//    }
 
     //로그인
 //    @PostMapping("login")

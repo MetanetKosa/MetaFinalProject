@@ -6,6 +6,9 @@ import com.example.metawater.mapper.MemberMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,42 +22,32 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-//    private ManagerMapper managerMapper;
     private MemberMapper memberMapper;
 
-    //로그인 처리
-    public AuthenticationFilter(AuthenticationManager authenticationManager, MemberMapper memberMapper){
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    //로그인 처리 /인증필터
+    public AuthenticationFilter(AuthenticationManager authenticationManager,MemberMapper memberMapper){
         super.setAuthenticationManager(authenticationManager);
         this.memberMapper = memberMapper;
+        //이 주소가 호출되면 spring security 가 낚아채서 로그인 작업을 진행해준다.
         setFilterProcessesUrl("/auth/login");
     }
 
-    @Override
+    @Override //사용자의 인증 요청 처리,보안 유지 /인증시도
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
         try {
-            MemberVO mem = new ObjectMapper().readValue(request.getInputStream(), MemberVO.class);
-            MemberVO memberVO = memberMapper.findByUserId(mem.getMemId());
-//            ManagerDTO mg = new ManagerDTO();
-//            mg.setId(md.getId());
-//            mg.setPassword(md.getPassword());
-//            ManagerDTO mas = managerMapper.managerGetUserByIdAndPassword(mg.getId());
-//            if (mas != null) {
-//                System.out.println("===========attemptAuthentication 매니저================");
-//                return getAuthenticationManager().authenticate(
-//                        new UsernamePasswordAuthenticationToken(
-//                                mas.getId(),
-//                                mg.getPassword(),
-//                                new ArrayList<>())
-//                );
-//            } else if (mds != null)
+            MemberVO memberVO = new ObjectMapper().readValue(request.getInputStream(), MemberVO.class);
+            logger.info("----------memberVO data comfirm---------- " + memberVO.getMemId());
+
             if (memberVO != null) {
-                System.out.println("===========attemptAuthentication 맴버================");
                 return getAuthenticationManager().authenticate(
                         new UsernamePasswordAuthenticationToken(
                                 memberVO.getMemId(),
@@ -73,14 +66,20 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain chain, Authentication authResult)
             throws IOException, ServletException {
-        String userName = ((User)authResult.getPrincipal()).getUsername();
+        MemberVO memberVO = (MemberVO) authResult.getPrincipal();
+        String username = memberVO.getUsername();
 
         String jwt = Jwts.builder()
                 .setHeaderParam("type", "jwt")
-                .setSubject(userName)
+                .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis()+1*(1000*60*60*24*365)))
                 .signWith(SignatureAlgorithm.HS256, "hello")
                 .compact();
         response.addHeader("token",jwt);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication failed");
     }
 }
