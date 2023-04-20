@@ -11,6 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MyOrderProductVO {
+    // 마이페이지 상세정보 VO
     private String productName;
     private String productModel;
     private String productSize;
