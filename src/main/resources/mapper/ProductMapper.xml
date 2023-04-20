@@ -28,13 +28,6 @@
         <result property="productSales" column="product_sales"/>
     </resultMap>
 
-<!--    <select id="getProductList" resultMap="productMap">-->
-<!--        select distinct p.*, c.color_name, f.function_name-->
-<!--        from product p-->
-<!--                 left join product_color c on p.product_no = c.product_no-->
-<!--                 left join product_function f on p.product_no = f.product_no-->
-<!--        order by p.product_no-->
-<!--    </select>-->
 
     <select id="getProductList" resultMap="productMap">
        <![CDATA[
@@ -42,14 +35,12 @@
         ]]>
     </select>
 
-<!--    <select id="getProduct" resultMap="productMap">-->
-<!--        SELECT DISTINCT p.*, c.color_name, f.function_name-->
-<!--        FROM product p-->
-<!--                 LEFT JOIN product_color c ON p.product_no = c.product_no-->
-<!--                 LEFT JOIN product_function f ON p.product_no = f.product_no-->
-<!--        WHERE p.product_no = #{product_no}-->
-<!--        ORDER BY p.product_no;-->
-<!--    </select>-->
+    <select id="getProduct" resultMap="productMap">
+       <![CDATA[
+        select  * from product where product_no = #{productNo}
+        ]]>
+    </select>
+
 
     <insert id="productInsert">
         <selectKey keyProperty="productNo" order="BEFORE"
@@ -63,7 +54,7 @@
                             product_model, product_rentalPrice, product_price, product_color)
         VALUES(
                  #{productNo},#{productName},#{productSize},#{productWeight},#{productDetail},#{productGuide},#{productType},#{productMethod},
-                 sysdate,#{productCompany},sysdate,sysdate,#{detailUrl},#{imgUrl},4,#{productFunction},#{productModel},
+        #{productRdate},#{productCompany},sysdate,sysdate,#{detailUrl},#{imgUrl},#{productSales},#{productFunction},#{productModel},
                   #{productRentalPrice},#{productPrice},#{productColor})
     </insert>
 
@@ -78,14 +69,10 @@
              product_size = #{productSize} ,
              product_weight = #{productWeight} ,
              product_detail = #{productDetail} ,
-             product_guide = #{productGuide},
              product_type = #{productType},
              product_method = #{productMethod},
-             product_rdate = #{productRdate},
              product_company = #{productCompany},
              updateDate = sysdate,
-             detail_url = #{detailUrl},
-             img_url = #{imgUrl}
         where product_no = #{productNo}
     </update>
 </mapper>

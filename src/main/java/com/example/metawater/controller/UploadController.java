@@ -78,14 +78,14 @@ public class UploadController {
                 uploadResultDTO.setUuid(uuid);
                 uploadResultDTO.setFolderPath(folderPath);
 
-//                //섬네일 생성
-//                String thumbnailSaveName = uploadPath + File.separator + folderPath + File.separator + "s_" + uuid +"_" + fileName;
-//
-//                //섬네일 파일 이름은 중간에 s_로 시작하도록
-//                File thumbnailFile = new File(thumbnailSaveName);
-//
-//                //섬네일 생성
-//                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
+                //섬네일 생성
+                String thumbnailSaveName = uploadPath + File.separator + folderPath + File.separator + "s_" + uuid +"_" + fileName;
+
+                //섬네일 파일 이름은 중간에 s_로 시작하도록
+                File thumbnailFile = new File(thumbnailSaveName);
+
+                //섬네일 생성
+                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 80, 100);
 
 
 
@@ -230,13 +230,17 @@ public class UploadController {
 
     //업로드 파일 삭제
     @PostMapping("/upload/removeFile")
-    public ResponseEntity<Boolean> removeFile(String fileName){
+    public ResponseEntity<Boolean> removeFile(@RequestParam String fileName){
 
         String srcFileName = null;
 
         try{
             srcFileName = URLDecoder.decode(fileName, "UTF-8");
+
             File file = new File(uploadPath + File.separator + srcFileName);
+            System.out.println(srcFileName);
+            System.out.println(file);
+            System.out.println(file.getParentFile());
             boolean result = file.delete();
 
             File thumbnail = new File(file.getParentFile(), "s_" + file.getName());

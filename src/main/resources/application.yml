@@ -29,5 +29,5 @@ mybatis:
 #  type-aliases-package: com.example.metajobs
 
 #metawater.upload.path : C:\\upload
-metawater.upload.path : C:\metanet\workspace\finalVueProject\MetaFinalVue\src\assets
+metawater.upload.path : C:\metanet\workspace\finalProject\MetaFinalProject\src\main\resources\files
 
