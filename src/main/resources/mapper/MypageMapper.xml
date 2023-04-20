@@ -130,7 +130,7 @@
     <!-- 해지 테이블에 해지 내역 추가 -->
     <insert id="insertReturn">
         INSERT INTO RETURN (return_no, return_date, return_addnumber, return_address, return_addDetail, return_price, return_method, return_true, order_no, mem_no, product_no)
-        VALUES (return_seq.nextval, #{returnDate}, #{returnAddNumber}, #{returnAddress}, #{returnAddDetail}, #{returnPrice}, #{returnMethod}, #{returnTrue}, #{orderNo}, #{memNo}, #{productNo})
+        VALUES (return_seq.nextval, #{returnDate}, #{returnAddNumber}, #{returnAddress}, #{returnAddDetail}, #{returnPrice}, #{returnMethod}, 1, #{orderNo}, #{memNo}, #{productNo})
     </insert>
 
 
