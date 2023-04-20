@@ -83,7 +83,7 @@
         )
         VALUES (
                    product_inquire_seq.nextval, #{proqTitle}, #{proqContent}, SYSDATE, '답변 대기중', NULL, NULL, NULL,
-                   0, 1, #{productNo}
+                   0, 4, #{productNo}
                )
     </insert>
 
