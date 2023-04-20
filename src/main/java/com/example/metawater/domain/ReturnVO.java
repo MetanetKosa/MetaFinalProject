@@ -14,11 +14,13 @@ public class ReturnVO {
     private Long returnNo;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date returnDate;
-    private String returnAdd;
+    private String returnAddNumber;
+    private String returnAddress;
+    private String returnAddDetail;
     private String returnPrice;
     private String returnMethod;
     private String returnTrue;
     private Long orderNo;
     private Long memNo;
-
+    private Long productNo;
 }

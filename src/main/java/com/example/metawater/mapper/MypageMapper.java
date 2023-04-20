@@ -4,6 +4,7 @@ import com.example.metawater.domain.MyOrderProductVO;
 import com.example.metawater.domain.OrderDTO;
 import com.example.metawater.domain.ProductVO;
 import com.example.metawater.domain.ReturnVO;
+import net.bytebuddy.asm.Advice;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,10 +20,15 @@ public interface MypageMapper {
 
     public ProductVO getMyProduct(Long productNo);
 
-    public void returnInsert(ReturnVO returnVO);
+    public void insertReturn(ReturnVO returnVO);
     public void deleteOrder(Long orderNo);
     public void deleteReturn(Long orderNo);
     public void deleteReview(Long orderNo);
+
+    // 주문 상태 해지 완료로 변경
+    public void changeOrderStatus(Long orderNo);
+    // 해지 내역 추가
+
 
     public List<MyOrderProductVO> getOrderProductDetailList(Long memNo);
     public MyOrderProductVO getOrderProductDetail(Long orderNo);

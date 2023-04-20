@@ -120,18 +120,25 @@
 
 
 
-
     <!-- 해지신청 -->
-    <insert id="returnInsert">
-        INSERT INTO REVIEW (return_no, return_date, return_add, return_price, return_method, return_true, order_no, mem_no)
-        VALUES (return_seq.nextval, #{returnDate}, #{returnAdd}, #{returnPrice}, #{returnMethod}, #{returnTrue}, #{orderNo}, #{memNo})
+    <!-- 주문상태 해지 완료로 변경 -->
+    <update id="changeOrderStatus">
+        UPDATE orders
+        SET order_state = '해지 완료'
+        WHERE order_no = #{orderNo}
+    </update>
+    <!-- 해지 테이블에 해지 내역 추가 -->
+    <insert id="insertReturn">
+        INSERT INTO RETURN (return_no, return_date, return_addnumber, return_address, return_addDetail, return_price, return_method, return_true, order_no, mem_no, product_no)
+        VALUES (return_seq.nextval, #{returnDate}, #{returnAddNumber}, #{returnAddress}, #{returnAddDetail}, #{returnPrice}, #{returnMethod}, #{returnTrue}, #{orderNo}, #{memNo}, #{productNo})
     </insert>
+
 
     <select id="getMyProductList" resultMap="productMap">
         <![CDATA[
         select * from product
                  where product_no IN
-                       (select product_no from pr_order
+                       (select product_no from orders
                                           where mem_no = #{memNo} and order_state = '설치 완료')
         ]]>
     </select>
@@ -145,7 +152,7 @@
                    o.rental_term, o.rental_payDate
             FROM orders o
                      JOIN product p ON o.product_no = p.product_no
-            WHERE o.mem_no = #{memNo}
+            WHERE o.mem_no = #{memNo} and o.order_state = '설치 완료'
             ]]>
     </select>
 
@@ -166,7 +173,7 @@
 
     <select id="getMyOrderList" resultMap="orderMap">
  		<![CDATA[
-        select * from pr_order
+        select * from orders
                  where mem_no = #{memNo} ORDER BY order_date DESC
         ]]>
  	</select>
@@ -188,7 +195,7 @@
     </delete>
 
     <delete id="deleteOrder" parameterType="long">
-            delete from pr_order where order_no = #{orderNo, jdbcType=BIGINT}
+            delete from orders where order_no = #{orderNo, jdbcType=BIGINT}
     </delete>
 
 

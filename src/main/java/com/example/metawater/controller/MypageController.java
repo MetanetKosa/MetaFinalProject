@@ -1,8 +1,6 @@
 package com.example.metawater.controller;
 
-import com.example.metawater.domain.MyOrderProductVO;
-import com.example.metawater.domain.OrderDTO;
-import com.example.metawater.domain.ProductVO;
+import com.example.metawater.domain.*;
 import com.example.metawater.mapper.MypageMapper;
 import com.example.metawater.service.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +48,16 @@ public class MypageController {
     @GetMapping("/myorder/myproduct/{orderNo}")
     public MyOrderProductVO getOrderProductDetail(@PathVariable Long orderNo){
         return mypageService.getOrderProductDetail(orderNo);
+    }
+
+    // 해지
+    @PatchMapping("/myorder/myproduct/cancel/{orderNo}")
+    public void changeOrderStatus(@PathVariable Long orderNo){
+        mypageService.changeOrderStatus(orderNo);
+    }
+
+    @PostMapping("/myorder/cancel")
+    public void insertReturn(@RequestBody ReturnVO returnVO){
+        mypageService.insertReturn(returnVO);
     }
 }

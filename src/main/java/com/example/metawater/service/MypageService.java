@@ -27,8 +27,13 @@ public class MypageService {
         return mypageMapper.getMyProduct(productNo);
     }
 
-    public void returnInsert(ReturnVO returnVO){
-        mypageMapper.returnInsert(returnVO);
+
+    // 해지
+    public void changeOrderStatus(Long orderNo){
+        mypageMapper.changeOrderStatus(orderNo);
+    }
+    public void insertReturn(ReturnVO returnVO){
+        mypageMapper.insertReturn(returnVO);
     }
 
     public void deleteOrder(Long orderNo){
@@ -44,5 +49,6 @@ public class MypageService {
     public MyOrderProductVO getOrderProductDetail(Long orderNo){
         return mypageMapper.getOrderProductDetail(orderNo);
     }
+
 
     }
