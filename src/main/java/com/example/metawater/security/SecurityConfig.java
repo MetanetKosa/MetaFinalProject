@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -26,7 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/auth/signup");
+                .antMatchers("/auth/signup")
+                .antMatchers("/auth/members/**")
+                .antMatchers("/css/**", "/js/**", "/img/**");
         // 이 요청들에 대해서는 spring security 필터 체인을 적용하지 않겠다
     }
 
@@ -36,6 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/**").permitAll()
             .antMatchers("/auth/login").permitAll()
+                .antMatchers("/auth").hasRole("USER")
+                .antMatchers("/admin").hasRole("ADMIN")
             .anyRequest().authenticated()
             .and()
             .addFilter(getAuthenticationFilter()) //회원 로그인

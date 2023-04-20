@@ -12,9 +12,12 @@ public interface MemberMapper {
     public List<MemberVO> findAllUsers();
     //회원가입
     public void insertMember(MemberVO memberVO);
+
     //로그인
     public MemberVO findByUserId(@Param("memId") String memId);
-    public MemberVO idGet(@Param("memId") String id);
+
+    //로그인 중복확인
+    public Boolean checkId(String id);
 
     //로그인
     //public UserDTO loginMember(UserDTO user);

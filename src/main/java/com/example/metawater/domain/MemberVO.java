@@ -18,11 +18,15 @@ import java.util.*;
 @NoArgsConstructor
 public class MemberVO implements UserDetails{
 
-    private Long memNo;
+    private Integer memNo;
+//    @NotBlank(message="아이디는 필수 입력값입니다.")
     private String memId;
+//    @NotBlank(message="비밀번호는 필수 입력값입니다.")
+//    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{4,10}", message = "비밀번호는 4~10자 영문 대/소문자, 숫자, 특수문자를 사용하세요.")
     private String memPw;
     private String memName;
     private String memPhone;
+//    @Pattern(regexp = "^(?:\\w+\\.?)*\\w+@(?:\\w+\\.)+\\w+$", message = "이메일 형식이 올바르지 않습니다.")
     private String memEmail;
     private String auth;
     private Integer status;

@@ -29,7 +29,6 @@ import java.util.Date;
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private MemberMapper memberMapper;
-    //private CustomUserDetailService customUserDetailService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -46,10 +45,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             throws AuthenticationException {
         try {
             MemberVO memberVO = new ObjectMapper().readValue(request.getInputStream(), MemberVO.class);
-            logger.info("=============== request에서 getMemId확인========= " + memberVO.getMemId());
+            logger.info("----------memberVO data comfirm---------- " + memberVO.getMemId());
 
             if (memberVO != null) {
-                System.out.println("===========attemptAuthentication 맴버================");
                 return getAuthenticationManager().authenticate(
                         new UsernamePasswordAuthenticationToken(
                                 memberVO.getMemId(),

@@ -55,7 +55,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
             System.out.println("AUTHORIZATION : " + authorizationHeader);
             String jwt = authorizationHeader.replace("Bearer", "");
             if (!isJwtValid(jwt)) {
-                logger.info("!isJwtValid 토큰 없는거 같은데?");
+                logger.info("!isJwtValid 토큰이 없습니다 다시 확인해보세요");
                 //onError(responseV, "UNAUTHORIZATION");
                 return;
             }
@@ -63,7 +63,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
             MemberVO memberVO = memberMapper.findByUserId(name);
 //            ManagerDTO managerDTO = managerMapper.managerGetUserByIdAndPassword(name);
             if (memberVO != null) {
-                logger.info("-------------------- 회원 -------------------------");
+                logger.info("회원이 로그인 시에 jwt가 많습니다.");
                 UserDetails user = User.builder()
                         .username(memberVO.getMemId())
                         .password(memberVO.getMemPw()) //TODO: 여기서 Auth(회원/관리자) 구분

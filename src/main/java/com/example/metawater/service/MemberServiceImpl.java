@@ -43,13 +43,25 @@ public class MemberServiceImpl implements MemberService {
         memberMapper.insertMember(memberVO);
     }
 
+    //로그인 Security
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("=========== loadUserByUsername 메서드 실행한다. ================");
         MemberVO member = memberMapper.findByUserId(username);
-        logger.info("------------member데이터 전체-------------" + member);
-        logger.info("------------member.getAuth()-------------" + member.getAuth());
         return member;
+    }
+
+    //회원 확인
+    @Override
+    public MemberVO findByUserId(String id) {
+        System.out.println("Service Confirm "  + id);
+        return memberMapper.findByUserId(id);
+    }
+
+    //회원 중복 확인
+    @Override
+    public Boolean checkId(String id) {
+        return memberMapper.checkId(id);
     }
 
 //        ManagerDTO manager = managerMapper.managerGetUserByIdAndPassword(username);
@@ -68,16 +80,6 @@ public class MemberServiceImpl implements MemberService {
 //            throw new UsernameNotFoundException("id :인 " + username + " 을 찾을 수 없습니다.");
 //        }
 
-
-    @Override
-    public boolean checkMemberInfo(MemberDTO memberDTO) {
-        return false;
-    }
-
-    @Override
-    public boolean getId(String id) {
-        return false;
-    }
 
 
     //로그인

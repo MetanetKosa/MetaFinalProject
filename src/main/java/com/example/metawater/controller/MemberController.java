@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Member;
+
 @RestController
 @Log4j2
 @RequestMapping("/auth")
@@ -31,15 +33,26 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).body(member);
     }
 
+    //회원정보
+    @GetMapping ("/members/{id}")
+    public ResponseEntity<MemberVO> selectMember(@PathVariable String id){
+        System.out.println("request 데이터 : " + id);
+        MemberVO memberVO = memberService.findByUserId(id);
+        System.out.println("즈기여 postman에서 성공적이라잖아요 왜 안나타나냐고요!! 아놔..하...");
+        System.out.println("memberVO 객체의 값은? " + memberVO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(memberVO);
+    }
+
     //id확인
     @PostMapping("/checkid")
     public ResponseEntity<String> checkId(@RequestBody MemberDTO memberDTO) {
         String id = memberDTO.getMemId();
-        if(memberService.getId(id)){
+        if(memberService.checkId(id)){
             return new ResponseEntity<>("success",HttpStatus.OK);
         }
         return new ResponseEntity<>("fail",HttpStatus.OK);
     }
+
 
 //    @Secured("ROLE_USER")
 //    @PostMapping ("/aftersignup")
