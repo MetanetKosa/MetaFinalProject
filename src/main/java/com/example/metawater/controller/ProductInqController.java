@@ -28,6 +28,7 @@ public class ProductInqController {
     public ResponseEntity<List<ProductInqVO>> list(@PathVariable Long productNo) {
         System.out.println("문의 GET 요청 확인");
         //pqService.findByProduct(productNo);
+        //System.out.println(pqService.findByProduct(productNo));
         return new ResponseEntity<>(pqService.findByProduct(productNo), HttpStatus.OK);
     }
 
