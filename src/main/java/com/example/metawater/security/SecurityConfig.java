@@ -1,7 +1,7 @@
 package com.example.metawater.security;
 
-import com.example.metawater.mapper.MemberMapper;
-import com.example.metawater.service.MemberService;
+//import com.example.metawater.mapper.MemberMapper;
+//import com.example.metawater.service.MemberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,17 +15,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private MemberMapper memberMapper;
-    private MemberService memberService;
-
-    public SecurityConfig(MemberMapper memberMapper, MemberService memberService) {
-        this.memberMapper = memberMapper;
-        this.memberService = memberService;
-    }
+//    private MemberMapper memberMapper;
+//    private MemberService memberService;
+//
+//    public SecurityConfig(MemberMapper memberMapper, MemberService memberService) {
+//        this.memberMapper = memberMapper;
+//        this.memberService = memberService;
+//    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
+                .antMatchers("/")
                 .antMatchers("/auth/signup")
                 .antMatchers("/auth/members/**")
                 .antMatchers("/mypage/**")
@@ -40,36 +41,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/auth/login").permitAll()
-                .antMatchers("/auth").hasRole("USER")
-//                .antMatchers("/mypage").hasRole("USER")
-//                .antMatchers("/admin").hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .addFilter(getAuthenticationFilter()) //회원 로그인
-            .addFilter(JwtFilter()).authorizeRequests()//회원 토큰 생성
-            .and()
-            .formLogin()
-            .and()
-            .logout();
+                .authorizeRequests().anyRequest().permitAll();
+//                .antMatchers("/**").permitAll()
+//                .antMatchers("/auth/login").permitAll()
+//                .antMatchers("/auth").hasRole("USER")
+////                .antMatchers("/mypage").hasRole("USER")
+////                .antMatchers("/admin").hasRole("ADMIN")
+//                .anyRequest().authenticated()
+//                .and()
+//                .addFilter(getAuthenticationFilter()) //회원 로그인
+//            .addFilter(JwtFilter()).authorizeRequests()//회원 토큰 생성
+//            .and()
+//            .formLogin()
+//            .and()
+//            .logout();
     }
 
     //토큰
-    private JwtFilter JwtFilter() throws Exception {
-        return new JwtFilter(authenticationManager(), memberMapper);
-    }
+//    private JwtFilter JwtFilter() throws Exception {
+//        return new JwtFilter(authenticationManager(), memberMapper);
+//    }
+//
+//    //인증 필터(사용자 이름, 비밀번호)
+//    private AuthenticationFilter getAuthenticationFilter() throws Exception {
+//        return new AuthenticationFilter(authenticationManager(), memberMapper);
+//    }
 
-    //인증 필터(사용자 이름, 비밀번호)
-    private AuthenticationFilter getAuthenticationFilter() throws Exception {
-        return new AuthenticationFilter(authenticationManager(), memberMapper);
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
+//    }
 
     //패스워드 암호화
     @Bean

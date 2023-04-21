@@ -24,7 +24,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="rentalPayDate" column="rental_payDate"/>
         <association property="member" resultMap="memberMap"/>
         <association property="product" resultMap="productMap"/>
-        <association property="rental" resultMap="rentalMap"/>
     </resultMap>
 
     <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
@@ -61,15 +60,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="status" column="status"/>
     </resultMap>
 
-    <resultMap id="rentalMap" type="com.example.metawater.domain.RentalVO">
-        <id property="renNo" column="ren_no"/>
-        <result property="renInstallCost" column="ren_installCost"/>
-        <result property="renEndDate" column="ren_endDate"/>
-        <result property="renTerm" column="ren_term"/>
-        <result property="renPayDate" column="ren_payDate"/>
-        <result property="productNo" column="product_no"/>
-    </resultMap>
-
     <insert id="insertOrder" parameterType="com.example.metawater.domain.OrderVO">
         INSERT INTO orders
         (order_no, product_no, mem_no, order_state, order_devDate, order_devTime, order_addNumber, order_address, order_addDetail, order_name, order_phone, order_price, order_date, order_pay, rental_price, rental_term, rental_payDate)
@@ -83,10 +73,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             VALUES (orders_seq.nextval, #{productNo}, #{memberNo}, '주문 완료', #{deliveryDate}, #{deliveryTime}, #{orderAddNumber}, #{orderAddress}, #{orderAddDetail}, #{orderName}, #{orderPhone}, null, sysdate, #{orderPay}, #{rentalPrice}, #{rentalTerm}, #{rentalPayDate})
     </insert>
 
-<!--    <select id="selectOrderNo" resultType="Long">-->
-<!--        SELECT order_no-->
-<!--        FROM( SELECT * FROM orders ORDER BY ROWNUM DESC )-->
-<!--        WHERE ROWNUM = 1-->
+    <select id="selectOrderNo" resultType="Long">
+        SELECT order_no
+        FROM( SELECT * FROM orders ORDER BY ROWNUM DESC )
+        WHERE ROWNUM = 1
+    </select>
+
 <!--    구매 목록 조회-->
     <select id="orderList" resultMap="orderMap">
         select * from
