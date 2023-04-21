@@ -38,6 +38,7 @@ public class ProductInqController {
         return productList;
 //        return new ResponseEntity<>(pqService.findByProduct(productNo), HttpStatus.OK);
 
+
     }
 
     //문의 상세 조회
@@ -63,8 +64,6 @@ public class ProductInqController {
     @PostMapping("/{productNo}/qnaInsert")
     public ResponseEntity insert(@PathVariable("productNo") Long productNo, @RequestBody ProductInqDTO question) {
         System.out.println("POST 문의 확인");
-        //System.out.println(question.getProqTitle());
-        //System.out.println(question.getProqContent());
 
         ProductInqVO q = new ProductInqVO();
         q.setProductNo(productNo);
