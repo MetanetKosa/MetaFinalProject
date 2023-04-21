@@ -10,6 +10,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -20,7 +23,7 @@ import java.util.List;
 public class AdminController {
 
     @Value("${metawater.upload.path}")
-    private String uploadDir;
+    private String uploadPath;
 
     @Autowired
     private ProductService service;
@@ -63,9 +66,35 @@ public class AdminController {
     @DeleteMapping("/product/{productNo}")
     public void delete(@PathVariable Long productNo){
         List<UploadResultDTO> attachList = service.getAttachList(productNo);
+        ProductVO product = service.getProduct(productNo);
+        String imgUrl = product.getImgUrl();
+        String detailUrl = product.getDetailUrl();
+        String productGuide = product.getProductGuide();
 
         if( service.deleteProduct(productNo)) {
             deleteFiles(attachList);
+            deleteFile(imgUrl);
+            deleteFile(detailUrl);
+            deleteFile(productGuide);
+        }
+    }
+
+    private void deleteFile(String imgUrl) {
+
+
+        try{
+
+            File file = new File(uploadPath + File.separator + imgUrl);
+            System.out.println(file);
+            System.out.println(file.getParentFile());
+            boolean result = file.delete();
+
+            File thumbnail = new File(file.getParentFile(), "s_" + file.getName());
+
+            result = thumbnail.delete();
+
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -86,13 +115,13 @@ public class AdminController {
 
         attachList.forEach(attach -> {
             try {
-                Path file  = Paths.get(uploadDir+attach.getFolderPath()+"\\" + attach.getUuid()+"_"+ attach.getFileName());
+                Path file  = Paths.get(uploadPath+attach.getFolderPath()+"\\" + attach.getUuid()+"_"+ attach.getFileName());
 
                 Files.deleteIfExists(file);
 
                 if(Files.probeContentType(file).startsWith("image")) {
 
-                    Path thumbNail = Paths.get(uploadDir+attach.getFolderPath()+"\\s_" + attach.getUuid()+"_"+ attach.getFileName());
+                    Path thumbNail = Paths.get(uploadPath+attach.getFolderPath()+"\\s_" + attach.getUuid()+"_"+ attach.getFileName());
 
                     Files.delete(thumbNail);
                 }

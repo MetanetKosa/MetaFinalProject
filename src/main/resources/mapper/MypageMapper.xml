@@ -48,6 +48,7 @@
         <result property="rentalPayDate" column="rental_payDate"/>
     </resultMap>
 
+
 <!--    <resultMap id="ReturnMap" type="com.example.metawater.domain.ReturnVO">-->
 <!--        <id property="returnNo" column="return_no"/>-->
 <!--        <result property="returnDate" column="return_date"/>-->
@@ -67,6 +68,18 @@
 <!--        <result property="ren_paydate" column="ren_paydate"/>-->
 <!--        <result property="product_no" column="product_no"/>-->
 <!--    </resultMap>-->
+
+    <resultMap id="ReturnMap" type="com.example.metawater.domain.ReturnVO">
+        <id property="returnNo" column="return_no"/>
+        <result property="returnDate" column="return_date"/>
+        <result property="returnAdd" column="return_add"/>
+        <result property="returnPrice" column="return_price"/>
+        <result property="returnMethod" column="return_method"/>
+        <result property="returnTrue" column="return_true"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="memNo" column="mem_no"/>
+    </resultMap>
+
 
     <resultMap id="orderMap" type="com.example.metawater.domain.OrderVO">
         <result property="orderNo" column="order_no"/>
@@ -171,7 +184,7 @@
     </select>
 
 
-    <select id="getMyOrderList" resultMap="orderMap">
+    <select id="getMyOrderList" resultMap="orderDtoMap">
  		<![CDATA[
         select * from orders
                  where mem_no = #{memNo} ORDER BY order_date DESC

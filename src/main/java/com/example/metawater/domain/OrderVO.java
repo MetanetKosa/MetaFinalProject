@@ -33,5 +33,4 @@ public class OrderVO {
     private MemberVO member;
     private ProductVO product;
 
-
 }

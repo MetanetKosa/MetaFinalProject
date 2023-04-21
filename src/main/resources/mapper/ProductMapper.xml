@@ -145,6 +145,12 @@
              product_method = #{productMethod},
              product_company = #{productCompany},
              updateDate = sysdate,
+             product_rdate = #{productRdate},
+             product_sales = #{productSales},
+             product_model = #{productModel},
+             product_rentalPrice = #{productRentalPrice},
+             product_price = #{productPrice},
+             product_color = #{productColor}
         where product_no = #{productNo}
     </update>
 </mapper>

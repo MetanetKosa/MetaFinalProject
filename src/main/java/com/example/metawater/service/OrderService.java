@@ -16,14 +16,15 @@ public interface OrderService{
     public Long getOrderNo();
     //구매 목록 조회
     public List<OrderVO> orderList();
-
+    
+    //렌탈 목록 조회
     public List<OrderVO> orderRentalList();
 
     public boolean orderStateUpdate(OrderVO orderVO);
 
 
     public OrderVO getOrderDetail(Long orderNo);
-        public OrderVO orderDetail(Long orderNo);
+    public OrderVO orderDetail(Long orderNo);
 
 
 }

@@ -20,9 +20,12 @@ public class ProductVO {
     private String productGuide;
     private String productType;
     private String productMethod;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+
     private Date productRdate;
     private String productCompany;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date regDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")

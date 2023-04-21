@@ -23,6 +23,7 @@ public class OrderServiceImpl implements OrderService{
         return orderMapper.orderList();
     }
 
+    //렌탈 목록 조회
     @Override
     public List<OrderVO> orderRentalList() {
         return orderMapper.orderRentalList();
