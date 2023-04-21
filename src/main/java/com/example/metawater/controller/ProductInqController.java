@@ -29,9 +29,6 @@ public class ProductInqController {
 //    }
     public ResponseEntity<List<ProductInqVO>> list(@PathVariable Long productNo) {
         System.out.println("문의 GET 요청 확인");
-        System.out.println("productNon데이터 확인" + productNo);
-
-        System.out.println("----------"+pqService.findByProduct(productNo));
 
         return new ResponseEntity<>(pqService.findByProduct(productNo), HttpStatus.OK);
     }
@@ -59,8 +56,6 @@ public class ProductInqController {
     @PostMapping("/{productNo}/qnaInsert")
     public ResponseEntity insert(@PathVariable("productNo") Long productNo, @RequestBody ProductInqDTO question) {
         System.out.println("POST 문의 확인");
-        //System.out.println(question.getProqTitle());
-        //System.out.println(question.getProqContent());
 
         ProductInqVO q = new ProductInqVO();
         q.setProductNo(productNo);
