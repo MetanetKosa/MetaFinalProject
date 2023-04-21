@@ -27,13 +27,25 @@ public class ProductInqController {
 //        System.out.println("문의 GET 요청 확인");
 //        return pqService.findByProduct(productNo);
 //    }
-    public ResponseEntity<List<ProductInqVO>> list(@PathVariable Long productNo) {
+//    public ResponseEntity<List<ProductInqVO>> list(@PathVariable Long productNo) {
+
+        public List<ProductInqVO> list(@PathVariable Long productNo) {
         System.out.println("문의 GET 요청 확인");
+<<<<<<< HEAD
+
+=======
+>>>>>>> 4a89de6bee4b97a0653429c5500fcad2506dd25f
         System.out.println("productNon데이터 확인" + productNo);
 
-        System.out.println("----------"+pqService.findByProduct(productNo));
+        System.out.println("-----문의 GET 요청을 이렇게 보내도 되나요?-----" + pqService.findByProduct(productNo));
+        List<ProductInqVO> productList = pqService.findByProduct(productNo);
+        return productList;
+//        return new ResponseEntity<>(pqService.findByProduct(productNo), HttpStatus.OK);
+<<<<<<< HEAD
+=======
 
-        return new ResponseEntity<>(pqService.findByProduct(productNo), HttpStatus.OK);
+>>>>>>> 4a89de6bee4b97a0653429c5500fcad2506dd25f
+
     }
 
     //문의 상세 조회
@@ -59,8 +71,6 @@ public class ProductInqController {
     @PostMapping("/{productNo}/qnaInsert")
     public ResponseEntity insert(@PathVariable("productNo") Long productNo, @RequestBody ProductInqDTO question) {
         System.out.println("POST 문의 확인");
-        //System.out.println(question.getProqTitle());
-        //System.out.println(question.getProqContent());
 
         ProductInqVO q = new ProductInqVO();
         q.setProductNo(productNo);
