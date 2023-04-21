@@ -51,12 +51,13 @@
     <resultMap id="ReturnMap" type="com.example.metawater.domain.ReturnVO">
         <id property="returnNo" column="return_no"/>
         <result property="returnDate" column="return_date"/>
-        <result property="returnAdd" column="return_add"/>
+        <result property="returnTime" column="return_add"/>
         <result property="returnPrice" column="return_price"/>
         <result property="returnMethod" column="return_method"/>
         <result property="returnTrue" column="return_true"/>
         <result property="orderNo" column="order_no"/>
         <result property="memNo" column="mem_no"/>
+        <result property="productNo" column="product_no"/>
     </resultMap>
 
     <resultMap id="orderMap" type="com.example.metawater.domain.OrderVO">
@@ -120,8 +121,8 @@
     </update>
     <!-- 해지 테이블에 해지 내역 추가 -->
     <insert id="insertReturn">
-        INSERT INTO RETURN (return_no, return_date, return_addnumber, return_address, return_addDetail, return_price, return_method, return_true, order_no, mem_no, product_no)
-        VALUES (return_seq.nextval, #{returnDate}, #{returnAddNumber}, #{returnAddress}, #{returnAddDetail}, #{returnPrice}, #{returnMethod}, 1, #{orderNo}, #{memNo}, #{productNo})
+        INSERT INTO RETURN (return_no, return_date, return_time, return_price, return_method, return_true, order_no, mem_no, product_no)
+        VALUES (return_seq.nextval, #{returnDate}, #{returnTime}, #{returnPrice}, #{returnMethod}, 1, #{orderNo}, #{memNo}, #{productNo})
     </insert>
 
 
@@ -152,7 +153,7 @@
     <select id="getOrderProductDetail" resultMap="MyDetailMap">
     <![CDATA[
         SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
-               o.order_no, o.order_state, o.order_devDate, o.order_devTime, o.order_addNumber, o.order_address,
+               p.product_no, o.order_no, o.order_state, o.order_devDate, o.order_devTime, o.order_addNumber, o.order_address,
                o.order_addDetail, o.order_name, o.order_phone, o.order_price, o.order_date, o.order_pay, o.rental_price,
                o.rental_term, o.rental_payDate
         FROM orders o
@@ -189,6 +190,11 @@
             delete from orders where order_no = #{orderNo, jdbcType=BIGINT}
     </delete>
 
-
+    <!-- 계약 연장 -->
+    <update id="contractExtend">
+        UPDATE orders
+        SET rental_term = 6
+        WHERE order_no = #{orderNo}
+    </update>
 
 </mapper>
