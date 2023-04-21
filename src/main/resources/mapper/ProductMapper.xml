@@ -87,6 +87,15 @@
         WHERE product_name LIKE '%' || #{searchKeyword} || '%'
     </select>
 
+
+<!--    <select id="getListWithPaging"  resultMap="productMap">-->
+<!--        select * from product where-->
+<!--                                  productNo <= ${cri.pageNum} * #{cri.amount}-->
+<!--        SELECT *-->
+<!--        FROM product-->
+<!--        WHERE product_name LIKE '%' || #{searchKeyword} || '%'-->
+<!--    </select>-->
+
 <!--
 
     <select id="getProduct" resultMap="productMap" parameterType="Long">

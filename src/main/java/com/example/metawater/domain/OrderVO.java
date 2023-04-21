@@ -33,5 +33,5 @@ public class OrderVO {
     private MemberVO member;
     private ProductVO product;
 
-    private RentalVO rental;
+
 }

@@ -61,14 +61,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="status" column="status"/>
     </resultMap>
 
-    <resultMap id="rentalMap" type="com.example.metawater.domain.RentalVO">
-        <id property="renNo" column="ren_no"/>
-        <result property="renInstallCost" column="ren_installCost"/>
-        <result property="renEndDate" column="ren_endDate"/>
-        <result property="renTerm" column="ren_term"/>
-        <result property="renPayDate" column="ren_payDate"/>
-        <result property="productNo" column="product_no"/>
-    </resultMap>
+<!--    <resultMap id="rentalMap" type="com.example.metawater.domain.RentalVO">-->
+<!--        <id property="renNo" column="ren_no"/>-->
+<!--        <result property="renInstallCost" column="ren_installCost"/>-->
+<!--        <result property="renEndDate" column="ren_endDate"/>-->
+<!--        <result property="renTerm" column="ren_term"/>-->
+<!--        <result property="renPayDate" column="ren_payDate"/>-->
+<!--        <result property="productNo" column="product_no"/>-->
+<!--    </resultMap>-->
 
     <insert id="insertOrder" parameterType="com.example.metawater.domain.OrderVO">
         INSERT INTO orders
