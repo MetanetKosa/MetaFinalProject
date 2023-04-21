@@ -6,18 +6,15 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+
 @Mapper
 public interface MemberMapper {
     public List<MemberVO> findAllUsers();
-
-
-    public MemberVO findUser(@Param("id") String id);
-
-    public MemberVO getUser(String id);
     //회원가입
     public void insertMember(MemberVO memberVO);
-
-//    public MemberVO getUserById(@Param("id") String id);
+    //로그인
+    public MemberVO findByUserId(@Param("memId") String memId);
+    public MemberVO idGet(@Param("memId") String id);
 
     //로그인
     //public UserDTO loginMember(UserDTO user);

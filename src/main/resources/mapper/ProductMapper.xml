@@ -26,23 +26,22 @@
         <result property="productRentalPrice" column="product_rentalPrice"/>
         <result property="productPrice" column="product_price"/>
         <result property="productColor" column="product_color"/>
-
 <!--        <collection property="colors" resultMap="colorMap"></collection>-->
 <!--        <collection property="functions" resultMap="functionMap"></collection>-->
     </resultMap>
 
-    <resultMap id="colorMap" type="com.example.metawater.domain.ColorVO">
-        <id property="colorNo" column="color_no"/>
-        <result property="colorName" column="color_name"/>
-    </resultMap>
+<!--    <resultMap id="colorMap" type="com.example.metawater.domain.ColorVO">-->
+<!--        <id property="colorNo" column="color_no"/>-->
+<!--        <result property="colorName" column="color_name"/>-->
+<!--    </resultMap>-->
 
-    <resultMap id="functionMap" type="com.example.metawater.domain.FunctionVO">
-        <id property="functionNo" column="function_no"/>
-        <result property="functionName" column="function_name"/>
-        <result property="functionModel" column="function_model"/>
-        <result property="functionRentalPrice" column="function_rentalPrice"/>
-        <result property="functionPrice" column="function_price"/>
-    </resultMap>
+<!--    <resultMap id="functionMap" type="com.example.metawater.domain.FunctionVO">-->
+<!--        <id property="functionNo" column="function_no"/>-->
+<!--        <result property="functionName" column="function_name"/>-->
+<!--        <result property="functionModel" column="function_model"/>-->
+<!--        <result property="functionRentalPrice" column="function_rentalPrice"/>-->
+<!--        <result property="functionPrice" column="function_price"/>-->
+<!--    </resultMap>-->
 
 <!--    <select id="getProductList" resultMap="productMap">-->
 <!--        select distinct p.*, c.color_name, f.function_name-->
@@ -102,39 +101,41 @@
 
     <select id="getProduct" resultMap="productMap" parameterType="Long">
         SELECT * from product where product_no = #{productNo}
+
     </select>
 
 
     <insert id="productInsert">
+        <selectKey keyProperty="productNo" order="BEFORE"
+                   resultType="long">
+            select product_seq.nextval from dual
+        </selectKey>
+
         INSERT INTO product(product_no, product_name, product_size,product_weight, product_detail,
                          product_guide, product_type,  product_method,
                          product_rdate, product_company, regDate, updateDate, detail_url,img_url, product_sales, product_function,
                             product_model, product_rentalPrice, product_price, product_color)
         VALUES(
-                  product_seq.nextval,#{product_name},#{product_size},#{product_weight},#{product_detail},#{product_guide},#{product_type},#{product_method},
-                 sysdate,#{product_company},sysdate,sysdate,'detail_url',#{img_url},4,#{product_function},#{product_model},
-                  #{product_rentalPrice},#{product_price},#{product_color})
+                 #{productNo},#{productName},#{productSize},#{productWeight},#{productDetail},#{productGuide},#{productType},#{productMethod},
+        #{productRdate},#{productCompany},sysdate,sysdate,#{detailUrl},#{imgUrl},#{productSales},#{productFunction},#{productModel},
+                  #{productRentalPrice},#{productPrice},#{productColor})
     </insert>
 
     <delete id="productDelete" parameterType="Long">
         delete from product where
-            product_no = #{product_no}
+            product_no = #{productNo}
     </delete>
 
     <update id="productUpdate">
         update product
-        set  product_name = #{product_name},
-             product_size = #{product_size} ,
-             product_weight = #{product_weight} ,
-             product_detail = #{product_detail} ,
-             product_guide = #{product_guide},
-             product_type = #{product_type},
-             product_method = #{product_method},
-             product_rdate = #{product_rdate},
-             product_company = #{product_company},
+        set  product_name = #{productName},
+             product_size = #{productSize} ,
+             product_weight = #{productWeight} ,
+             product_detail = #{productDetail} ,
+             product_type = #{productType},
+             product_method = #{productMethod},
+             product_company = #{productCompany},
              updateDate = sysdate,
-             detail_url = #{detail_url},
-             img_url = #{ img_url}
-        where product_no = #{product_no}
+        where product_no = #{productNo}
     </update>
 </mapper>

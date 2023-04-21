@@ -22,9 +22,19 @@ spring:
       max-request-size: 30MB
       max-file-size: 10MB
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri:
+
+
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.metawater
 #  type-aliases-package: com.example.metajobs
+
+#metawater.upload.path : C:\\upload
+metawater.upload.path : C:\metanet\workspace\finalProject\MetaFinalProject\src\main\resources\files
 

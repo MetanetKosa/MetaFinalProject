@@ -26,16 +26,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <association property="product" resultMap="productMap"/>
     </resultMap>
 
-    <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
-        <id property="memNo" column="mem_no"/>
-        <result property="memId" column="mem_id"/>
-        <result property="memPw" column="mem_pw"/>
-        <result property="memName" column="mem_name"/>
-        <result property="memPhone" column="mem_phone"/>
-        <result property="memEmail" column="mem_email"/>
-        <result property="auth" column="auth"/>
-    </resultMap>
-
     <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
         <id property="productNo" column="product_no"/>
         <result property="productName" column="product_name"/>
@@ -59,14 +49,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="productColor" column="product_color"/>
     </resultMap>
 
-<!--    <resultMap id="rentalMap" type="com.example.metawater.vo.RentalVO">-->
-<!--        <result property="renNo" column="ren_no"/>-->
-<!--        <result property="renInstallCost" column="ren_installcost"/>-->
-<!--        <result property="renEndDate" column="ren_enddate"/>-->
-<!--        <result property="renTerm" column="ren_term"/>-->
-<!--        <result property="renPayDate" column="ren_paydate"/>-->
-<!--        <result property="productNo" column="product_no"/>-->
-<!--    </resultMap>-->
+    <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
+        <id property="memNo" column="mem_no"/>
+        <result property="memId" column="mem_id"/>
+        <result property="memPw" column="mem_pw"/>
+        <result property="memName" column="mem_name"/>
+        <result property="memPhone" column="mem_phone"/>
+        <result property="memEmail" column="mem_email"/>
+        <result property="auth" column="auth"/>
+        <result property="status" column="status"/>
+    </resultMap>
 
     <insert id="insertOrder" parameterType="com.example.metawater.domain.OrderVO">
         INSERT INTO orders
@@ -87,10 +79,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE ROWNUM = 1
     </select>
 
+<!--    구매 목록 조회-->
+    <select id="orderList" resultMap="orderMap">
+        select * from
+        pr_order inner join member
+        on pr_order.mem_no = member.mem_no
+        inner join product
+        on pr_order.product_no = product.product_no
+        where order_type = '구매'
+    </select>
+
+    <select id="orderRentalList" resultMap="orderMap">
+        select * from
+            pr_order inner join member
+                                on pr_order.mem_no = member.mem_no
+                     inner join rental
+                                on pr_order.ren_no = rental.ren_no
+                     inner join product
+                                on pr_order.product_no = product.product_no
+        where order_type = '렌탈'
+    </select>
+
     <select id="getOrderDetail" parameterType="Long" resultMap="orderMap">
         select o.*, m.*, p.*
         from orders o, member m, product p
         where o.product_no = p.product_no and o.mem_no = m.mem_no
         and o.order_no = #{orderNo}
     </select>
+
+    <!--주문 상세 조회-->
+    <select id="orderDetail" resultMap="orderMap">
+        select * from
+            pr_order inner join member
+                                on pr_order.mem_no = member.mem_no
+                     inner join product
+                                on pr_order.product_no = product.product_no
+        where order_no=#{orderNo}
+    </select>
+
+    <!--    주문 상태 변경-->
+    <update id="updateOrderState">
+        update pr_order
+        set  order_state = #{orderState}
+        where order_no = #{orderNo}
+    </update>
+
 </mapper>

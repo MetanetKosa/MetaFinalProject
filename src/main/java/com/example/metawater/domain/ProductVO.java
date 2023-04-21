@@ -29,12 +29,19 @@ public class ProductVO {
     private Date updateDate;
     private String imgUrl;
     private String detailUrl;
-    private Long productSales;
+
+    private int productSales;
+
     private String productFunction;
+
     private String productModel;
-    private Long productRentalPrice;
-    private Long productPrice;
+
+    private int productRentalPrice;
+
+    private int productPrice;
+
     private String productColor;
-    //private List<ColorVO> colors;
-    //private List<FunctionVO> functions;
+
+    private List<UploadResultDTO> attachList;
+
 }

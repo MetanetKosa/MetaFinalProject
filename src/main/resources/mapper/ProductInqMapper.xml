@@ -54,6 +54,7 @@
         <result property="memPhone" column="mem_phone"/>
         <result property="memEmail" column="mem_email"/>
         <result property="auth" column="auth"/>
+        <result property="status" column="status" />
     </resultMap>
 
     <select id="getQuestionList" resultMap="questionMap">

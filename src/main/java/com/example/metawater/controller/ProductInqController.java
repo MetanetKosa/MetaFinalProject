@@ -4,6 +4,7 @@ import com.example.metawater.domain.ProductInqVO;
 import com.example.metawater.dto.ProductInqDTO;
 import com.example.metawater.service.ProductInqService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,10 @@ import java.util.List;
 public class ProductInqController {
 
     @Autowired
-    private ProductInqService pqService;
+    public ProductInqService pqService;
 
-    public ProductInqController(ProductInqService pqService) {this.pqService = pqService;}
+    public ProductInqController(ProductInqService pqService) {
+        this.pqService = pqService;}
 
     //문의 목록 조회
     @GetMapping("/{productNo}/proQna")
@@ -27,8 +29,6 @@ public class ProductInqController {
 //    }
     public ResponseEntity<List<ProductInqVO>> list(@PathVariable Long productNo) {
         System.out.println("문의 GET 요청 확인");
-        //pqService.findByProduct(productNo);
-        //System.out.println(pqService.findByProduct(productNo));
         return new ResponseEntity<>(pqService.findByProduct(productNo), HttpStatus.OK);
     }
 
@@ -55,8 +55,6 @@ public class ProductInqController {
     @PostMapping("/{productNo}/qnaInsert")
     public ResponseEntity insert(@PathVariable("productNo") Long productNo, @RequestBody ProductInqDTO question) {
         System.out.println("POST 문의 확인");
-        //System.out.println(question.getProqTitle());
-        //System.out.println(question.getProqContent());
 
         ProductInqVO q = new ProductInqVO();
         q.setProductNo(productNo);

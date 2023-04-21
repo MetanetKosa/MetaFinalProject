@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.metawater.mapper.MypageMapper">
+
+
+    <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
+        <id property="productNo" column="product_no"/>
+        <result property="productName" column="product_name"/>
+        <result property="productSize" column="product_size"/>
+        <result property="productWeight" column="product_weight"/>
+        <result property="productDetail" column="product_detail"/>
+        <result property="productGuide" column="product_guide"/>
+        <result property="productType" column="product_type"/>
+        <result property="productMethod" column="product_method"/>
+        <result property="productRdate" column="product_rdate"/>
+        <result property="productCompany" column="product_company"/>
+        <result property="regDate" column="regDate"/>
+        <result property="updateDate" column="updateDate"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="detailUrl" column="detail_url"/>
+        <result property="productSales" column="product_sales"/>
+        <result property="productFunction" column="product_function"/>
+        <result property="productModel" column="product_model"/>
+        <result property="productRentalPrice" column="product_rentalPrice"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="productColor" column="product_color"/>
+    </resultMap>
+
+    <resultMap id="orderDtoMap" type="com.example.metawater.domain.OrderDTO">
+        <result property="orderNo" column="order_no"/>
+        <result property="productNo" column="product_no"/>
+        <result property="memberNo" column="mem_no"/>
+        <result property="orderState" column="order_state"/>
+        <result property="deliveryDate" column="order_devDate"/>
+        <result property="deliveryTime" column="order_devTime"/>
+        <result property="orderAddNumber" column="order_addNumber"/>
+        <result property="orderAddress" column="order_address"/>
+        <result property="orderAddDetail" column="order_addDetail"/>
+        <result property="orderName" column="order_name"/>
+        <result property="orderPhone" column="order_phone"/>
+        <result property="orderPrice" column="order_price"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="orderPay" column="order_pay"/>
+        <result property="rentalPrice" column="rental_price"/>
+        <result property="rentalTerm" column="rental_term"/>
+        <result property="rentalPayDate" column="rental_payDate"/>
+    </resultMap>
+
+    <resultMap id="ReturnMap" type="com.example.metawater.domain.ReturnVO">
+        <id property="returnNo" column="return_no"/>
+        <result property="returnDate" column="return_date"/>
+        <result property="returnAdd" column="return_add"/>
+        <result property="returnPrice" column="return_price"/>
+        <result property="returnMethod" column="return_method"/>
+        <result property="returnTrue" column="return_true"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="memNo" column="mem_no"/>
+    </resultMap>
+
+    <resultMap id="orderMap" type="com.example.metawater.domain.OrderVO">
+        <result property="orderNo" column="order_no"/>
+        <result property="productNo" column="product_no"/>
+        <result property="memberNo" column="mem_no"/>
+        <result property="orderState" column="order_state"/>
+        <result property="deliveryDate" column="order_devDate"/>
+        <result property="deliveryTime" column="order_devTime"/>
+        <result property="orderAddNumber" column="order_addNumber"/>
+        <result property="orderAddress" column="order_address"/>
+        <result property="orderAddDetail" column="order_addDetail"/>
+        <result property="orderName" column="order_name"/>
+        <result property="orderPhone" column="order_phone"/>
+        <result property="orderPrice" column="order_price"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="orderPay" column="order_pay"/>
+        <result property="rentalPrice" column="rental_price"/>
+        <result property="rentalTerm" column="rental_term"/>
+        <result property="rentalPayDate" column="rental_payDate"/>
+        <association property="member" resultMap="memberMap"/>
+        <association property="product" resultMap="productMap"/>
+    </resultMap>
+
+    <resultMap id="MyDetailMap" type="com.example.metawater.domain.MyOrderProductVO">
+        <result property="productName" column="product_name"/>
+        <result property="productModel" column="product_model"/>
+        <result property="productSize" column="product_size"/>
+        <result property="productGuide" column="product_guide"/>
+        <result property="productRentalPrice" column="product_rentalprice"/>
+        <result property="imgUrl" column="img_url"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="productNo" column="product_no"/>
+        <result property="memberNo" column="mem_no"/>
+        <result property="orderState" column="order_state"/>
+        <result property="deliveryDate" column="order_devDate"/>
+        <result property="deliveryTime" column="order_devTime"/>
+        <result property="orderAddNumber" column="order_addNumber"/>
+        <result property="orderAddress" column="order_address"/>
+        <result property="orderAddDetail" column="order_addDetail"/>
+        <result property="orderName" column="order_name"/>
+        <result property="orderPhone" column="order_phone"/>
+        <result property="orderPrice" column="order_price"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="orderPay" column="order_pay"/>
+        <result property="rentalPrice" column="rental_price"/>
+        <result property="rentalTerm" column="rental_term"/>
+        <result property="rentalPayDate" column="rental_payDate"/>
+        <association property="order" javaType="com.example.metawater.domain.OrderDTO"/>
+        <association property="product" javaType="com.example.metawater.domain.ProductVO"/>
+    </resultMap>
+
+
+
+    <!-- 해지신청 -->
+    <!-- 주문상태 해지 완료로 변경 -->
+    <update id="changeOrderStatus">
+        UPDATE orders
+        SET order_state = '해지 완료'
+        WHERE order_no = #{orderNo}
+    </update>
+    <!-- 해지 테이블에 해지 내역 추가 -->
+    <insert id="insertReturn">
+        INSERT INTO RETURN (return_no, return_date, return_addnumber, return_address, return_addDetail, return_price, return_method, return_true, order_no, mem_no, product_no)
+        VALUES (return_seq.nextval, #{returnDate}, #{returnAddNumber}, #{returnAddress}, #{returnAddDetail}, #{returnPrice}, #{returnMethod}, 1, #{orderNo}, #{memNo}, #{productNo})
+    </insert>
+
+
+    <select id="getMyProductList" resultMap="productMap">
+        <![CDATA[
+        select * from product
+                 where product_no IN
+                       (select product_no from orders
+                                          where mem_no = #{memNo} and order_state = '설치 완료')
+        ]]>
+    </select>
+
+    <!-- 상세 정보 리스트-->
+    <select id="getOrderProductDetailList" resultMap="MyDetailMap">
+    <![CDATA[
+            SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
+                   o.order_no, o.order_state, o.order_devDate, o.order_devTime, o.order_addNumber, o.order_address,
+                   o.order_addDetail, o.order_name, o.order_phone, o.order_price, o.order_date, o.order_pay, o.rental_price,
+                   o.rental_term, o.rental_payDate
+            FROM orders o
+                     JOIN product p ON o.product_no = p.product_no
+            WHERE o.mem_no = #{memNo} and o.order_state = '설치 완료'
+            ]]>
+    </select>
+
+
+    <!-- 상세 정보 디테일-->
+    <select id="getOrderProductDetail" resultMap="MyDetailMap">
+    <![CDATA[
+        SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
+               o.order_no, o.order_state, o.order_devDate, o.order_devTime, o.order_addNumber, o.order_address,
+               o.order_addDetail, o.order_name, o.order_phone, o.order_price, o.order_date, o.order_pay, o.rental_price,
+               o.rental_term, o.rental_payDate
+        FROM orders o
+                 JOIN product p ON o.product_no = p.product_no
+        WHERE o.order_no = #{orderNo}
+        ]]>
+    </select>
+
+
+    <select id="getMyOrderList" resultMap="orderDtoMap">
+ 		<![CDATA[
+        select * from orders
+                 where mem_no = #{memNo} ORDER BY order_date DESC
+        ]]>
+ 	</select>
+
+
+    <select id="getMyProduct" resultMap="productMap">
+ 		<![CDATA[
+        select * from product
+        where product_no = #{productNo}
+        ]]>
+ 	</select>
+
+    <delete id="deleteReview" parameterType="long">
+            delete from review where order_no = #{orderNo, jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteReturn" parameterType="long">
+            delete from return where order_no = #{orderNo, jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteOrder" parameterType="long">
+            delete from orders where order_no = #{orderNo, jdbcType=BIGINT}
+    </delete>
+
+
+
+</mapper>
