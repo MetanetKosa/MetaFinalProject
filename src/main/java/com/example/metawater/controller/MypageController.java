@@ -22,6 +22,9 @@ public class MypageController {
 
     @GetMapping("/myorder/{memNo}")
     public List<ProductVO> getMyOrderList(@PathVariable Long memNo){
+
+        System.out.println("주문목록에서 가져온 값 : " +memNo );
+        System.out.println("주문목록 ProductVO 데이터 확인해보자----"+ mypageService.getMyOrderList(memNo));
         return mypageService.getMyOrderList(memNo);
     }
 
