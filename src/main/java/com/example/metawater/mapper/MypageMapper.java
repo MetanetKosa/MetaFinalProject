@@ -17,6 +17,7 @@ public interface MypageMapper {
 
     // 나의 주문목록 조회
     public List<ProductVO> getMyOrderList(Long memNo);
+    public List<ProductVO> getMyCancelList(Long memNo);
 
     public ProductVO getMyProduct(Long productNo);
 

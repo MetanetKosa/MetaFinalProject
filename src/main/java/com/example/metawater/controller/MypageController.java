@@ -1,6 +1,7 @@
 package com.example.metawater.controller;
 
 import com.example.metawater.domain.*;
+import com.example.metawater.mapper.MypageMapper;
 import com.example.metawater.service.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,11 @@ public class MypageController {
 
     @GetMapping("/myorder/{memNo}")
     public List<ProductVO> getMyOrderList(@PathVariable Long memNo){
-
-        System.out.println("주문목록에서 가져온 값 : " +memNo );
-        System.out.println("주문목록 ProductVO 데이터 확인해보자----"+ mypageService.getMyOrderList(memNo));
         return mypageService.getMyOrderList(memNo);
+    }
+    @GetMapping("/mycancel/{memNo}")
+    public List<ProductVO> getMyCancelList(@PathVariable Long memNo){
+        return mypageService.getMyCancelList(memNo);
     }
 
     @GetMapping("/myproduct/detail/{productNo}")
@@ -37,6 +39,7 @@ public class MypageController {
 //
 //    }
 
+    // 주문 취소
     @DeleteMapping("/myorder/{orderNo}")
     public void deleteOrder(@PathVariable Long orderNo){
         mypageService.deleteOrder(orderNo);
