@@ -13,14 +13,15 @@ public interface MemberService extends UserDetailsService {
 
     //회원가입
     public void createMember(MemberVO memberVO);
-    //로그인
-//    UserDetails loadUserByUsername(String memId);
-    boolean checkMemberInfo(MemberDTO memberDTO);
-    public boolean getId(String id);
-    public MemberVO membersData(String id);
 
+    //로그인
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException;
+
+    //아이디 중복체크
+    public MemberVO checkMemberInfo(String id);
+    public MemberVO membersData(String id);
+    public boolean updateMember(String id);
 
     //    public boolean remove(Long userid);
 //    public List<MemberVO> getUserList();

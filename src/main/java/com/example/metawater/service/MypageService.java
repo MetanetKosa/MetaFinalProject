@@ -16,12 +16,15 @@ public class MypageService {
     private MypageMapper mypageMapper;
 
     public List<ProductVO> getMyProductList(Long memNo) {
-            return mypageMapper.getMyProductList(memNo);
-        }
+        return mypageMapper.getMyProductList(memNo);
+    }
 
     public List<ProductVO> getMyOrderList(Long memNo) {
         return mypageMapper.getMyOrderList(memNo);
-        }
+    }
+    public List<ProductVO> getMyCancelList(Long memNo) {
+        return mypageMapper.getMyCancelList(memNo);
+    }
 
     public ProductVO getMyProduct(Long productNo){
         return mypageMapper.getMyProduct(productNo);
@@ -36,6 +39,10 @@ public class MypageService {
         mypageMapper.insertReturn(returnVO);
     }
 
+    // 계약 연장
+    public void contractExtend(Long orderNo){
+        mypageMapper.contractExtend(orderNo);
+    }
     public void deleteOrder(Long orderNo){
         mypageMapper.deleteReturn(orderNo);
         mypageMapper.deleteReview(orderNo);
@@ -51,4 +58,4 @@ public class MypageService {
     }
 
 
-    }
+}

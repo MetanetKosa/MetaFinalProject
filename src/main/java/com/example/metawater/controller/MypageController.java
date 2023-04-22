@@ -24,6 +24,10 @@ public class MypageController {
     public List<ProductVO> getMyOrderList(@PathVariable Long memNo){
         return mypageService.getMyOrderList(memNo);
     }
+    @GetMapping("/mycancel/{memNo}")
+    public List<ProductVO> getMyCancelList(@PathVariable Long memNo){
+        return mypageService.getMyCancelList(memNo);
+    }
 
     @GetMapping("/myproduct/detail/{productNo}")
     public ProductVO getMyProduct(@PathVariable Long productNo){
@@ -35,6 +39,7 @@ public class MypageController {
 //
 //    }
 
+    // 주문 취소
     @DeleteMapping("/myorder/{orderNo}")
     public void deleteOrder(@PathVariable Long orderNo){
         mypageService.deleteOrder(orderNo);
@@ -51,13 +56,18 @@ public class MypageController {
     }
 
     // 해지
-    @PatchMapping("/myorder/myproduct/cancel/{orderNo}")
+    @PatchMapping("/myproduct/myorder/cancel/{orderNo}")
     public void changeOrderStatus(@PathVariable Long orderNo){
         mypageService.changeOrderStatus(orderNo);
     }
 
-    @PostMapping("/myorder/cancel")
+    @PostMapping("/myproduct/myorder/cancel")
     public void insertReturn(@RequestBody ReturnVO returnVO){
         mypageService.insertReturn(returnVO);
+    }
+
+    @PatchMapping("/myproduct/myorder/extend/{orderNo}")
+    public void contractExtend(@PathVariable Long orderNo){
+        mypageService.contractExtend(orderNo);
     }
 }

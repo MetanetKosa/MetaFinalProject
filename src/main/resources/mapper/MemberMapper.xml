@@ -26,58 +26,68 @@
         select * from member where mem_id = #{memId}
     </select>
 
-    <select id="idGet" resultType="MemberVO">
+    <!-- id 중복체크 -->
+    <select id="checkMemberInfo" parameterType="String" resultType="boolean">
         select * from member where mem_id = #{memId}
     </select>
 
-    <insert id ="userRole">
-        insert into memberauth values(#{memberIdx}, 'ROLE_USER')
-    </insert>
-
-    <!-- 모든 회원정보 확인 -->
-    <select id="findAllUsers" resultMap="memberMap">
-        SELECT * FROM member
-    </select>
-
-    <!-- 회원정보 확인 -->
-    <select id="findUser" resultMap="memberMap">
-        SELECT * FROM member
-        WHERE id = #{id}
-    </select>
-
-    <!-- 권한 등록 -->
-    <insert id="insertRole">
-        insert into auth values(#{mem_id}, 'ROLE_MEMBER');
-    </insert>
-
     <!-- 회원정보 수정 -->
-    <update id="updateMember" parameterType="MemberVO">
-        update member set phone = #{mem_phone}
-        where mem_id = #{mem_id}
-    </update>
-
-    <!-- 회원정보 삭제 -->
-    <update id="deleteUser">
-        update member set enabled = 0
-        where mem_id = #{mem_id}
-    </update>
-
-    <!-- 회원정보 검색 -->
-    <select id="getId" resultType="String">
-        select mem_id from member where mem_id = #{mem_id} and mem_name = #{mem_name}
-    </select>
-
-    <!-- 회원정보 수정 -->
-    <select id="updatePw" resultType="String">
+    <update id="updateMember">
         update member
-        set mem_pw = #{mem_pw}
-        where mem_id = {mem_id} and mem_name = #{mem_name}
-    </select>
+        set memName = #{mem_birth},
+            memPhone = #{mem_phone},
+            memEmail = #{mem_address}
+        where mem_id = #{mem_id}
+    </update>
 
-    <!-- 회원정보 확인 -->
-    <select id="getUser" parameterType="MemberVO">
-        select * from member where mem_id = #{mem_id}
-    </select>
+<!--    <insert id ="userRole">-->
+<!--        insert into memberauth values(#{memberIdx}, 'ROLE_USER')-->
+<!--    </insert>-->
+
+<!--    &lt;!&ndash; 모든 회원정보 확인 &ndash;&gt;-->
+<!--    <select id="findAllUsers" resultMap="memberMap">-->
+<!--        SELECT * FROM member-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 회원정보 확인 &ndash;&gt;-->
+<!--    <select id="findUser" resultMap="memberMap">-->
+<!--        SELECT * FROM member-->
+<!--        WHERE id = #{id}-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 권한 등록 &ndash;&gt;-->
+<!--    <insert id="insertRole">-->
+<!--        insert into auth values(#{mem_id}, 'ROLE_MEMBER');-->
+<!--    </insert>-->
+
+<!--    &lt;!&ndash; 회원정보 수정 &ndash;&gt;-->
+<!--    <update id="updateMember" parameterType="MemberVO">-->
+<!--        update member set phone = #{mem_phone}-->
+<!--        where mem_id = #{mem_id}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 회원정보 삭제 &ndash;&gt;-->
+<!--    <update id="deleteUser">-->
+<!--        update member set enabled = 0-->
+<!--        where mem_id = #{mem_id}-->
+<!--    </update>-->
+
+<!--    &lt;!&ndash; 회원정보 검색 &ndash;&gt;-->
+<!--    <select id="getId" resultType="String">-->
+<!--        select mem_id from member where mem_id = #{mem_id} and mem_name = #{mem_name}-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 회원정보 수정 &ndash;&gt;-->
+<!--    <select id="updatePw" resultType="String">-->
+<!--        update member-->
+<!--        set mem_pw = #{mem_pw}-->
+<!--        where mem_id = {mem_id} and mem_name = #{mem_name}-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 회원정보 확인 &ndash;&gt;-->
+<!--    <select id="getUser" parameterType="MemberVO">-->
+<!--        select * from member where mem_id = #{mem_id}-->
+<!--    </select>-->
 
 
 </mapper>
