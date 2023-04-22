@@ -36,6 +36,10 @@ public class MypageService {
         mypageMapper.insertReturn(returnVO);
     }
 
+    // 계약 연장
+    public void contractExtend(Long orderNo){
+        mypageMapper.contractExtend(orderNo);
+    }
     public void deleteOrder(Long orderNo){
         mypageMapper.deleteReturn(orderNo);
         mypageMapper.deleteReview(orderNo);

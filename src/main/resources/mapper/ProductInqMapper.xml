@@ -58,20 +58,20 @@
     </resultMap>
 
     <select id="getQuestionList" resultMap="questionMap">
-        select pi.*, m.member_name, p.product_name, p.product_function, p.product_model
+        select pi.*, m.*, p.product_name, p.product_function, p.product_model
         from product_inquire pi, member m, product p
         where pi.mem_no = m.mem_no and pi.product_no = p.product_no
     </select>
 
     <select id="getQuestionListByProductId" parameterType="Long" resultMap="questionMap">
-        select pi.*, m.mem_name, p.product_name, p.product_function, p.product_model
+        select pi.*, m.*, p.product_name, p.product_function, p.product_model
         from product_inquire pi, member m, product p
         where pi.mem_no = m.mem_no and pi.product_no = p.product_no
         and pi.product_no = #{productNo}
     </select>
 
     <select id="getQuestion" parameterType="Long" resultMap="questionMap">
-        select pi.*, m.mem_name, p.product_name, p.product_function, p.product_model
+        select pi.*, m.*, p.product_name, p.product_function, p.product_model
         from product_inquire pi, member m, product p
         where pi.mem_no = m.mem_no and pi.product_no = p.product_no
           and pi.proq_no = #{proqNo} and pi.product_no = #{productNo}
@@ -84,7 +84,7 @@
         )
         VALUES (
                    product_inquire_seq.nextval, #{proqTitle}, #{proqContent}, SYSDATE, '답변 대기중', NULL, NULL, NULL,
-                   0, 4, #{productNo}
+                   0, #{memNo}, #{productNo}
                )
     </insert>
 

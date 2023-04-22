@@ -20,7 +20,6 @@ public interface MypageMapper {
 
     public ProductVO getMyProduct(Long productNo);
 
-    public void insertReturn(ReturnVO returnVO);
     public void deleteOrder(Long orderNo);
     public void deleteReturn(Long orderNo);
     public void deleteReview(Long orderNo);
@@ -28,7 +27,9 @@ public interface MypageMapper {
     // 주문 상태 해지 완료로 변경
     public void changeOrderStatus(Long orderNo);
     // 해지 내역 추가
-
+    public void insertReturn(ReturnVO returnVO);
+    // 계약 연장
+    public void contractExtend(Long orderNo);
 
     public List<MyOrderProductVO> getOrderProductDetailList(Long memNo);
     public MyOrderProductVO getOrderProductDetail(Long orderNo);

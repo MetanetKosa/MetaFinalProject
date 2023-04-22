@@ -16,8 +16,8 @@ import java.util.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//public class MemberVO implements UserDetails{
-public class MemberVO{
+public class MemberVO implements UserDetails{
+//public class MemberVO{
 
     private Long memNo;
     private String memId;
@@ -28,37 +28,34 @@ public class MemberVO{
     private String auth;
     private Integer status;
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return Collections.singletonList(new SimpleGrantedAuthority(auth));
-//    }
-//
-//    @Override
-//    public String getUsername() {return memId;}
-//
-//    @Override
-//    public String getPassword() {
-//        return memPw;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() { return true;}
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return status == 1;
-//    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(auth));
+    }
 
+    @Override
+    public String getUsername() {return memId;}
 
+    @Override
+    public String getPassword() {
+        return memPw;
+    }
 
+    @Override
+    public boolean isAccountNonExpired() { return true;}
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return status == 1;
+    }
 }
