@@ -33,21 +33,41 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).body(member);
     }
 
-    //id확인
-    @PostMapping("/checkid")
-    public ResponseEntity<String> checkId(@RequestBody MemberDTO memberDTO) {
-        String id = memberDTO.getMemId();
-        if(memberService.getId(id)){
-            return new ResponseEntity<>("success",HttpStatus.OK);
-        }
-        return new ResponseEntity<>("fail",HttpStatus.OK);
-    }
-
+    //token보낸 후 정보 가져오기
     @GetMapping("/members/{id}")
     public MemberVO membersData(@PathVariable String id){
         MemberVO memberVO = memberService.membersData(id);
         return memberVO;
     }
+
+    //id 중복확인
+    @PostMapping("/checkid/{id}")
+    public ResponseEntity<String> checkId(@PathVariable String memId) {
+        System.out.println("결과 확인"+memId);
+        if(memberService.checkMemberInfo(memId)){
+            return new ResponseEntity<>("success",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("fail",HttpStatus.OK);
+    }
+    
+
+    //회원수정
+//    @PutMapping("/update")
+//    public void updateUser(@PathVariable String mem_id, @RequestBody MemberVO memberVO) {
+//        userService.updateMember(mem_id);
+//    }
+//
+//    //회원탈퇴
+//    @DeleteMapping("/users/{mem_id}")
+//    public void deleteUser(@PathVariable String mem_id) {
+//        MemberVO memberVO = userService.findUser(mem_id);
+//
+//        if(user == null) {
+//            throw new UserNotFoundException(String.format("ID[%s] not found", mem_id));
+//        } userService.deleteMember(mem_id);
+//    }
+
+  
 
 //    @Secured("ROLE_USER")
 //    @PostMapping ("/aftersignup")

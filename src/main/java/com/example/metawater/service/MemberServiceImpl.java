@@ -25,7 +25,7 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    //    회원가입
+    // 회원가입
     @Override
     public void createMember(MemberVO memberVO) {
         System.out.println("pw ㅇ---------------" +memberVO.getMemPw() );
@@ -47,6 +47,40 @@ public class MemberServiceImpl implements MemberService {
         return member;
     }
 
+    @Override
+    public boolean checkMemberInfo(String id) {
+        System.out.println("-----------------memberServiceImple 아이디 중보체크"+memberMapper.checkMemberInfo(id));
+        return memberMapper.checkMemberInfo(id);
+    }
+
+    @Override
+    public boolean updateMember(String id) {
+        System.out.println("-----------------memberServiceImple 아이디 중보체크"+memberMapper.checkMemberInfo(id));
+        return memberMapper.updateMember(id);
+    }
+
+    @Override
+    public MemberVO membersData(String id) {
+        return memberMapper.findByUserId(id);
+    }
+
+    //회원정보 변경
+//    public void updateMember(String mem_id, MemberVO updateUser) {
+//        MemberVO memberVO = userMapper.findUser(mem_id);
+//
+//        if (memberVO != null) {
+//            memberVO.setMemPw(memberVO.getMemPw());
+//            memberVO.setMemName(memberVO.getMemName());
+//            memberVO.setMemName(memberVO.getMemEmail());
+//            memberVO.setMemName(memberVO.getMemPhone());
+//            userMapper.updateMember(user);
+//        } else {
+//            throw new IllegalStateException("회원정보가 존재하지 않습니다.");
+//        }
+//    }
+
+
+
 //        ManagerDTO manager = managerMapper.managerGetUserByIdAndPassword(username);
 //        if (member != null){
 //            System.out.println("멤버 권한 부여");
@@ -64,20 +98,6 @@ public class MemberServiceImpl implements MemberService {
 //        }
 
 
-    @Override
-    public boolean checkMemberInfo(MemberDTO memberDTO) {
-        return false;
-    }
-
-    @Override
-    public boolean getId(String id) {
-        return false;
-    }
-
-    @Override
-    public MemberVO membersData(String id) {
-        return memberMapper.findByUserId(id);
-    }
 
 
     //로그인
