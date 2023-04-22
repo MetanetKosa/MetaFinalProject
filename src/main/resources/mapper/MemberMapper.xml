@@ -34,10 +34,10 @@
     <!-- 회원정보 수정 -->
     <update id="updateMember">
         update member
-        set memName = #{mem_birth},
-            memPhone = #{mem_phone},
-            memEmail = #{mem_address}
-        where mem_id = #{mem_id}
+        set mem_name = #{memName},
+            mem_phone = #{memPhone},
+            mem_email = #{memEmail}
+        where mem_id = #{memId}
     </update>
 
 <!--    <insert id ="userRole">-->

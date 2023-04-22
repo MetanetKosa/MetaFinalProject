@@ -56,10 +56,26 @@ public class MemberController {
     
 
     //회원수정
-//    @PutMapping("/update")
-//    public void updateUser(@PathVariable String mem_id, @RequestBody MemberVO memberVO) {
-//        userService.updateMember(mem_id);
-//    }
+//    @PatchMapping("/update")
+    @PostMapping("/update")
+    public boolean updateUser(@RequestBody MemberVO memberVO) {
+        System.out.println("update데이터 확인 " + memberVO);
+
+        boolean result = memberService.updateMember(memberVO);
+        System.out.println("update데이터 후 데이터 확인" + result);
+        return result;
+    }
+
+    //회원삭제
+    //    public void deleteUser(@PathVariable String
+    @GetMapping("/delete/{mem_id}")
+    public void deleteUser(@RequestBody MemberVO memberVO {
+        MemberVO memberVO = userService.findUser(mem_id);
+
+        if(user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", mem_id));
+        } userService.deleteMember(mem_id);
+    }
 //
 //    //회원탈퇴
 //    @DeleteMapping("/users/{mem_id}")

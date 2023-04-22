@@ -17,7 +17,7 @@ public interface MemberMapper {
     //id중복확인
     public MemberVO checkMemberInfo(@Param("memId") String id);
     //정보수정
-    public boolean updateMember(@Param("memId") String id);
+    public int updateMember( MemberVO memberVO);
 
     //로그인
     //public UserDTO loginMember(UserDTO user);

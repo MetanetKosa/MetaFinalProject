@@ -54,9 +54,9 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean updateMember(String id) {
-        System.out.println("-----------------memberServiceImple 아이디 중보체크"+memberMapper.checkMemberInfo(id));
-        return memberMapper.updateMember(id);
+    public boolean updateMember(MemberVO memberVO) {
+        System.out.println("-----updateMember 아이디 중보체크"+memberMapper.updateMember(memberVO));
+        return memberMapper.updateMember(memberVO) == 1;
     }
 
     @Override

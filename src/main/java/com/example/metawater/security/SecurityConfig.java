@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/members")
                 .antMatchers("/order/**")
                 .antMatchers("/product/**")
+                .antMatchers("/auth/update")
                 .antMatchers("/product/{productNo}/**")
                 .antMatchers("/css/**", "/js/**", "/img/**");
         // 이 요청들에 대해서는 spring security 필터 체인을 적용하지 않겠다
@@ -44,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .antMatchers("/auth/login").permitAll()
+                .antMatchers("/auth/update").permitAll()
 //                .antMatchers("/auth/checkid").permitAll()
 //                .antMatchers("/auth").hasRole("USER")
 //                .antMatchers("/mypage").hasRole("USER")
@@ -58,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .logout();
     }
     //                .authorizeRequests().anyRequest().permitAll();
+//                .antMatchers(HttpMethod.PATCH, "/api/**").authenticated() // PATCH 요청 권한 설정
 
 
     //토큰

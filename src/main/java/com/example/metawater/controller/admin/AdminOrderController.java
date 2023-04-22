@@ -43,7 +43,7 @@ public class AdminOrderController {
     @PatchMapping("/orders/{orderNo}")
     public ResponseEntity updateOrderState(@PathVariable Long orderNo, @RequestBody OrderVO order){
         order.setOrderNo(orderNo);
-      service.orderStateUpdate(order);
+        service.orderStateUpdate(order);
 
       return new ResponseEntity(HttpStatus.OK);
     }

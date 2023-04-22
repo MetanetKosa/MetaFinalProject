@@ -21,7 +21,7 @@ public interface MemberService extends UserDetailsService {
     //아이디 중복체크
     public MemberVO checkMemberInfo(String id);
     public MemberVO membersData(String id);
-    public boolean updateMember(String id);
+    public boolean updateMember(MemberVO memberVO);
 
     //    public boolean remove(Long userid);
 //    public List<MemberVO> getUserList();
