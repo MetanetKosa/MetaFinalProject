@@ -19,7 +19,7 @@ public interface MemberService extends UserDetailsService {
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException;
 
     //아이디 중복체크
-    public boolean checkMemberInfo(String id);
+    public MemberVO checkMemberInfo(String id);
     public MemberVO membersData(String id);
     public boolean updateMember(String id);
 

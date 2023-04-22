@@ -48,7 +48,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean checkMemberInfo(String id) {
+    public MemberVO checkMemberInfo(String id) {
         System.out.println("-----------------memberServiceImple 아이디 중보체크"+memberMapper.checkMemberInfo(id));
         return memberMapper.checkMemberInfo(id);
     }

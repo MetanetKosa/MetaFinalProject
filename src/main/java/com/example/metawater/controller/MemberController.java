@@ -36,18 +36,22 @@ public class MemberController {
     //token보낸 후 정보 가져오기
     @GetMapping("/members/{id}")
     public MemberVO membersData(@PathVariable String id){
+        System.out.println("id 확인 "+ id);
         MemberVO memberVO = memberService.membersData(id);
         return memberVO;
     }
 
     //id 중복확인
-    @PostMapping("/checkid/{id}")
-    public ResponseEntity<String> checkId(@PathVariable String memId) {
+    @GetMapping("/checkid/{id}")
+    public MemberVO checkId(@PathVariable String memId) {
         System.out.println("결과 확인"+memId);
-        if(memberService.checkMemberInfo(memId)){
-            return new ResponseEntity<>("success",HttpStatus.OK);
-        }
-        return new ResponseEntity<>("fail",HttpStatus.OK);
+        MemberVO memberVO= memberService.checkMemberInfo(memId);
+        System.out.println("결과 확인 memberService "+memberService.checkMemberInfo(memId));
+        return memberVO;
+//        if(memberService.checkMemberInfo(memId)){
+//            return new ResponseEntity<>("success",HttpStatus.OK);
+//        }
+//        return new ResponseEntity<>("fail",HttpStatus.OK);
     }
     
 
