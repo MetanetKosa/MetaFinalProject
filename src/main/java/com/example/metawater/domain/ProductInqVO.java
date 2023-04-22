@@ -27,4 +27,5 @@ public class ProductInqVO {
 
     public ProductVO product;
     public MemberVO member;
+
 }
