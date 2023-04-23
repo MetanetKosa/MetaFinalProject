@@ -16,7 +16,7 @@ public class OrderController {
     //구매
     @PostMapping("/{productNo}/{memberNo}")
     private ResponseEntity order(@PathVariable("productNo") Long productNo, @PathVariable("memberNo") Long memberNo, @RequestBody OrderVO order){
-        System.out.println("POST 구매");
+        //System.out.println("POST 구매");
         OrderVO o = new OrderVO();
 
         o.setProductNo(productNo);
@@ -41,7 +41,7 @@ public class OrderController {
     //렌탈
     @PostMapping("/rental/{productNo}/{memberNo}")
     private ResponseEntity rental(@PathVariable("productNo") Long productNo, @PathVariable("memberNo") Long memberNo, @RequestBody OrderVO order){
-        System.out.println("POST 렌탈");
+        //System.out.println("POST 렌탈");
         OrderVO r = new OrderVO();
 
         r.setProductNo(productNo);
@@ -68,14 +68,14 @@ public class OrderController {
     //주문번호
     @GetMapping("/getOrderNo")
     private ResponseEntity<Long> orderNo() {
-        System.out.println("GET 주문번호 조회");
+        //System.out.println("GET 주문번호 조회");
         return new ResponseEntity<>(orderService.getOrderNo(), HttpStatus.OK);
     }
 
     //주문 상세조회
     @GetMapping("/check/{orderNo}")
     public OrderVO orderDetail(@PathVariable Long orderNo) {
-        System.out.println("GET 주문상세 요청");
+        //System.out.println("GET 주문상세 요청");
         return orderService.getOrderDetail(orderNo);
     }
 

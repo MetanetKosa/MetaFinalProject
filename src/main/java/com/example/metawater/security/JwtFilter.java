@@ -45,7 +45,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
 
         System.out.println(requestV.getHeader("AUTHORIZATION"));
         if (requestV.getHeader("AUTHORIZATION") == null) {
-            logger.info("AUTHORIZATION 로그인 안 한 사람");
+            //logger.info("AUTHORIZATION 로그인 안 한 사람");
             onError(responseV, "UNAUTHORIZATION");
             return;
         } else {
@@ -53,7 +53,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
             System.out.println("AUTHORIZATION : " + authorizationHeader);
             String jwt = authorizationHeader.replace("Bearer", "");
             if (!isJwtValid(jwt)) {
-                logger.info("!isJwtValid 토큰 없는거 같은데?");
+                //logger.info("!isJwtValid 토큰 없는거 같은데?");
                 //onError(responseV, "UNAUTHORIZATION");
                 return;
             }
@@ -61,7 +61,7 @@ public class JwtFilter extends BasicAuthenticationFilter {
             MemberVO memberVO = memberMapper.findByUserId(name);
 //            ManagerDTO managerDTO = managerMapper.managerGetUserByIdAndPassword(name);
             if (memberVO != null) {
-                logger.info("-------------------- 회원 -------------------------");
+                //logger.info("-------------------- 회원 -------------------------");
                 UserDetails user = User.builder()
                         .username(memberVO.getMemId())
                         .password(memberVO.getMemPw()) //TODO: 여기서 Auth(회원/관리자) 구분
@@ -78,8 +78,8 @@ public class JwtFilter extends BasicAuthenticationFilter {
 //                        memberVO.getRoles().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList())
                 );
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                logger.info("-------authentication 값 확인--------" + authentication);
-                System.out.println("authentication 값 확인" + authentication);
+                //logger.info("-------authentication 값 확인--------" + authentication);
+                //System.out.println("authentication 값 확인" + authentication);
                 if (authentication != null && authentication.isAuthenticated() && authentication.getAuthorities().stream()
                         .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_USER"))) {
                     filterChain.doFilter(requestValue, responseValue);
@@ -99,8 +99,8 @@ public class JwtFilter extends BasicAuthenticationFilter {
         String token = null;
         try {
             token = Jwts.parser().setSigningKey("secret").parseClaimsJws(jwt).getBody().getSubject();
-            logger.info("token 생성 : " + token);
-            System.out.println("token 생성 : " + token);
+            //logger.info("token 생성 : " + token);
+            //System.out.println("token 생성 : " + token);
         }catch (Exception e){
             returnValue=false;
         }
