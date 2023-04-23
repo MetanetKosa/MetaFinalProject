@@ -110,6 +110,17 @@
         <association property="product" javaType="com.example.metawater.domain.ProductVO"/>
     </resultMap>
 
+    <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
+        <id property="memNo" column="mem_no"/>
+        <result property="memId" column="mem_id" />
+        <result property="memPw" column="mem_pw" />
+        <result property="memName" column="mem_name" />
+        <result property="memPhone" column="mem_phone" />
+        <result property="memEmail" column="mem_email" />
+        <result property="auth" column="auth" />
+        <result property="status" column="status" />
+    </resultMap>
+
 
 
     <!-- 해지신청 -->
@@ -164,11 +175,20 @@
 
 
     <!-- 주문 내역 -->
-    <select id="getMyOrderList" resultMap="orderDtoMap">
+<!--    <select id="getMyOrderList" resultMap="orderDtoMap">-->
+<!--       <![CDATA[-->
+<!--        select * from orders-->
+<!--        where mem_no = #{memNo} AND (order_state = '주문 완료' OR order_state = '설치 완료')-->
+<!--        ORDER BY order_date DESC-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <select id="getMyOrderList" resultMap="orderMap">
        <![CDATA[
-        select * from orders
-        where mem_no = #{memNo} AND (order_state = '주문 완료' OR order_state = '설치 완료')
-        ORDER BY order_date DESC
+        select o.*, p.*, m.* from orders o, product p, member m
+        where o.product_no = p.product_no and o.mem_no = m.mem_no
+        and m.mem_no = #{memNo} AND (o.order_state = '주문 완료' OR o.order_state = '설치 완료')
+        ORDER BY o.order_date DESC
         ]]>
     </select>
 
