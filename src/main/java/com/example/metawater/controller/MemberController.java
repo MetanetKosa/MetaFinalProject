@@ -24,6 +24,13 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
+    //회원삭제
+    @PostMapping("/delete")
+    public void deleteMember(@RequestBody MemberVO memberVO) {
+        System.out.println("deleteUser 확인 " + memberVO);
+        memberService.deleteMember(memberVO);
+    }
+
     //회원가입 //get/post
     @PostMapping("/signup")
     public ResponseEntity<MemberVO> createUser(@RequestBody MemberVO member) {
@@ -58,7 +65,7 @@ public class MemberController {
     //회원수정
 //    @PatchMapping("/update")
     @PostMapping("/update")
-    public boolean updateUser(@RequestBody MemberVO memberVO) {
+    public boolean updateMember(@RequestBody MemberVO memberVO) {
         System.out.println("update데이터 확인 " + memberVO);
 
         boolean result = memberService.updateMember(memberVO);
@@ -66,16 +73,16 @@ public class MemberController {
         return result;
     }
 
-    //회원삭제
-    //    public void deleteUser(@PathVariable String
-    @GetMapping("/delete/{mem_id}")
-    public void deleteUser(@RequestBody MemberVO memberVO {
-        MemberVO memberVO = userService.findUser(mem_id);
-
-        if(user == null) {
-            throw new UserNotFoundException(String.format("ID[%s] not found", mem_id));
-        } userService.deleteMember(mem_id);
-    }
+    //회원탈퇴 전 password확인
+//    @PatchMapping("/update")
+//    @PostMapping("/checkDelete")
+//    public MemberVO checkDelete(@RequestBody MemberVO mem) {
+//        System.out.println("checkDelete getMemId 데이터 확인: " +mem.getMemId());
+//        System.out.println("checkDelete getMemPw 데이터 확인: " +mem.getMemPw());
+//        MemberVO memberVO = memberService.checkMemberInfo(mem.getMemId());
+//        System.out.println("update데이터 후 데이터 확인" + memberVO);
+//        return memberVO;
+//    }
 //
 //    //회원탈퇴
 //    @DeleteMapping("/users/{mem_id}")

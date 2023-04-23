@@ -18,6 +18,7 @@ public interface MemberMapper {
     public MemberVO checkMemberInfo(@Param("memId") String id);
     //정보수정
     public int updateMember( MemberVO memberVO);
+    public int deleteMember(MemberVO memberVO);
 
     //로그인
     //public UserDTO loginMember(UserDTO user);

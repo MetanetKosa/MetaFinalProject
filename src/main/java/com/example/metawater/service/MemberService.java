@@ -22,6 +22,7 @@ public interface MemberService extends UserDetailsService {
     public MemberVO checkMemberInfo(String id);
     public MemberVO membersData(String id);
     public boolean updateMember(MemberVO memberVO);
+    public void deleteMember(MemberVO memberVO);
 
     //    public boolean remove(Long userid);
 //    public List<MemberVO> getUserList();

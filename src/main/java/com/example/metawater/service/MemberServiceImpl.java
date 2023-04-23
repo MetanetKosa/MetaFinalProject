@@ -60,6 +60,13 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public void deleteMember(MemberVO memberVO) {
+//        MemberVO member = memberMapper.findByUserId(memberVO.getMemId());
+//        System.out.println("delete 된 데이터 삭제");
+        memberMapper.deleteMember(memberVO);
+    }
+
+    @Override
     public MemberVO membersData(String id) {
         return memberMapper.findByUserId(id);
     }
