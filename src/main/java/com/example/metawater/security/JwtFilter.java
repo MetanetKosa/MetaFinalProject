@@ -88,14 +88,19 @@ public class JwtFilter extends BasicAuthenticationFilter {
                 else {
                     responseValue.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 }
-            }else if (memberVO != null) {
+            }
+            //================================관리자 token을 따로 설정====================================================
+            else if (memberVO != null) {
                 System.out.println("-------------  admin 관리자는 따로 seurity 설정---------------------------");
-                logger.info(----------  admin 관리자는 따로 seurity 설정-----------------);
+                logger.info("(----------  admin 관리자는 따로 seurity 설정-----------------");
                 UserDetails user = User.builder()
                         .username(memberVO.getMemId())
                         .password(memberVO.getMemPw())//TODO: 여기서 Auth(회원/관리자) 구분
                         .authorities(new SimpleGrantedAuthority(memberVO.getAuth()))
                         .build();
+                Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+                authorities.add(new SimpleGrantedAuthority(memberVO.getAuth()));
+
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
                         user,
                         memberVO.getMemPw(),
@@ -105,14 +110,13 @@ public class JwtFilter extends BasicAuthenticationFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
                 if (authentication != null && authentication.isAuthenticated() && authentication.getAuthorities().stream()
-                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_MANAGER"))) {
-                    filterChain.doFilter(request, response);
+                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"))) {
+                    filterChain.doFilter(requestValue, responseValue);
                 }
                 else {
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    responseValue.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 }
             }
-
             else {
                 throw new UsernameNotFoundException("사용자 없음");
             }

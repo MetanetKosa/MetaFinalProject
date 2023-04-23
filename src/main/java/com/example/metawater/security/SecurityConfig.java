@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
 //                .antMatchers("/")
-                .antMatchers("/auth/signup")
+                .antMatchers("/auth/signup/**")
                 .antMatchers("/auth/members/**")
                 .antMatchers("/product/**")
                 .antMatchers("/css/**", "/js/**", "/img/**");
@@ -46,10 +46,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests() // 요청에 의한 보안검사 시작
 //                .antMatchers("/**").permitAll()//해당경로에 대한 모든 접근을 하용한다.
                 .antMatchers("/auth/login").permitAll()
-                .antMatchers("/auth").access("hasRole('USER')")
-                .antMatchers("/mypage").access("hasRole('USER')")
-                .antMatchers("/order").access("hasRole('USER')")
-                .antMatchers("/admin").access("hasRole('ADMIN')")// /show/mypage는 ADMIN권한을 가지고있는 사용자에게만 허용한다.
+                .antMatchers("/auth/**").access("hasRole('ROLE_USER')")
+                .antMatchers("/mypage/**").access("hasRole('ROLE_USER')")
+                .antMatchers("/order/**").access("hasRole('ROLE_USER')")
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")//ROLE_ADMIN권한을 가지고있는 사용자에게만 허용한다.
                 .anyRequest().authenticated()//어떤 요청에도 보안검사를 한다.
                 .and()
                 .addFilter(getAuthenticationFilter()) //회원 로그인
@@ -82,6 +82,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    //Erro페이지
+    @Bean
+    public ErrorPageHandler accessDeniedHandler() {
+        return new ErrorPageHandler();
     }
 
 
