@@ -42,7 +42,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             throws AuthenticationException {
         try {
             MemberVO memberVO = new ObjectMapper().readValue(request.getInputStream(), MemberVO.class);
-            logger.info("----------memberVO data comfirm---------- " + memberVO.getMemId());
+            //logger.info("----------memberVO data comfirm---------- " + memberVO.getMemId());
 
             if (memberVO != null) {
                 return getAuthenticationManager().authenticate(

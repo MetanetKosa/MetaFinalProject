@@ -53,14 +53,14 @@ public class ProductController {
     //상품 검색
     @GetMapping("/search/{searchKeyword}")
     public List<ProductVO> search(@PathVariable String searchKeyword) {
-        System.out.println("검색 GET 요청 확인");
-        System.out.println(service.getProductListBySearch(searchKeyword));
+        //System.out.println("검색 GET 요청 확인");
+        //System.out.println(service.getProductListBySearch(searchKeyword));
         return service.getProductListBySearch(searchKeyword);
     }
 
     @GetMapping("/{productNo}")
     public ProductVO get(@PathVariable Long productNo){
-        System.out.println("GET 요청 확인");
+        //System.out.println("GET 요청 확인");
         return service.getProduct(productNo);
     }
 

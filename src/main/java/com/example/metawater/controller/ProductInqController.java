@@ -28,8 +28,19 @@ public class ProductInqController {
 //        return pqService.findByProduct(productNo);
 //    }
 
+//    public ResponseEntity<List<ProductInqVO>> list(@PathVariable Long productNo) {
+
+//        public List<ProductInqVO> list(@PathVariable Long productNo) {
+//        System.out.println("문의 GET 요청 확인");
+//        System.out.println("productNon데이터 확인" + productNo);
+//
+//        System.out.println("-----문의 GET 요청을 이렇게 보내도 되나요?-----" + pqService.findByProduct(productNo));
+//        List<ProductInqVO> productList = pqService.findByProduct(productNo);
+//        return productList;
+//        return new ResponseEntity<>(pqService.findByProduct(productNo), HttpStatus.OK);
+
     public ResponseEntity<List<ProductInqVO>> list(@PathVariable Long productNo) {
-        System.out.println("문의 GET 요청 확인");
+        //System.out.println("문의 GET 요청 확인");
         return new ResponseEntity<>(pqService.findByProduct(productNo), HttpStatus.OK);
     }
 
@@ -55,7 +66,7 @@ public class ProductInqController {
     //문의 등록
     @PostMapping("/{productNo}/{memNo}/qnaInsert")
     public ResponseEntity insert(@PathVariable("productNo") Long productNo, @PathVariable("memNo") Long memNo, @RequestBody ProductInqDTO question) {
-        System.out.println("POST 문의 확인");
+        //System.out.println("POST 문의 확인");
 
         ProductInqVO q = new ProductInqVO();
         q.setProductNo(productNo);

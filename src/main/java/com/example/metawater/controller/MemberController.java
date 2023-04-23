@@ -34,7 +34,7 @@ public class MemberController {
     //회원가입 //get/post
     @PostMapping("/signup")
     public ResponseEntity<MemberVO> createUser(@RequestBody MemberVO member) {
-        System.out.println(member);
+        //System.out.println(member);
         memberService.createMember(member);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(member);
@@ -43,7 +43,7 @@ public class MemberController {
     //token보낸 후 정보 가져오기
     @GetMapping("/members/{id}")
     public MemberVO membersData(@PathVariable String id){
-        System.out.println("id 확인 "+ id);
+        //System.out.println("id 확인 "+ id);
         MemberVO memberVO = memberService.membersData(id);
         return memberVO;
     }
@@ -51,9 +51,9 @@ public class MemberController {
     //id 중복확인
     @GetMapping("/checkid/{id}")
     public MemberVO checkId(@PathVariable String memId) {
-        System.out.println("결과 확인"+memId);
+        //System.out.println("결과 확인"+memId);
         MemberVO memberVO= memberService.checkMemberInfo(memId);
-        System.out.println("결과 확인 memberService "+memberService.checkMemberInfo(memId));
+        //System.out.println("결과 확인 memberService "+memberService.checkMemberInfo(memId));
         return memberVO;
 //        if(memberService.checkMemberInfo(memId)){
 //            return new ResponseEntity<>("success",HttpStatus.OK);
