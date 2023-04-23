@@ -43,14 +43,14 @@ public class JwtFilter extends BasicAuthenticationFilter {
         HttpServletRequest requestV = requestValue;
         HttpServletResponse responseV = responseValue;
 
-        System.out.println(requestV.getHeader("AUTHORIZATION"));
+        //System.out.println(requestV.getHeader("AUTHORIZATION"));
         if (requestV.getHeader("AUTHORIZATION") == null) {
             //logger.info("AUTHORIZATION 로그인 안 한 사람");
             onError(responseV, "UNAUTHORIZATION");
             return;
         } else {
             String authorizationHeader = requestV.getHeader("AUTHORIZATION");
-            System.out.println("AUTHORIZATION : " + authorizationHeader);
+            //System.out.println("AUTHORIZATION : " + authorizationHeader);
             String jwt = authorizationHeader.replace("Bearer", "");
             if (!isJwtValid(jwt)) {
                 //logger.info("!isJwtValid 토큰 없는거 같은데?");
