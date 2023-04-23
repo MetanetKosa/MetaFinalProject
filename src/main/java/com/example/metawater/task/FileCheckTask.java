@@ -52,7 +52,7 @@ public class FileCheckTask {
         return str.replace("-", File.separator);
     }
 
-    //매일 12시에 동작
+    //매일 3시에 동작(초,분,시,일,월,주,년)
     @Scheduled(cron = "10 25 15 * * *")
     public void checkFiles() throws Exception {
         log.info("File Check Task run ......");
@@ -60,7 +60,9 @@ public class FileCheckTask {
 
         //file list in database
       List<UploadResultDTO> fileList = attachMapper.getOldFiles();
-//        List<UploadResultDTO> fileList = attachMapper.getFiles();
+
+      //product에서 등록일이 어제인 것을 조회
+//      List<UploadResultDTO> files = productMapper.getFile()
         System.out.println(fileList);
 
         //ready for check file in directory with database file list

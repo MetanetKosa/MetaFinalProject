@@ -58,7 +58,7 @@
 <!--    </select>-->
 
     <select id="getProductList" resultMap="productMap">
-        SELECT * from product
+        SELECT * from product order by product_no desc
     </select>
 <!--
     <select id="getBestProductList" resultMap="productMap">
