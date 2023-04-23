@@ -113,6 +113,28 @@
 
     </select>
 
+<!--    <select id="getListPaging" resultMap="productMap" >-->
+<!--        <![CDATA[-->
+<!--            select productName, productType, productMethod, productRdate,  updateDate, productSales, productFunction, productModel, productRentalPrice, productPrice from(-->
+<!--                select /*+INDEX_DESC(product product_pk) */-->
+<!--                 rowum rn, productNo, productName, productType, productMethod, productRdate,  updateDate, productSales, productFunction, productModel, productRentalPrice, productPrice-->
+<!--                from-->
+<!--                    product-->
+<!--                where rownum <= #{pageNum} * #{amount}-->
+<!--        )-->
+<!--        where rn > (#{pageNum} - 1) * #{amount}-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <select id="getTotalCount" resultMap="productMap" >
+        <![CDATA[
+        SELECT COUNT(*) FROM product
+        ]]>
+
+    </select>
+
+
+
 
     <insert id="productInsert">
         <selectKey keyProperty="productNo" order="BEFORE"
@@ -137,20 +159,7 @@
 
     <update id="productUpdate">
         update product
-        set  product_name = #{productName},
-             product_size = #{productSize} ,
-             product_weight = #{productWeight} ,
-             product_detail = #{productDetail} ,
-             product_type = #{productType},
-             product_method = #{productMethod},
-             product_company = #{productCompany},
-             updateDate = sysdate,
-             product_rdate = #{productRdate},
-             product_sales = #{productSales},
-             product_model = #{productModel},
-             product_rentalPrice = #{productRentalPrice},
-             product_price = #{productPrice},
-             product_color = #{productColor}
+        set product_detail = #{productDetail}
         where product_no = #{productNo}
     </update>
 </mapper>

@@ -51,6 +51,11 @@ public class ReviewServiceImpl implements ReviewService{
 
     @Override
     public boolean deleteReview(Long reviewNo) {
-        return reviewMapper.reviewDelete(reviewNo) == 1;
+        return false;
     }
+
+//    @Override
+//    public boolean deleteReview(Long reviewNo) {
+//        return reviewMapper.reviewDelete(reviewNo) == 1;
+//    }
 }

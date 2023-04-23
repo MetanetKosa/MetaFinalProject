@@ -2,8 +2,7 @@ package com.example.metawater.service;
 
 import com.example.metawater.domain.ProductVO;
 import com.example.metawater.domain.UploadResultDTO;
-import com.example.metawater.mapper.AttachMapper;
-import com.example.metawater.mapper.ProductMapper;
+import com.example.metawater.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +17,15 @@ public class ProductServiceImpl implements ProductService
 
     @Autowired
     private AttachMapper attachmapper;
+
+    @Autowired
+    private OrderMapper orderMapper;
+
+    @Autowired
+    private ReviewMapper reviewMapper;
+
+    @Autowired
+    private ProductInqMapper inqMapper;
 
     @Transactional
     @Override
@@ -41,14 +49,39 @@ public class ProductServiceImpl implements ProductService
     }
 
     @Override
-    public boolean deleteProduct(Long productNo) {
-        attachmapper.deleteFileAll(productNo);
-        return mapper.productDelete(productNo) == 1;
+    public boolean deleteProduct(Long product_no) {
+        return false;
     }
+
+//    @Transactional
+//    @Override
+//    public boolean deleteProduct(Long productNo) {
+//        attachmapper.deleteFileAll(productNo);
+//        // 해당 제품과 관련된 주문 삭제
+//        orderMapper.deleteOrder(productNo);
+//
+//        // 해당 제품과 관련된 리뷰 삭제
+//        reviewMapper.deleteByProductId(productNo);
+//
+//        // 해당 제품 삭제
+//        productRepository.deleteById(productId);
+//        return mapper.productDelete(productNo) == 1;
+//    }
 
     @Override
     public List<ProductVO> getProductList() {
         return mapper.getProductList();
+    }
+
+    @Override
+    public void deleteByProductId(Long productNo) {
+
+    }
+
+
+    @Override
+    public int getTotalCount() {
+        return mapper.getTotalCount();
     }
 
     @Override

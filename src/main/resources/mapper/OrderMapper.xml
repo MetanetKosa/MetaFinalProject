@@ -82,19 +82,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!--    구매 목록 조회-->
     <select id="orderList" resultMap="orderMap">
-        select * from
-        orders inner join member
-        on orders.mem_no = member.mem_no
-        inner join product
-        on orders.product_no = product.product_no
-        where rental_price is null
+        SELECT *
+        FROM orders
+                 LEFT OUTER JOIN member ON orders.mem_no = member.mem_no
+                 LEFT OUTER JOIN product ON orders.product_no = product.product_no
+        WHERE rental_price IS NULL
     </select>
 
     <select id="orderRentalList" resultMap="orderMap">
         select * from
-            orders inner join member
+            orders LEFT OUTER JOIN member
                                 on orders.mem_no = member.mem_no
-                     inner join product
+                   LEFT OUTER JOIN product
                                 on orders.product_no = product.product_no
         where rental_price is not null
     </select>
@@ -122,5 +121,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         set  order_state = #{orderState}
         where order_no = #{orderNo}
     </update>
+
+    <delete id="deleteOrder">
+        DELETE FROM orders WHERE product_no = #{productNo};
+    </delete>
+
+
 
 </mapper>

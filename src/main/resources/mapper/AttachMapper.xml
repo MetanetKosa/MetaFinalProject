@@ -26,5 +26,15 @@
         WHERE product_no = #{product_no}
     </select>
 
+    <select id="getOldFiles" resultType="uploadResultDTO">
+        select * from attach where folderPath = to_char(sysdate-1, 'yyyy\mm\dd')
+    </select>
+
+    <select id="getFiles" resultType="uploadResultDTO">
+        select * from attach
+    </select>
+
+
+
 
 </mapper>

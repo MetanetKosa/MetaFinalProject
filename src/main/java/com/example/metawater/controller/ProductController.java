@@ -14,7 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -39,10 +41,24 @@ public class ProductController {
     }
 
     //상품 목록 조회
-    @GetMapping("/products")
-    public List<ProductVO> list(){
-        return service.getProductList();
-    }
+//    @GetMapping("/products")
+//    public List<ProductVO> list(){
+//        return service.getProductList();
+//    }
+
+//    @GetMapping("/products")
+//    public Map<String, Object> list(Criteria cri){
+//        List<ProductVO> productList = service.getProductList(cri);
+//        int total = service.getTotalCount();
+//
+//        PageDTO pageDTO = new PageDTO(total, cri);
+//
+//        Map<String, Object> resultMap = new HashMap<>();
+//        resultMap.put("productList", productList);
+//        resultMap.put("pageDTO", pageDTO);
+//
+//        return resultMap;
+//    }
 
     //best5
     @GetMapping("/best")

@@ -12,6 +12,10 @@ public interface AttachMapper {
 
     public void deleteFile(String uuid);
 
+    public List<UploadResultDTO> getOldFiles();
+
+    public List<UploadResultDTO> getFiles();
+
     public void deleteFileAll(Long productNo);
     public List<UploadResultDTO> findByPno(Long productNo);
 }

@@ -13,6 +13,8 @@ public interface ProductMapper {
     //public List<ProductVO> getProductListByCategory();
     public ProductVO getProduct(Long product_no);
 
+    public int getTotalCount();
+
     public void productInsert(ProductVO product);
 
     public int productUpdate(ProductVO product);

@@ -12,6 +12,8 @@ public interface OrderMapper {
     public Long selectOrderNo();
     public OrderVO getOrderDetail(Long orderNo);
 
+    //제품에 대한 주문 삭제
+    public void deleteOrder(Long productNo);
 
     //구매 목록 조회
     public List<OrderVO> orderList();

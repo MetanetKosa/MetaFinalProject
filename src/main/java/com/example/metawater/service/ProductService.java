@@ -12,6 +12,9 @@ public interface ProductService {
     public boolean updateProduct(ProductVO product);
     public boolean deleteProduct(Long product_no);
     public List<ProductVO> getProductList();
+
+    public void deleteByProductId(Long productNo);
+    public int getTotalCount();
     public List<ProductVO> getBestProductList();
     public List<ProductVO> getProductListBySearch(String searchKeyword);
     public ProductVO getProduct(Long product_no);

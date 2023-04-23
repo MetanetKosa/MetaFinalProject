@@ -29,5 +29,5 @@ public interface ReviewMapper {
     public int reviewUpdate(ReviewVO review);
 
     //리뷰 삭제
-    public int reviewDelete(Long reviewNo);
+    public int deleteByProductId(Long reviewNo);
 }

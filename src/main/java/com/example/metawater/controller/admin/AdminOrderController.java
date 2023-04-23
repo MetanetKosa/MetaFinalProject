@@ -60,9 +60,9 @@ public class AdminOrderController {
     //렌탈 상세 조회
     @GetMapping("/orders/rental/{orderNo}")
     public ResponseEntity getRentalOrder(@PathVariable Long orderNo){
-        OrderVO order = service.orderDetail(orderNo);
+        OrderVO rental = service.orderDetail(orderNo);
 
-        return new ResponseEntity(order, HttpStatus.OK);
+        return new ResponseEntity(rental, HttpStatus.OK);
 
     }
 }

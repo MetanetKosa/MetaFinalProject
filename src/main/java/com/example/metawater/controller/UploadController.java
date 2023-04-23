@@ -259,7 +259,8 @@ public class UploadController {
     public ResponseEntity<byte[]> downloadFile(@RequestHeader("User-Agent") String userAgent, @RequestParam String fileName) {
 
 
-        FileSystemResource resource = new FileSystemResource("c:\\upload\\" + fileName);
+        FileSystemResource resource = new FileSystemResource(uploadPath + "\\"+fileName);
+        System.out.println(resource);
 
         if (!resource.exists()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -283,6 +284,7 @@ public class UploadController {
                 downloadName = new String(resourceOriginalName.getBytes("UTF-8"), "ISO-8859-1");
             }
 
+//            headers.add("Content-Disposition", "attachment; filename=" + downloadName);
             headers.add("Content-Disposition", "attachment; filename=" + downloadName);
 
         } catch (UnsupportedEncodingException e) {
