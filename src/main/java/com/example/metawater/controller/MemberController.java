@@ -40,7 +40,7 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).body(member);
     }
 
-    //token보낸 후 정보 가져오기
+    //로그인 token보낸 후 정보 가져오기
     @GetMapping("/members/{id}")
     public MemberVO membersData(@PathVariable String id){
         //System.out.println("id 확인 "+ id);

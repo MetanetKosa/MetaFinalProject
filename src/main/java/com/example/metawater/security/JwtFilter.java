@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 //Filter로 로그인 한 사람/안한 사람 권한 부여
 public class JwtFilter extends BasicAuthenticationFilter {
@@ -87,7 +88,33 @@ public class JwtFilter extends BasicAuthenticationFilter {
                 else {
                     responseValue.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 }
-            }else {
+            }else if (memberVO != null) {
+//                System.out.println("=========== Manager 테이블 접근 ===========");
+//                UserDetails user = User.builder()
+//                        .username(memberVO.getMemId())
+//                        .password(memberVO.getMemPw())//TODO: 여기서 Auth(회원/관리자) 구분
+//                        .authorities(new SimpleGrantedAuthority(memberVO.getAuth()))
+//                        .build();
+//                Authentication authentication = new UsernamePasswordAuthenticationToken(
+//                        user,
+//                        memberVO.getPassword(),
+//                        memberVO.getRoles().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth()))
+//                                .collect(Collectors.toList()));
+//                SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//                if (authentication != null && authentication.isAuthenticated() && authentication.getAuthorities().stream()
+//                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_MANAGER"))) {
+//                    filterChain.doFilter(request, response);
+//                }
+//                else {
+//                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//                }
+            }
+//            else {
+//                throw new UsernameNotFoundException("유저없음");
+//            }
+
+            else {
                 throw new UsernameNotFoundException("사용자 없음");
             }
 

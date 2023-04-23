@@ -26,33 +26,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/")
+//                .antMatchers("/")
                 .antMatchers("/auth/signup")
                 .antMatchers("/auth/members/**")
-                .antMatchers("/mypage/**")
-                .antMatchers("/auth/members")
-                .antMatchers("/order/**")
                 .antMatchers("/product/**")
-                .antMatchers("/auth/update")
-                .antMatchers("/auth/delete")
-                .antMatchers("/product/{productNo}/**")
                 .antMatchers("/css/**", "/js/**", "/img/**");
         // 이 요청들에 대해서는 spring security 필터 체인을 적용하지 않겠다
+        //                .antMatchers("/mypage/**")
+//                .antMatchers("/auth/members")
+//                .antMatchers("/order/**")
+//                .antMatchers("/auth/update")
+//                .antMatchers("/auth/delete")
+//                .antMatchers("/product/{productNo}/**")
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .authorizeRequests() // 요청에 의한 보안검사 시작
+//                .antMatchers("/**").permitAll()//해당경로에 대한 모든 접근을 하용한다.
                 .antMatchers("/auth/login").permitAll()
-                .antMatchers("/auth/update").permitAll()
-                .antMatchers("/auth/delete").permitAll()
-//                .antMatchers("/auth/checkid").permitAll()
-//                .antMatchers("/auth").hasRole("USER")
-//                .antMatchers("/mypage").hasRole("USER")
-//                .antMatchers("/admin").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .antMatchers("/auth").access("hasRole('USER')")
+                .antMatchers("/mypage").access("hasRole('USER')")
+                .antMatchers("/order").access("hasRole('USER')")
+                .antMatchers("/admin").access("hasRole('ADMIN')")// /show/mypage는 ADMIN권한을 가지고있는 사용자에게만 허용한다.
+                .anyRequest().authenticated()//어떤 요청에도 보안검사를 한다.
                 .and()
                 .addFilter(getAuthenticationFilter()) //회원 로그인
             .addFilter(JwtFilter()).authorizeRequests()//회원 토큰 생성
