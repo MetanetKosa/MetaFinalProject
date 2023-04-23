@@ -40,9 +40,13 @@
         where mem_id = #{memId}
     </update>
 
-    <delete id="deleteMember">
-        delete from member where mem_id=#{memId}
-    </delete>
+    <update id="deleteMember">
+        update member set status = 0 where mem_id = #{memId}
+    </update>
+
+<!--    <delete id="deleteMember">-->
+<!--        delete from member where mem_id=#{memId}-->
+<!--    </delete>-->
 
 <!--    <insert id ="userRole">-->
 <!--        insert into memberauth values(#{memberIdx}, 'ROLE_USER')-->
