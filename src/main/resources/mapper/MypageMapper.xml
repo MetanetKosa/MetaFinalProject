@@ -175,22 +175,22 @@
 
 
     <!-- 주문 내역 -->
-<!--    <select id="getMyOrderList" resultMap="orderDtoMap">-->
-<!--       <![CDATA[-->
-<!--        select * from orders-->
-<!--        where mem_no = #{memNo} AND (order_state = '주문 완료' OR order_state = '설치 완료')-->
-<!--        ORDER BY order_date DESC-->
-<!--        ]]>-->
-<!--    </select>-->
-
-    <select id="getMyOrderList" resultMap="orderMap">
+    <select id="getMyOrderList" resultMap="orderDtoMap">
        <![CDATA[
-        select o.*, p.*, m.* from orders o, product p, member m
-        where o.product_no = p.product_no and o.mem_no = m.mem_no
-        and m.mem_no = #{memNo} AND (o.order_state = '주문 완료' OR o.order_state = '설치 완료')
-        ORDER BY o.order_date DESC
+        select * from orders
+        where mem_no = #{memNo} AND (order_state = '주문 완료' OR order_state = '설치 완료')
+        ORDER BY order_date DESC
         ]]>
     </select>
+
+<!--    <select id="getMyOrderList" resultMap="orderMap">-->
+<!--       <![CDATA[-->
+<!--        select o.*, p.*, m.* from orders o, product p, member m-->
+<!--        where o.product_no = p.product_no and o.mem_no = m.mem_no-->
+<!--        and m.mem_no = #{memNo} AND (o.order_state = '주문 완료' OR o.order_state = '설치 완료')-->
+<!--        ORDER BY o.order_date DESC-->
+<!--        ]]>-->
+<!--    </select>-->
 
     <!-- 해지 내역 -->
     <select id="getMyCancelList" resultMap="orderDtoMap">

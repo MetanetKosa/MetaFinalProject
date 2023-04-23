@@ -41,7 +41,7 @@
     </update>
 
     <delete id="deleteMember">
-        delete from member where mem_id='${memId}'
+        delete from member where mem_id=#{memId}
     </delete>
 
 <!--    <insert id ="userRole">-->
