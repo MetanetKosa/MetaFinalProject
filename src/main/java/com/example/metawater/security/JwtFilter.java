@@ -89,30 +89,29 @@ public class JwtFilter extends BasicAuthenticationFilter {
                     responseValue.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 }
             }else if (memberVO != null) {
-//                System.out.println("=========== Manager 테이블 접근 ===========");
-//                UserDetails user = User.builder()
-//                        .username(memberVO.getMemId())
-//                        .password(memberVO.getMemPw())//TODO: 여기서 Auth(회원/관리자) 구분
-//                        .authorities(new SimpleGrantedAuthority(memberVO.getAuth()))
-//                        .build();
-//                Authentication authentication = new UsernamePasswordAuthenticationToken(
-//                        user,
-//                        memberVO.getPassword(),
-//                        memberVO.getRoles().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth()))
-//                                .collect(Collectors.toList()));
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//                if (authentication != null && authentication.isAuthenticated() && authentication.getAuthorities().stream()
-//                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_MANAGER"))) {
-//                    filterChain.doFilter(request, response);
-//                }
-//                else {
-//                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//                }
+                System.out.println("-------------  admin 관리자는 따로 seurity 설정---------------------------");
+                logger.info(----------  admin 관리자는 따로 seurity 설정-----------------);
+                UserDetails user = User.builder()
+                        .username(memberVO.getMemId())
+                        .password(memberVO.getMemPw())//TODO: 여기서 Auth(회원/관리자) 구분
+                        .authorities(new SimpleGrantedAuthority(memberVO.getAuth()))
+                        .build();
+                Authentication authentication = new UsernamePasswordAuthenticationToken(
+                        user,
+                        memberVO.getMemPw(),
+                        authorities
+//                        memberVO.getRoles().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuth())).collect(Collectors.toList())
+                );
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                if (authentication != null && authentication.isAuthenticated() && authentication.getAuthorities().stream()
+                        .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_MANAGER"))) {
+                    filterChain.doFilter(request, response);
+                }
+                else {
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                }
             }
-//            else {
-//                throw new UsernameNotFoundException("유저없음");
-//            }
 
             else {
                 throw new UsernameNotFoundException("사용자 없음");
