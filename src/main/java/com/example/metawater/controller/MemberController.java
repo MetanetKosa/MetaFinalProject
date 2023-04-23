@@ -27,7 +27,7 @@ public class MemberController {
     //회원삭제
     @PostMapping("/delete")
     public void deleteMember(@RequestBody MemberVO memberVO) {
-        System.out.println("deleteUser 확인 " + memberVO);
+//        System.out.println("deleteUser 확인 " + memberVO);
         memberService.deleteMember(memberVO);
     }
 
@@ -66,10 +66,10 @@ public class MemberController {
 //    @PatchMapping("/update")
     @PostMapping("/update")
     public boolean updateMember(@RequestBody MemberVO memberVO) {
-        System.out.println("update데이터 확인 " + memberVO);
+//        System.out.println("update데이터 확인 " + memberVO);
 
         boolean result = memberService.updateMember(memberVO);
-        System.out.println("update데이터 후 데이터 확인" + result);
+//        System.out.println("update데이터 후 데이터 확인" + result);
         return result;
     }
 
@@ -89,7 +89,7 @@ public class MemberController {
 //    public void deleteUser(@PathVariable String mem_id) {
 //        MemberVO memberVO = userService.findUser(mem_id);
 //
-//        if(user == null) {
+//        if(user == pw 인코딩된 값) {
 //            throw new UserNotFoundException(String.format("ID[%s] not found", mem_id));
 //        } userService.deleteMember(mem_id);
 //    }

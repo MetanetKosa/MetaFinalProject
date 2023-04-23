@@ -28,34 +28,34 @@ public class MemberServiceImpl implements MemberService {
     // 회원가입
     @Override
     public void createMember(MemberVO memberVO) {
-        System.out.println("pw ㅇ---------------" +memberVO.getMemPw() );
+//        System.out.println("pw ㅇ---------------" +memberVO.getMemPw() );
         memberVO.setMemPw(passwordEncoder.encode(memberVO.getMemPw()));
-        System.out.println("pw 인코딩된 값---------------" + passwordEncoder.encode(memberVO.getMemPw()) );
+//        System.out.println("pw 인코딩된 값---------------" + passwordEncoder.encode(memberVO.getMemPw()) );
 
         memberVO.setAuth("ROLE_USER");
         memberVO.setStatus(1);
-        System.out.println("createMember 회원가입 auth, status 값 확인" + memberVO);
+//        System.out.println("createMember 회원가입 auth, status 값 확인" + memberVO);
         memberMapper.insertMember(memberVO);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.info("=========== loadUserByUsername 메서드 실행한다. ================");
+//        logger.info("=========== loadUserByUsername 메서드 실행한다. ================");
         MemberVO member = memberMapper.findByUserId(username);
-        logger.info("------------member데이터 전체-------------" + member);
-        logger.info("------------member.getAuth()-------------" + member.getAuth());
+//        logger.info("------------member데이터 전체-------------" + member);
+//        logger.info("------------member.getAuth()-------------" + member.getAuth());
         return member;
     }
 
     @Override
     public MemberVO checkMemberInfo(String id) {
-        System.out.println("-----------------memberServiceImple 아이디 중보체크"+memberMapper.checkMemberInfo(id));
+//        System.out.println("-----------------memberServiceImple 아이디 중보체크"+memberMapper.checkMemberInfo(id));
         return memberMapper.checkMemberInfo(id);
     }
 
     @Override
     public boolean updateMember(MemberVO memberVO) {
-        System.out.println("-----updateMember 아이디 중보체크"+memberMapper.updateMember(memberVO));
+//        System.out.println("-----updateMember 아이디 중보체크"+memberMapper.updateMember(memberVO));
         return memberMapper.updateMember(memberVO) == 1;
     }
 
