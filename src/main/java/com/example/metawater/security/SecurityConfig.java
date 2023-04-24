@@ -71,9 +71,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .logout();
     }
-    //                .authorizeRequests().anyRequest().permitAll();
-//                .antMatchers(HttpMethod.PATCH, "/api/**").authenticated() // PATCH 요청 권한 설정
-
 
     //토큰
     private JwtFilter JwtFilter() throws Exception {
