@@ -1,5 +1,6 @@
 package com.example.metawater.domain;
 
+import com.example.metawater.dto.UploadResultDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -11,6 +11,7 @@ public interface OrderMapper {
     public void insertRental(OrderVO order);
     public Long selectOrderNo();
     public OrderVO getOrderDetail(Long orderNo);
+    public void updateProductSales(Long productNo);
 
 
     //구매 목록 조회

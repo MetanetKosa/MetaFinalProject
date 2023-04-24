@@ -1,6 +1,5 @@
 package com.example.metawater.service;
 
-import com.example.metawater.domain.MemberDTO;
 import com.example.metawater.domain.MemberVO;
 import com.example.metawater.mapper.MemberMapper;
 import lombok.extern.log4j.Log4j2;

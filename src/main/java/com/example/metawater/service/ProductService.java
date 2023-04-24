@@ -1,7 +1,7 @@
 package com.example.metawater.service;
 
 import com.example.metawater.domain.ProductVO;
-import com.example.metawater.domain.UploadResultDTO;
+import com.example.metawater.dto.UploadResultDTO;
 
 
 import java.util.List;

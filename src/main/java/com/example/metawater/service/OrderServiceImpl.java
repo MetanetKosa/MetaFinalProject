@@ -16,7 +16,9 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void insertOrder(OrderVO order) {
+
         orderMapper.insertOrder(order);
+        //orderMapper.updateProductSales();
     }
 
     public List<OrderVO> orderList() {
@@ -36,7 +38,14 @@ public class OrderServiceImpl implements OrderService{
 
     @Override
     public void insertRental(OrderVO order) {
+
         orderMapper.insertRental(order);
+        //orderMapper.updateProductSales();
+    }
+
+    @Override
+    public void updateSales(Long productNo) {
+        orderMapper.updateProductSales(productNo);
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.example.metawater.mapper;
 
 import com.example.metawater.domain.MyOrderProductVO;
-import com.example.metawater.domain.OrderDTO;
 import com.example.metawater.domain.ProductVO;
 import com.example.metawater.domain.ReturnVO;
-import net.bytebuddy.asm.Advice;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

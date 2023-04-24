@@ -28,7 +28,7 @@
         <result property="productColor" column="product_color"/>
     </resultMap>
 
-    <resultMap id="orderDtoMap" type="com.example.metawater.domain.OrderDTO">
+    <resultMap id="orderDtoMap" type="com.example.metawater.dto.OrderDTO">
         <result property="orderNo" column="order_no"/>
         <result property="productNo" column="product_no"/>
         <result property="memberNo" column="mem_no"/>
@@ -106,7 +106,7 @@
         <result property="rentalPrice" column="rental_price"/>
         <result property="rentalTerm" column="rental_term"/>
         <result property="rentalPayDate" column="rental_payDate"/>
-        <association property="order" javaType="com.example.metawater.domain.OrderDTO"/>
+        <association property="order" javaType="com.example.metawater.dto.OrderDTO"/>
         <association property="product" javaType="com.example.metawater.domain.ProductVO"/>
     </resultMap>
 

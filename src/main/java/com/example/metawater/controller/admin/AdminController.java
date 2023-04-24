@@ -1,7 +1,7 @@
 package com.example.metawater.controller.admin;
 
 import com.example.metawater.domain.ProductVO;
-import com.example.metawater.domain.UploadResultDTO;
+import com.example.metawater.dto.UploadResultDTO;
 import com.example.metawater.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

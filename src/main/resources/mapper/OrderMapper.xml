@@ -74,10 +74,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <select id="selectOrderNo" resultType="Long">
-        SELECT order_no
-        FROM( SELECT * FROM orders ORDER BY ROWNUM DESC )
-        WHERE ROWNUM = 1
+--         SELECT order_no
+--         FROM( SELECT * FROM orders ORDER BY ROWNUM DESC )
+--         WHERE ROWNUM = 1
+
+        SELECT MAX(order_no) FROM orders
     </select>
+
+    <update id="updateProductSales" parameterType="com.example.metawater.domain.ProductVO">
+        UPDATE product
+        SET product_sales = product_sales + 1
+        WHERE product_no = #{productNo}
+    </update>
 
 <!--    구매 목록 조회-->
     <select id="orderList" resultMap="orderMap">

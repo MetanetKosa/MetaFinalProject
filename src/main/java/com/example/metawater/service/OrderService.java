@@ -10,8 +10,9 @@ public interface OrderService{
 
     public void insertOrder(OrderVO order);
 
-
     public void insertRental(OrderVO order);
+
+    public void updateSales(Long productNo);
 
     public Long getOrderNo();
     //구매 목록 조회

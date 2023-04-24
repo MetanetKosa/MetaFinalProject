@@ -1,13 +1,9 @@
 package com.example.metawater.service;
 
-import com.example.metawater.domain.MemberDTO;
 import com.example.metawater.domain.MemberVO;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 public interface MemberService extends UserDetailsService {
 

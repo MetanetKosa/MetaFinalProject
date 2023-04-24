@@ -1,4 +1,4 @@
-package com.example.metawater.domain;
+package com.example.metawater.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

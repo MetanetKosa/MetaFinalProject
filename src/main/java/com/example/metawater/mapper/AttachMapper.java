@@ -1,6 +1,6 @@
 package com.example.metawater.mapper;
 
-import com.example.metawater.domain.UploadResultDTO;
+import com.example.metawater.dto.UploadResultDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

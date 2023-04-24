@@ -35,6 +35,7 @@ public class OrderController {
 //        order.setMemberNo(memberNo);
 //        orderService.insertRental(order);
         orderService.insertOrder(o);
+        orderService.updateSales(productNo);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -62,6 +63,7 @@ public class OrderController {
 //        order.setMemberNo(memberNo);
 //        orderService.insertRental(order);
         orderService.insertRental(r);
+        orderService.updateSales(productNo);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

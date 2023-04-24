@@ -1,7 +1,7 @@
 package com.example.metawater.service;
 
 import com.example.metawater.domain.ProductVO;
-import com.example.metawater.domain.UploadResultDTO;
+import com.example.metawater.dto.UploadResultDTO;
 import com.example.metawater.mapper.AttachMapper;
 import com.example.metawater.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
