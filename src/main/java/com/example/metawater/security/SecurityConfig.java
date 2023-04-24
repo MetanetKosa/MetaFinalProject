@@ -52,7 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/auth").hasRole("USER")
 //                .antMatchers("/mypage").hasRole("USER")
 //                .antMatchers("/admin").hasRole("ADMIN")
-                .anyRequest().authenticated()
+//                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .addFilter(getAuthenticationFilter()) //회원 로그인
             .addFilter(JwtFilter()).authorizeRequests()//회원 토큰 생성
@@ -61,9 +62,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .logout();
     }
-    //                .authorizeRequests().anyRequest().permitAll();
-//                .antMatchers(HttpMethod.PATCH, "/api/**").authenticated() // PATCH 요청 권한 설정
-
 
     //토큰
     private JwtFilter JwtFilter() throws Exception {
