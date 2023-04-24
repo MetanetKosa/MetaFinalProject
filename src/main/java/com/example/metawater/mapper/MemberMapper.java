@@ -14,7 +14,11 @@ public interface MemberMapper {
     public void insertMember(MemberVO memberVO);
     //로그인
     public MemberVO findByUserId(@Param("memId") String memId);
-    public MemberVO idGet(@Param("memId") String id);
+    //id중복확인
+    public MemberVO checkMemberInfo(@Param("memId") String id);
+    //정보수정
+    public int updateMember( MemberVO memberVO);
+    public int deleteMember(MemberVO memberVO);
 
     //로그인
     //public UserDTO loginMember(UserDTO user);

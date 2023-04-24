@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.metawater.mapper.MypageMapper">
 
 
@@ -72,12 +72,13 @@
     <resultMap id="ReturnMap" type="com.example.metawater.domain.ReturnVO">
         <id property="returnNo" column="return_no"/>
         <result property="returnDate" column="return_date"/>
-        <result property="returnAdd" column="return_add"/>
+        <result property="returnTime" column="return_add"/>
         <result property="returnPrice" column="return_price"/>
         <result property="returnMethod" column="return_method"/>
         <result property="returnTrue" column="return_true"/>
         <result property="orderNo" column="order_no"/>
         <result property="memNo" column="mem_no"/>
+        <result property="productNo" column="product_no"/>
     </resultMap>
 
 
@@ -131,42 +132,53 @@
         <association property="product" javaType="com.example.metawater.domain.ProductVO"/>
     </resultMap>
 
+    <resultMap id="memberMap" type="com.example.metawater.domain.MemberVO">
+        <id property="memNo" column="mem_no"/>
+        <result property="memId" column="mem_id" />
+        <result property="memPw" column="mem_pw" />
+        <result property="memName" column="mem_name" />
+        <result property="memPhone" column="mem_phone" />
+        <result property="memEmail" column="mem_email" />
+        <result property="auth" column="auth" />
+        <result property="status" column="status" />
+    </resultMap>
+
 
 
     <!-- 해지신청 -->
-    <!-- 주문상태 해지 완료로 변경 -->
+    <!-- 주문상태 반납 신청 완료로 변경 -->
     <update id="changeOrderStatus">
         UPDATE orders
-        SET order_state = '해지 완료'
+        SET order_state = '반납 신청 완료'
         WHERE order_no = #{orderNo}
     </update>
     <!-- 해지 테이블에 해지 내역 추가 -->
     <insert id="insertReturn">
-        INSERT INTO RETURN (return_no, return_date, return_addnumber, return_address, return_addDetail, return_price, return_method, return_true, order_no, mem_no, product_no)
-        VALUES (return_seq.nextval, #{returnDate}, #{returnAddNumber}, #{returnAddress}, #{returnAddDetail}, #{returnPrice}, #{returnMethod}, 1, #{orderNo}, #{memNo}, #{productNo})
+        INSERT INTO RETURN (return_no, return_date, return_time, return_price, return_method, return_true, order_no, mem_no, product_no)
+        VALUES (return_seq.nextval, #{returnDate}, #{returnTime}, #{returnPrice}, #{returnMethod}, 1, #{orderNo}, #{memNo}, #{productNo})
     </insert>
 
 
     <select id="getMyProductList" resultMap="productMap">
         <![CDATA[
         select * from product
-                 where product_no IN
-                       (select product_no from orders
-                                          where mem_no = #{memNo} and order_state = '설치 완료')
+        where product_no IN
+              (select product_no from orders
+               where mem_no = #{memNo} and order_state = '설치 완료')
         ]]>
     </select>
 
     <!-- 상세 정보 리스트-->
     <select id="getOrderProductDetailList" resultMap="MyDetailMap">
     <![CDATA[
-            SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
-                   o.order_no, o.order_state, o.order_devDate, o.order_devTime, o.order_addNumber, o.order_address,
-                   o.order_addDetail, o.order_name, o.order_phone, o.order_price, o.order_date, o.order_pay, o.rental_price,
-                   o.rental_term, o.rental_payDate
-            FROM orders o
-                     JOIN product p ON o.product_no = p.product_no
-            WHERE o.mem_no = #{memNo} and o.order_state = '설치 완료'
-            ]]>
+        SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
+               o.order_no, o.order_state, o.order_devDate, o.order_devTime, o.order_addNumber, o.order_address,
+               o.order_addDetail, o.order_name, o.order_phone, o.order_price, o.order_date, o.order_pay, o.rental_price,
+               o.rental_term, o.rental_payDate
+        FROM orders o
+                 JOIN product p ON o.product_no = p.product_no
+        WHERE o.mem_no = #{memNo} and o.order_state = '설치 완료'
+        ]]>
     </select>
 
 
@@ -174,7 +186,7 @@
     <select id="getOrderProductDetail" resultMap="MyDetailMap">
     <![CDATA[
         SELECT p.product_name, p.product_model, p.product_size, p.product_guide, p.product_rentalprice,p.img_url,
-               o.order_no, o.order_state, o.order_devDate, o.order_devTime, o.order_addNumber, o.order_address,
+               p.product_no, o.order_no, o.order_state, o.order_devDate, o.order_devTime, o.order_addNumber, o.order_address,
                o.order_addDetail, o.order_name, o.order_phone, o.order_price, o.order_date, o.order_pay, o.rental_price,
                o.rental_term, o.rental_payDate
         FROM orders o
@@ -184,33 +196,58 @@
     </select>
 
 
+    <!-- 주문 내역 -->
     <select id="getMyOrderList" resultMap="orderDtoMap">
- 		<![CDATA[
+       <![CDATA[
         select * from orders
-                 where mem_no = #{memNo} ORDER BY order_date DESC
+        where mem_no = #{memNo} AND (order_state = '주문 완료' OR order_state = '설치 완료')
+        ORDER BY order_date DESC
         ]]>
- 	</select>
+    </select>
+
+<!--    <select id="getMyOrderList" resultMap="orderMap">-->
+<!--       <![CDATA[-->
+<!--        select o.*, p.*, m.* from orders o, product p, member m-->
+<!--        where o.product_no = p.product_no and o.mem_no = m.mem_no-->
+<!--        and m.mem_no = #{memNo} AND (o.order_state = '주문 완료' OR o.order_state = '설치 완료')-->
+<!--        ORDER BY o.order_date DESC-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <!-- 해지 내역 -->
+    <select id="getMyCancelList" resultMap="orderDtoMap">
+       <![CDATA[
+        select * from orders
+        where mem_no = #{memNo} AND (order_state = '반납 신청 완료')
+        ORDER BY order_date DESC
+        ]]>
+    </select>
 
 
     <select id="getMyProduct" resultMap="productMap">
- 		<![CDATA[
+       <![CDATA[
         select * from product
         where product_no = #{productNo}
         ]]>
- 	</select>
+    </select>
 
     <delete id="deleteReview" parameterType="long">
-            delete from review where order_no = #{orderNo, jdbcType=BIGINT}
+        delete from review where order_no = #{orderNo, jdbcType=BIGINT}
     </delete>
 
     <delete id="deleteReturn" parameterType="long">
-            delete from return where order_no = #{orderNo, jdbcType=BIGINT}
+        delete from return where order_no = #{orderNo, jdbcType=BIGINT}
     </delete>
 
     <delete id="deleteOrder" parameterType="long">
-            delete from orders where order_no = #{orderNo, jdbcType=BIGINT}
+        delete from orders where order_no = #{orderNo, jdbcType=BIGINT}
     </delete>
 
-
+    <!-- 계약 연장 -->
+    <update id="contractExtend">
+        UPDATE orders
+        SET rental_term = 6
+        WHERE order_no = #{orderNo}
+    </update>
 
 </mapper>

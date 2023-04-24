@@ -43,6 +43,7 @@
         <result property="memPhone" column="mem_phone"/>
         <result property="memEmail" column="mem_email"/>
         <result property="auth" column="auth"/>
+        <result property="status" column="status" />
     </resultMap>
 
     <resultMap id="productMap" type="com.example.metawater.domain.ProductVO">
@@ -71,20 +72,20 @@
     </resultMap>
 
     <select id="getReviewList" resultMap="reviewMap">
-        select r.*, m.member_name, p.product_name, p.product_function, p.product_model
+        select r.*, m.*, p.product_name, p.product_function, p.product_model
         from review r, member m, product p
         where r.mem_no = m.mem_no and r.product_no = p.product_no
     </select>
 
     <select id="getReviewListByProductId" parameterType="Long" resultMap="reviewMap">
-        select r.*, m.mem_name, p.product_name, p.product_function, p.product_model
+        select r.*, m.*, p.product_name, p.product_function, p.product_model
         from review r, member m, product p
         where r.mem_no = m.mem_no and r.product_no = p.product_no
           and r.product_no = #{productNo}
     </select>
 
     <select id="getReview" parameterType="Long" resultMap="reviewMap">
-        select r.*, m.mem_name, p.product_name, p.product_function, p.product_model
+        select r.*, m.*, p.product_name, p.product_function, p.product_model
         from review r, member m, product p
         where r.mem_no = m.mem_no and r.product_no = p.product_no
           and r.re_no = #{reviewNo} and r.product_no = #{productNo}
