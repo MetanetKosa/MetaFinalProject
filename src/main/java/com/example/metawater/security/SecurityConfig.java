@@ -26,8 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/")
-                .antMatchers("/auth/signup")
+                .antMatchers("/auth/login/**")
+                .antMatchers("/auth/signup/**")
                 .antMatchers("/auth/members/**")
                 .antMatchers("/mypage/**")
                 .antMatchers("/auth/members")
@@ -35,9 +35,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/product/**")
                 .antMatchers("/auth/update")
                 .antMatchers("/auth/delete")
+                .antMatchers("/admin/products/**")
+                .antMatchers("/admin/product/**")
+                .antMatchers("/admin/orders/**")
+                .antMatchers("/admin/upload/**")
                 .antMatchers("/product/{productNo}/**")
+                .antMatchers("/swaggeer-ui.html")
                 .antMatchers("/css/**", "/js/**", "/img/**");
-        // 이 요청들에 대해서는 spring security 필터 체인을 적용하지 않겠다
+        // 이 요청들에 대해서는 spring security 필터 체인을 적용하지 않겠다;
     }
 
     @Override
@@ -46,12 +51,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .antMatchers("/auth/login").permitAll()
-                .antMatchers("/auth/update").permitAll()
-                .antMatchers("/auth/delete").permitAll()
-//                .antMatchers("/auth/checkid").permitAll()
-//                .antMatchers("/auth").hasRole("USER")
-//                .antMatchers("/mypage").hasRole("USER")
-//                .antMatchers("/admin").hasRole("ADMIN")
+                .antMatchers("/auth/signup").permitAll()
+                .antMatchers("/auth").hasRole("USER")
+                .antMatchers("/mypage/**").hasRole("USER")
+                .antMatchers("/auth/members").hasRole("USER")
+                .antMatchers("/order/**").hasRole("USER")
+                .antMatchers("/product/**").hasRole("USER")
+                .antMatchers("/product/{productNo}/**").hasRole("USER")
+                .antMatchers("/auth/update").hasRole("USER")
+                .antMatchers("/auth/delete").hasRole("USER")
+                .antMatchers("/mypage").hasRole("USER")
+                .antMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(getAuthenticationFilter()) //회원 로그인
